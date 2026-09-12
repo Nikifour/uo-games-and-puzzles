@@ -1,0 +1,92 @@
+{
+  "id": "uo-igry",
+  "title": "UO · Игры и загадки",
+  "description": "<p>Интерактивные загадки и настольные игры за одним столом: ведущий выкладывает, игроки решают, все видят одно и то же.</p>",
+  "version": "0.25.0",
+  "url": "https://github.com/Nikifour/uo-igry",
+  "manifest": "https://github.com/Nikifour/uo-igry/releases/latest/download/module.json",
+  "readme": "https://github.com/Nikifour/uo-igry/blob/main/README.md",
+  "bugs": "https://github.com/Nikifour/uo-igry/issues",
+  "changelog": "https://github.com/Nikifour/uo-igry/releases",
+  "license": "https://github.com/Nikifour/uo-igry/blob/main/LICENSE",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14"
+  },
+  "authors": [
+    {
+      "name": "timmi"
+    }
+  ],
+  "socket": true,
+  "esmodules": [
+    "scripts/uo-igry.mjs"
+  ],
+  "styles": [
+    "styles/uo-igry.css"
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "5.0.0"
+        }
+      }
+    ],
+    "recommends": [
+      {
+        "id": "monks-active-tiles",
+        "type": "module",
+        "reason": "Тайл на карте может выложить загадку на стол и отпереть дверь, когда её решат."
+      }
+    ]
+  },
+  "packFolders": [
+    {
+      "name": "UO",
+      "sorting": "m",
+      "color": "#7555a5",
+      "folders": [
+        {
+          "name": "Модули",
+          "sorting": "m",
+          "folders": [
+            {
+              "name": "Игры и загадки",
+              "sorting": "m",
+              "packs": [
+                "uo-igry-help",
+                "uo-igry-help-en"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "packs": [
+    {
+      "name": "uo-igry-help",
+      "label": "Игры и загадки · Как пользоваться",
+      "path": "packs/uo-igry-help",
+      "type": "JournalEntry",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "uo-igry-help-en",
+      "label": "Games and Puzzles · How to use",
+      "path": "packs/uo-igry-help-en",
+      "type": "JournalEntry",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    }
+  ],
+  "download": "https://github.com/Nikifour/uo-igry/releases/download/v0.25.0/module.zip"
+}

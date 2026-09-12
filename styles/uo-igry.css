@@ -1,0 +1,951 @@
+/*
+ * UO · Игры и загадки
+ *
+ * Оформление отделено от механики нарочно: один и тот же замок должен уметь
+ * выглядеть храмовой печатью, орденским механизмом или наростом Бездны —
+ * и для этого не нужно ни строчки нового кода, только класс темы.
+ */
+
+.uo-igry .uo-zamok-telo,
+.uo-igry .uo-mozaika-telo {
+  --uo-fon: #1b1b1e;
+  --uo-ramka: #6b6b73;
+  --uo-simvol: #e8e4d8;
+  --uo-otsvet: #b9b3a3;
+  --uo-udacha: #6fae5a;
+  --uo-beda: #b4553f;
+
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  padding: .3rem .2rem;
+}
+
+/* ─── темы ─── */
+
+.uo-igry .uo-tema-kamen {
+  --uo-fon: #23231f;
+  --uo-ramka: #7a7466;
+  --uo-simvol: #ece6d6;
+  --uo-otsvet: #b6ad97;
+}
+
+.uo-igry .uo-tema-orden {
+  --uo-fon: #101c2e;
+  --uo-ramka: #c9a227;
+  --uo-simvol: #f2e7c4;
+  --uo-otsvet: #7fa3cc;
+}
+
+.uo-igry .uo-tema-bezdna {
+  --uo-fon: #170f22;
+  --uo-ramka: #7a4fa8;
+  --uo-simvol: #e6d8f5;
+  --uo-otsvet: #a982d1;
+}
+
+/* ─── надпись на замке ─── */
+
+.uo-igry .uo-podpis {
+  margin: 0;
+  text-align: center;
+  font-style: italic;
+  color: var(--uo-otsvet);
+}
+
+/* ─── диски ─── */
+
+.uo-igry .uo-diski {
+  display: flex;
+  justify-content: center;
+  gap: .45rem;
+  flex-wrap: wrap;
+}
+
+.uo-igry .uo-disk {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .15rem;
+}
+
+.uo-igry .uo-okoshko {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 3.1rem;
+  padding: .2rem 0;
+  background: var(--uo-fon);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 6px;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, .7);
+  line-height: 1.05;
+  /* руны и знаки светил есть не в каждом шрифте — подстраховываемся */
+  font-family: "Segoe UI Historic", "Segoe UI Symbol", "Noto Sans Runic", "Signika", serif;
+}
+
+.uo-igry .uo-sosed {
+  font-size: .8rem;
+  color: var(--uo-otsvet);
+  opacity: .4;
+}
+
+.uo-igry .uo-simvol {
+  font-size: 1.9rem;
+  color: var(--uo-simvol);
+  text-shadow: 0 0 6px rgba(0, 0, 0, .8);
+}
+
+.uo-igry .uo-krut {
+  width: 3.1rem;
+  min-height: 0;
+  padding: 0;
+  line-height: 1.3;
+  font-size: .8rem;
+  flex: 0 0 auto;
+}
+
+/* ─── строка проверки ─── */
+
+.uo-igry .uo-stroka {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+}
+
+.uo-igry .uo-schet {
+  color: var(--uo-otsvet);
+  font-size: .9rem;
+}
+
+.uo-igry .uo-proverit { flex: 0 0 auto; width: auto; padding: 0 .9rem; }
+
+/* ─── итог ─── */
+
+.uo-igry .uo-itog {
+  margin: 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+.uo-igry .uo-otkryt { color: var(--uo-udacha); }
+.uo-igry .uo-zaklinilo { color: var(--uo-beda); }
+
+/* ─── журнал попыток ─── */
+
+.uo-igry .uo-zhurnal {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 8.5rem;
+  overflow-y: auto;
+  font-size: .85rem;
+}
+
+.uo-igry .uo-zhurnal li {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  padding: .1rem .3rem;
+  border-bottom: 1px dotted rgba(128, 128, 128, .35);
+}
+
+.uo-igry .uo-zhurnal code {
+  font-size: 1rem;
+  letter-spacing: .12em;
+}
+
+.uo-igry .uo-zhurnal .uo-kto { color: var(--uo-otsvet); }
+.uo-igry .uo-zhurnal .uo-udacha code { color: var(--uo-udacha); }
+.uo-igry .uo-zhurnal .uo-podskazka { margin-left: auto; opacity: .8; }
+
+/* ─── панель ведущего ─── */
+
+.uo-igry .uo-gm {
+  border-top: 1px solid rgba(128, 128, 128, .4);
+  padding-top: .45rem;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.uo-igry .uo-gm-kod {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.uo-igry .uo-gm-kod code { font-size: 1.1rem; letter-spacing: .15em; }
+.uo-igry .uo-gm-knopki { display: flex; gap: .35rem; }
+.uo-igry .uo-gm button { flex: 1; }
+
+/* ─── диалоги ─── */
+
+.uo-forma { display: flex; flex-direction: column; gap: .35rem; }
+.uo-forma label { display: flex; align-items: center; gap: .5rem; justify-content: space-between; }
+.uo-forma label input[type="text"],
+.uo-forma label input[type="number"],
+.uo-forma label select { flex: 0 0 55%; }
+.uo-forma fieldset { border: 1px solid rgba(128, 128, 128, .4); border-radius: 4px; padding: .3rem .5rem; }
+.uo-forma .uo-igrok { justify-content: flex-start; }
+.uo-forma .uo-podskazka { margin: .1rem 0; font-size: .85rem; opacity: .8; }
+.uo-forma h3 { margin: 0 0 .2rem; }
+
+/* Заголовок раздела в панели: чертой, потому что разделов там два — что лежит
+   на столе и что приготовлено, и на глаз они иначе сливаются. Первому черта
+   не нужна: над ним и так край окна. */
+.uo-forma h2 {
+  margin: .7rem 0 .3rem;
+  padding-top: .5rem;
+  font-size: 1.05rem;
+  border-top: 1px solid rgba(128, 128, 128, .35);
+}
+.uo-forma h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+.uo-zagotovki { display: flex; flex-direction: column; gap: .25rem; }
+.uo-zagotovki:not(:last-child) { margin-bottom: .45rem; }
+.uo-zagotovka { display: flex; align-items: center; gap: .4rem; }
+.uo-zagotovka span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Четыре кнопки в строке — жмём поля, а не имя заготовки: имя и есть то,
+   по чему ведущий её узнаёт. */
+.uo-zagotovka button { flex: 0 0 auto; width: auto; padding: 0 .5rem; font-size: .9rem; }
+
+/* ─── Кости ─── */
+
+.uo-igry .uo-kosti-telo {
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  padding: .3rem .2rem;
+  --uo-otsvet: #b6ad97;
+  --uo-udacha: #6fae5a;
+}
+
+.uo-igry .uo-mesta { display: flex; gap: .4rem; flex-wrap: wrap; }
+
+.uo-igry .uo-mesto {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .2rem .5rem;
+  border: 1px solid rgba(128, 128, 128, .5);
+  border-radius: 4px;
+}
+
+.uo-igry .uo-mesto.uo-hodit { border-color: #c9a227; box-shadow: 0 0 6px rgba(201, 162, 39, .45); }
+.uo-igry .uo-mesto.uo-pobeda { border-color: var(--uo-udacha); }
+.uo-igry .uo-mesto .uo-ochki { font-weight: 700; }
+
+.uo-igry .uo-sukno {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  align-items: center;
+  padding: .5rem;
+  background: rgba(20, 40, 25, .35);
+  border: 1px solid rgba(128, 128, 128, .4);
+  border-radius: 6px;
+}
+
+.uo-igry .uo-kosti { display: flex; gap: .35rem; flex-wrap: wrap; justify-content: center; min-height: 2.6rem; }
+
+.uo-igry .uo-kost {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  font-size: 2rem;
+  line-height: 1;
+  flex: 0 0 auto;
+  font-family: "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+}
+
+.uo-igry .uo-kost.uo-vybrana {
+  border-color: #c9a227;
+  box-shadow: 0 0 8px rgba(201, 162, 39, .6);
+  transform: translateY(-3px);
+}
+
+.uo-igry .uo-kosti-telo .uo-schet { color: var(--uo-otsvet); font-size: .9rem; }
+
+.uo-igry .uo-knopki { display: flex; align-items: center; gap: .4rem; }
+.uo-igry .uo-knopki button { flex: 0 0 auto; width: auto; padding: 0 .8rem; }
+.uo-igry .uo-vybrano { flex: 1; font-size: .9rem; color: var(--uo-otsvet); }
+
+/* ─── правила игры ─── */
+
+.uo-igry .uo-stroka-schet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  width: 100%;
+}
+
+.uo-igry .uo-pravila-knopka {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 0 .6rem;
+  font-size: .85rem;
+  line-height: 1.6;
+}
+
+.uo-pravila p { margin: .35rem 0; }
+.uo-pravila-tabl { width: 100%; border-collapse: collapse; margin: .4rem 0; }
+.uo-pravila-tabl td { padding: .12rem .4rem; border-bottom: 1px dotted rgba(128, 128, 128, .35); }
+.uo-pravila-tabl .uo-cifra { text-align: right; white-space: nowrap; font-weight: 600; }
+
+/* ─── шулерство и пул соперников ─── */
+
+.uo-igry .uo-podmena {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 0 .7rem;
+  border-style: dashed;
+}
+
+.uo-igry .uo-podmena.uo-vkl {
+  border-style: solid;
+  border-color: #b4553f;
+  box-shadow: 0 0 8px rgba(180, 85, 63, .5);
+}
+
+.uo-boty { display: flex; flex-direction: column; gap: .3rem; margin: .3rem 0; }
+.uo-bot-stroka { display: flex; align-items: center; gap: .4rem; }
+.uo-bot-stroka .uo-bot-imya { flex: 1 1 55%; }
+.uo-bot-stroka .uo-bot-nrav { flex: 1 1 40%; }
+.uo-bot-stroka .uo-bot-ubrat { flex: 0 0 auto; width: auto; padding: 0 .5rem; }
+.uo-bot-dobavit { width: auto; padding: 0 .8rem; align-self: flex-start; }
+
+/* ─── мозаика ─── */
+
+.uo-igry .uo-mozaika {
+  display: grid;
+  grid-template-columns: repeat(var(--storona), 1fr);
+  gap: 3px;
+  width: 100%;
+  aspect-ratio: 1 / 1;   /* запасное: настоящую форму задаёт картинка, из разметки */
+  padding: 3px;
+  background: var(--uo-fon);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 6px;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, .7);
+}
+
+.uo-igry .uo-kusok {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+}
+
+.uo-igry .uo-kusok.uo-hodit { cursor: pointer; outline: 1px solid rgba(201, 162, 39, .55); }
+.uo-igry .uo-kusok.uo-hodit:hover { outline-color: #c9a227; box-shadow: 0 0 10px rgba(201, 162, 39, .55); }
+.uo-igry .uo-dyra { background: rgba(0, 0, 0, .5); box-shadow: inset 0 0 12px rgba(0, 0, 0, .9); }
+
+.uo-igry .uo-mozaika-telo .uo-schet { color: var(--uo-otsvet); font-size: .9rem; }
+
+.uo-kartinka { display: flex; gap: .3rem; flex: 0 0 55%; }
+.uo-kartinka input { flex: 1; min-width: 0; }
+.uo-kartinka .uo-vybrat { flex: 0 0 auto; width: auto; padding: 0 .5rem; }
+
+/* ─── колесо шифра ─── */
+
+.uo-igry .uo-shifr-telo {
+  --uo-fon: #23231f;
+  --uo-ramka: #7a7466;
+  --uo-simvol: #ece6d6;
+  --uo-otsvet: #b6ad97;
+  --uo-udacha: #6fae5a;
+
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  padding: .3rem .2rem;
+}
+
+.uo-igry .uo-nadpis {
+  margin: 0;
+  padding: .5rem .6rem;
+  background: var(--uo-fon);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 6px;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, .7);
+  color: var(--uo-simvol);
+  font-size: 1.25rem;
+  letter-spacing: .14em;
+  line-height: 1.5;
+  text-align: center;
+  word-break: break-word;
+  font-family: "Segoe UI Historic", "Segoe UI Symbol", "Signika", serif;
+}
+
+.uo-igry .uo-nadpis.uo-otkryt { color: var(--uo-udacha); }
+
+.uo-igry .uo-koleso { display: flex; align-items: stretch; gap: .35rem; }
+
+.uo-igry .uo-azbuka {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+}
+
+.uo-igry .uo-para {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 1.15rem;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, .25);
+  font-size: .8rem;
+  line-height: 1.35;
+}
+
+.uo-igry .uo-verh { color: var(--uo-otsvet); opacity: .65; }
+.uo-igry .uo-niz { color: var(--uo-simvol); font-weight: 700; }
+
+.uo-igry .uo-krut-shag {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 0 .6rem;
+  min-height: 0;
+}
+
+/* ─── череда картинок ─── */
+
+.uo-igry .uo-porjadok-telo {
+  --uo-fon: #23231f;
+  --uo-ramka: #7a7466;
+  --uo-otsvet: #b6ad97;
+  --uo-udacha: #6fae5a;
+  --uo-beda: #b4553f;
+
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  padding: .3rem .2rem;
+}
+
+.uo-igry .uo-karty {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .4rem;
+}
+
+.uo-igry .uo-karta {
+  position: relative;
+  margin: 0;
+  width: 6.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+  padding: .25rem;
+  background: var(--uo-fon);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 5px;
+}
+
+.uo-igry .uo-karta.uo-vzjata {
+  border-color: #c9a227;
+  box-shadow: 0 0 10px rgba(201, 162, 39, .55);
+  transform: translateY(-3px);
+}
+
+.uo-igry .uo-karta img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 0;
+  border-radius: 3px;
+  cursor: zoom-in;
+}
+
+.uo-igry .uo-karta figcaption {
+  font-size: .75rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--uo-otsvet);
+}
+
+.uo-igry .uo-nomer {
+  position: absolute;
+  top: .1rem;
+  left: .25rem;
+  padding: 0 .25rem;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, .65);
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.uo-igry .uo-vzjat { min-height: 0; padding: 0; font-size: .75rem; line-height: 1.5; }
+
+.uo-igry .uo-porjadok-telo .uo-zhurnal li { justify-content: flex-start; gap: .4rem; }
+
+/* строки набора в настройках */
+.uo-kartinki { display: flex; flex-direction: column; gap: .25rem; margin: .3rem 0; }
+.uo-kartinka-stroka { display: flex; align-items: center; gap: .25rem; }
+.uo-kartinka-stroka .uo-put { flex: 1 1 45%; min-width: 0; }
+.uo-kartinka-stroka .uo-podpis { flex: 1 1 35%; min-width: 0; }
+.uo-kartinka-stroka button { flex: 0 0 auto; width: auto; padding: 0 .4rem; min-height: 0; }
+.uo-dobavit-stroku { width: auto; padding: 0 .8rem; align-self: flex-start; }
+
+/* ─── подстановка ─── */
+
+.uo-igry .uo-nadpis .uo-temno { color: var(--uo-otsvet); opacity: .45; }
+.uo-igry .uo-nadpis .uo-razobrano { color: var(--uo-simvol); }
+
+.uo-igry .uo-shifrbukvy,
+.uo-igry .uo-azbuka-plain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3px;
+}
+
+.uo-igry .uo-shifrbukva {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1.7rem;
+  min-height: 0;
+  padding: .1rem 0;
+  line-height: 1.25;
+  font-size: .8rem;
+}
+
+.uo-igry .uo-shifrbukva .uo-verh { color: var(--uo-otsvet); }
+.uo-igry .uo-shifrbukva .uo-niz { color: var(--uo-simvol); font-weight: 700; }
+.uo-igry .uo-shifrbukva.uo-est .uo-niz { color: var(--uo-udacha); }
+.uo-igry .uo-shifrbukva.uo-vzjata {
+  border-color: #c9a227;
+  box-shadow: 0 0 8px rgba(201, 162, 39, .6);
+  transform: translateY(-2px);
+}
+
+.uo-igry .uo-plain {
+  width: 1.5rem;
+  min-height: 0;
+  padding: 0;
+  line-height: 1.5;
+  font-size: .8rem;
+}
+
+.uo-igry .uo-plain.uo-zanjata { opacity: .45; }
+
+/* ─── устройство и разорванное руководство ─── */
+
+.uo-igry .uo-ustrojstvo-telo {
+  --uo-fon: #23231f;
+  --uo-ramka: #7a7466;
+  --uo-simvol: #ece6d6;
+  --uo-otsvet: #b6ad97;
+  --uo-udacha: #6fae5a;
+  --uo-beda: #b4553f;
+
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: .3rem .2rem;
+}
+
+.uo-igry .uo-ryczagi-panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .35rem;
+  padding: .5rem;
+  background: var(--uo-fon);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 6px;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, .7);
+}
+
+.uo-igry .uo-ryczag-knopka {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  width: auto;
+  min-height: 0;
+  padding: .2rem .6rem;
+  font-size: .9rem;
+}
+
+.uo-igry .uo-ryczag-knopka .uo-nomer {
+  position: static;
+  background: rgba(255, 255, 255, .12);
+  padding: 0 .3rem;
+  border-radius: 3px;
+  font-size: .75rem;
+}
+
+.uo-igry .uo-nabrano {
+  margin: 0;
+  text-align: center;
+  color: var(--uo-simvol);
+  letter-spacing: .04em;
+}
+
+.uo-igry .uo-obryvok-moj {
+  padding: .4rem .6rem;
+  border: 1px dashed var(--uo-ramka);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, .25);
+}
+
+.uo-igry .uo-obryvok-moj h4 { margin: 0 0 .2rem; font-size: .85rem; color: var(--uo-otsvet); }
+.uo-igry .uo-obryvok-moj p { margin: 0; }
+
+.uo-igry .uo-gm-tajna {
+  font-size: .85rem;
+  border-left: 2px solid var(--uo-ramka);
+  padding-left: .5rem;
+}
+.uo-igry .uo-gm-tajna p { margin: .15rem 0; }
+
+.uo-ryczagi, .uo-obryvki { display: flex; flex-direction: column; gap: .25rem; margin: .3rem 0; }
+.uo-ryczag-stroka, .uo-obryvok-stroka { display: flex; align-items: flex-start; gap: .3rem; }
+.uo-ryczag-stroka .uo-ryczag, .uo-obryvok-stroka .uo-obryvok { flex: 1; min-width: 0; }
+.uo-ryczag-stroka button, .uo-obryvok-stroka button { flex: 0 0 auto; width: auto; padding: 0 .45rem; min-height: 0; }
+.uo-dobavit-ryczag, .uo-dobavit-obryvok { width: auto; padding: 0 .8rem; align-self: flex-start; }
+
+/* ─── зал плит ─── */
+
+.uo-igry .uo-plity-telo {
+  --uo-fon: #23231f;
+  --uo-ramka: #7a7466;
+  --uo-simvol: #ece6d6;
+  --uo-otsvet: #b6ad97;
+  --uo-udacha: #6fae5a;
+  --uo-beda: #b4553f;
+
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: .3rem .2rem;
+}
+
+.uo-igry .uo-plity {
+  display: grid;
+  grid-template-columns: repeat(var(--shirina), 1fr);
+  gap: 4px;
+  padding: 5px;
+  background: var(--uo-fon);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 6px;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, .75);
+}
+
+.uo-igry .uo-plita {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 1px solid rgba(128, 128, 128, .35);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .04);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.uo-igry .uo-plita.uo-mozhno {
+  border-color: #c9a227;
+  background: rgba(201, 162, 39, .12);
+  cursor: pointer;
+}
+
+.uo-igry .uo-plita.uo-mozhno:hover { box-shadow: 0 0 10px rgba(201, 162, 39, .5); }
+
+.uo-igry .uo-plita.uo-projdena {
+  border-color: var(--uo-udacha);
+  background: rgba(111, 174, 90, .22);
+  color: var(--uo-udacha);
+}
+
+.uo-igry .uo-plita.uo-tut { box-shadow: 0 0 10px rgba(111, 174, 90, .6); }
+
+.uo-igry .uo-plita.uo-lovushka {
+  border-color: var(--uo-beda);
+  background: rgba(180, 85, 63, .25);
+  color: var(--uo-beda);
+}
+
+.uo-igry .uo-plita.uo-tropa { outline: 1px dashed rgba(127, 163, 204, .8); }
+
+/* ─── Счастливчик Джо ─── */
+
+.uo-igry .uo-dzho-telo {
+  --uo-fon: #23231f;
+  --uo-ramka: #7a7466;
+  --uo-simvol: #ece6d6;
+  --uo-otsvet: #b6ad97;
+  --uo-udacha: #6fae5a;
+
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  padding: .3rem .2rem;
+}
+
+.uo-igry .uo-mesto-dzho {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+  padding: .25rem .5rem;
+  border: 1px solid rgba(128, 128, 128, .5);
+  border-radius: 4px;
+  flex: 1 1 45%;
+}
+
+.uo-igry .uo-mesto-dzho.uo-hodit { border-color: #c9a227; box-shadow: 0 0 6px rgba(201, 162, 39, .45); }
+.uo-igry .uo-mesto-dzho.uo-pobeda { border-color: var(--uo-udacha); }
+.uo-igry .uo-mesto-dzho.uo-uzy { border-color: #b07fd1; box-shadow: 0 0 10px rgba(176, 127, 209, .5); }
+
+.uo-igry .uo-imya-stroka { display: flex; justify-content: space-between; gap: .5rem; }
+.uo-igry .uo-imya-stroka .uo-ochki { font-weight: 700; }
+
+.uo-igry .uo-ryad {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: .1rem;
+  font-family: "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+  color: var(--uo-otsvet);
+}
+
+.uo-igry .uo-kost-ryad.uo-v-okne { color: var(--uo-udacha); }
+
+.uo-igry .uo-itog.uo-uzy-itog { color: #b07fd1; }
+
+/* ─── врата с надписями ─── */
+
+.uo-igry .uo-vrata-telo,
+.uo-igry .uo-sozvezdie-telo,
+.uo-igry .uo-puti-telo,
+.uo-igry .uo-zerkala-telo {
+  --uo-fon: #23231f;
+  --uo-ramka: #7a7466;
+  --uo-simvol: #ece6d6;
+  --uo-otsvet: #b6ad97;
+  --uo-udacha: #6fae5a;
+  --uo-beda: #b4553f;
+
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: .3rem .2rem;
+}
+
+.uo-igry .uo-nadpisi { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .25rem; }
+.uo-igry .uo-nadpis-stroka { display: flex; align-items: flex-start; gap: .45rem; }
+.uo-igry .uo-nadpis-stroka span { flex: 1; font-style: italic; }
+.uo-igry .uo-metka { flex: 0 0 auto; width: 1.7rem; min-height: 0; padding: 0; line-height: 1.5; }
+.uo-igry .uo-metka-правда .uo-metka { color: var(--uo-udacha); border-color: var(--uo-udacha); }
+.uo-igry .uo-metka-ложь .uo-metka { color: var(--uo-beda); border-color: var(--uo-beda); }
+
+.uo-igry .uo-stvorki { display: flex; gap: .4rem; flex-wrap: wrap; }
+.uo-igry .uo-stvorka { flex: 1 1 30%; width: auto; padding: .3rem .5rem; }
+.uo-igry .uo-stvorka.uo-otkryta { border-color: var(--uo-udacha); color: var(--uo-udacha); }
+
+/* ─── созвездие ─── */
+
+.uo-igry .uo-nebo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 15rem;
+  background: radial-gradient(circle at 50% 45%, #1b1630 0%, #0d0b16 75%);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 6px;
+}
+
+.uo-igry .uo-nebo .uo-zvezda { fill: #f2e7c4; }
+.uo-igry .uo-nebo .uo-zvezda.uo-vzjata { fill: #c9a227; }
+.uo-igry .uo-nebo .uo-linija { stroke: #c9a227; stroke-width: .7; }
+.uo-igry .uo-nebo .uo-podskazannaja { stroke: rgba(111, 174, 90, .5); stroke-width: 1.4; stroke-dasharray: 2 2; }
+
+.uo-igry .uo-zvezdy, .uo-igry .uo-uzly { display: flex; flex-wrap: wrap; gap: .3rem; }
+.uo-igry .uo-zvezda-knopka, .uo-igry .uo-uzel-knopka {
+  width: auto; min-height: 0; padding: .15rem .5rem; font-size: .85rem;
+  display: flex; align-items: center; gap: .3rem;
+}
+.uo-igry .uo-zvezda-knopka.uo-vzjata { border-color: #c9a227; box-shadow: 0 0 8px rgba(201, 162, 39, .5); }
+
+/* ─── карта путей ─── */
+
+.uo-igry .uo-karta {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 16rem;
+  background: rgba(16, 28, 46, .5);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 6px;
+}
+
+.uo-igry .uo-karta .uo-portal { stroke: rgba(180, 180, 180, .45); stroke-width: .5; }
+.uo-igry .uo-karta .uo-portal.uo-projden { stroke: #c9a227; stroke-width: 1; }
+.uo-igry .uo-karta .uo-nakonechnik { fill: rgba(180, 180, 180, .6); }
+.uo-igry .uo-karta .uo-uzel { fill: #6b6b73; }
+.uo-igry .uo-karta .uo-uzel.uo-nachalo { fill: #7fa3cc; }
+.uo-igry .uo-karta .uo-uzel.uo-cel { fill: var(--uo-udacha); }
+.uo-igry .uo-karta .uo-uzel.uo-nuzhen { stroke: #c9a227; stroke-width: .8; }
+.uo-igry .uo-karta .uo-uzel.uo-projden { fill: #c9a227; }
+.uo-igry .uo-karta .uo-uzel.uo-tut { stroke: #fff; stroke-width: .8; }
+
+.uo-igry .uo-uzel-knopka.uo-mozhno { border-color: #c9a227; }
+.uo-igry .uo-uzel-knopka.uo-projden { opacity: .55; }
+.uo-igry .uo-put-stroka { margin: 0; text-align: center; color: var(--uo-otsvet); font-size: .9rem; }
+
+/* ─── зал зеркал ─── */
+
+.uo-igry .uo-zerkala {
+  display: grid;
+  grid-template-columns: repeat(var(--shirina), 1fr);
+  gap: 3px;
+  padding: 4px;
+  background: var(--uo-fon);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 6px;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, .75);
+}
+
+.uo-igry .uo-zerkalo-kletka {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  /*
+   * height: auto обязателен. Клетка — <button>, а ядро задаёт кнопкам
+   * height и min-height по --button-size. Явная высота отменяет
+   * aspect-ratio (тот работает, только когда одна из сторон auto),
+   * и клетка растягивается в прямоугольник по ширине колонки.
+   */
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border: 1px solid rgba(128, 128, 128, .3);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .03);
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--uo-simvol);
+}
+
+.uo-igry .uo-zerkalo-kletka.uo-svetlo { background: rgba(242, 231, 196, .18); box-shadow: inset 0 0 8px rgba(242, 231, 196, .35); }
+.uo-igry .uo-zerkalo-kletka.uo-est-zerkalo { border-color: #7fa3cc; cursor: pointer; }
+.uo-igry .uo-zerkalo-kletka.uo-est-zerkalo:hover { box-shadow: 0 0 8px rgba(127, 163, 204, .6); }
+.uo-igry .uo-zerkalo-kletka.uo-priemnik { color: var(--uo-udacha); border-color: var(--uo-udacha); }
+.uo-igry .uo-zerkalo-kletka.uo-istochnik { border-color: #c9a227; }
+
+/* ─── зал призм ─── */
+
+.uo-igry .uo-prizmy-telo {
+  --uo-fon: #1a1622;
+  --uo-ramka: #7a4fa8;
+  --uo-simvol: #e6d8f5;
+  --uo-otsvet: #a982d1;
+  --uo-udacha: #6fae5a;
+  --uo-beda: #b4553f;
+
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: .3rem .2rem;
+}
+
+.uo-igry .uo-prizmy {
+  display: grid;
+  grid-template-columns: repeat(var(--shirina), 1fr);
+  gap: 3px;
+  padding: 4px;
+  background: var(--uo-fon);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 6px;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, .8);
+}
+
+.uo-igry .uo-prizma-kletka {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: auto;   /* см. .uo-zerkalo-kletka: без этого кнопка держит высоту ядра */
+  min-height: 0;
+  padding: 0;
+  border: 1px solid rgba(128, 128, 128, .3);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .03);
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--uo-simvol);
+}
+
+.uo-igry .uo-prizma-kletka.uo-est-zerkalo { border-color: #7fa3cc; cursor: pointer; }
+.uo-igry .uo-prizma-kletka.uo-est-zerkalo:hover { box-shadow: 0 0 8px rgba(127, 163, 204, .6); }
+.uo-igry .uo-prizma-kletka.uo-smesitel { border-color: var(--uo-otsvet); color: var(--uo-otsvet); }
+.uo-igry .uo-prizma-kletka.uo-dovolen { box-shadow: 0 0 12px rgba(111, 174, 90, .7); }
+
+.uo-kristally { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; font-size: .85rem; }
+
+/* ─── двадцать одно ─── */
+
+.uo-igry .uo-ochko-telo {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+
+/* Место здесь в две строки: подпись со счётом и выпавшие кубики под ней. */
+.uo-igry .uo-ochko-telo .uo-mesto {
+  flex: 1 1 45%;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: .25rem;
+  padding: .35rem .5rem;
+}
+
+.uo-igry .uo-ochko-telo .uo-mesto.uo-perebor { border-color: rgba(190, 70, 70, .7); opacity: .75; }
+
+.uo-igry .uo-stroka-mesta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .5rem;
+}
+
+.uo-igry .uo-stroka-mesta .uo-summa { font-weight: 700; font-size: 1.05rem; }
+.uo-igry .uo-stroka-mesta .uo-summa.uo-bito { color: #d06b6b; font-weight: 600; font-size: .85rem; }
+.uo-igry .uo-stroka-mesta .uo-ochki { letter-spacing: .1em; color: var(--uo-udacha); }
+
+.uo-igry .uo-kubiki { display: flex; flex-wrap: wrap; gap: .25rem; min-height: 1.4rem; }
+
+/* Выпавшее: крупно значение, мелким индексом — какой это был кубик. */
+.uo-igry .uo-brosok {
+  padding: .05rem .35rem;
+  border: 1px solid rgba(128, 128, 128, .45);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .04);
+  font-variant-numeric: tabular-nums;
+}
+
+.uo-igry .uo-brosok sub { opacity: .6; font-size: .7em; margin-left: .1em; }
+
+.uo-igry .uo-ryad-kubikov { display: flex; flex-wrap: wrap; gap: .3rem; }
+
+.uo-igry .uo-kubik {
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  padding: .25rem .6rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Брошенный кубик со стола не убирается, а гаснет: видно, что уже потрачено. */
+.uo-igry .uo-kubik.uo-nedostupen { opacity: .35; }
+
+.uo-igry .uo-nabrano { margin: 0; }
