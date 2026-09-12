@@ -2,7 +2,7 @@
   "id": "uo-igry",
   "title": "UO · Игры и загадки",
   "description": "<p>Интерактивные загадки и настольные игры за одним столом: ведущий выкладывает, игроки решают, все видят одно и то же.</p>",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "url": "https://github.com/Nikifour/uo-igry",
   "manifest": "https://github.com/Nikifour/uo-igry/releases/latest/download/module.json",
   "readme": "https://github.com/Nikifour/uo-igry/blob/main/README.md",
@@ -88,5 +88,5 @@
       }
     }
   ],
-  "download": "https://github.com/Nikifour/uo-igry/releases/download/v0.25.0/module.zip"
+  "download": "https://github.com/Nikifour/uo-igry/releases/download/v0.25.1/module.zip"
 }
