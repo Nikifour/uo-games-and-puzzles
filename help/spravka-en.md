@@ -4,7 +4,7 @@
 
 A table where the GM lays out a puzzle and the players solve it. The window opens at once for everyone in the world: one person turns the dials, the rest watch, and they see it the same instant.
 
-Twelve things sit on the table now: the combination lock, the mosaic, the inscription, the sequence of pictures, the device with a torn manual, the hall of slabs, the gates with inscriptions, the constellation, the map of paths, the hall of mirrors, the hall of prisms, and two dice games — Dice and Lucky Joe. The machinery underneath is shared, and whatever comes next sits down at the same table.
+Fourteen things sit on the table now. Eleven puzzles: the combination lock, the mosaic, the inscription, the sequence of pictures, the device with a torn manual, the hall of slabs, the hall of mirrors, the hall of prisms, the gates with inscriptions, the constellation, the map of paths. And three games to sit down at: Dice, Twenty-One, Lucky Joe. The machinery underneath is shared, and whatever comes next sits down at the same table.
 
 ## The combination lock
 
