@@ -359,4 +359,4 @@ Stake, coin and pot work as in Dice: the pot is counted by the number of seats a
 
 ## Language
 
-The module speaks the language chosen in Foundry: Russian in the source, English through the `lang/en.json` dictionary — 569 phrases. Switching is the ordinary Foundry language setting.
+Russian in the source, English through the `lang/en.json` dictionary. Which one is used is decided by the **"Module language"** setting — each participant has their own: **"Same as Foundry"** (the default: Russian if Foundry is in Russian, English for any other language), **"Русский"** or **"English"**. So Foundry can run in English while the module speaks Russian, and the other way round. Changing it reloads the world.

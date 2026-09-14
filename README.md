@@ -122,8 +122,9 @@ table: the GM lays a puzzle out, players solve it together and see every move
 at once. Eleven puzzles — combination lock, sliding mosaic, gates of truth and
 lies, constellation, portal map, hall of mirrors, hall of prisms, hall of slabs,
 a device with a torn manual, picture order, ciphers — and three dice games with
-bot opponents, stakes and loaded dice. The interface follows Foundry's language
-(Russian and English); an English guide ships as a compendium.
+bot opponents, stakes and loaded dice. The interface is in Russian and English —
+it follows Foundry's language, or pick one in the module settings; an English
+guide ships as a compendium.
 
 Install with the manifest URL:
 `https://github.com/Nikifour/uo-igry/releases/latest/download/module.json`

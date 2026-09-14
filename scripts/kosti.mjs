@@ -15,7 +15,7 @@ import {
 import { ПРАВИЛА, оценить, естьХод } from "./kosti-pravila.mjs";
 import { ХАРАКТЕРЫ, сыгратьХод } from "./kosti-bot.mjs";
 import * as боты from "./boty.mjs";
-import { Т, М } from "./yazyk.mjs";
+import { Т, М, числом } from "./yazyk.mjs";
 import {
   МОНЕТЫ, монетами, актёрМеста, изменитьКошелёк, собратьСтавки, выдатьБанк, вернутьСтавки,
 } from "./stavki.mjs";
@@ -117,7 +117,7 @@ async function броситьВИгре(сколько, чьё, название
   } else if (режим !== "tikho") {
     await бросок.toMessage({
       speaker: { alias: `${название} · ${чьё}` },
-      flavor: `бросает ${сколько} ${сколько === 1 ? "кость" : "костей"}`,
+      flavor: Т("бросает {сколько} {кость}", { сколько, кость: числом(сколько, М("кость"), М("кости"), М("костей")) }),
     }, { rollMode: режим === "gm" ? CONST.DICE_ROLL_MODES.PRIVATE : CONST.DICE_ROLL_MODES.PUBLIC });
   }
   // Тихо и без Dice So Nice — кости просто появятся в окне: показывать нечем.
@@ -692,8 +692,8 @@ class ОкноКостей extends ApplicationV2 {
         <div class="uo-sukno">
           <div class="uo-kosti">${кости || `<span class="uo-podskazka">${Т("кости в руке")}</span>`}</div>
           <div class="uo-stroka-schet">
-            <span class="uo-schet">${Т("За ход:")} <strong>${с.вХоде}</strong> · до цели ${с.правила.цель}${
-              с.ставка?.сколько ? ` · банк ${монетами(с.ставка.банк, с.ставка.монета)}` : ")"}</span>
+            <span class="uo-schet">${Т("За ход:")} <strong>${с.вХоде}</strong> · ${Т("до цели {цель}", { цель: с.правила.цель })}${
+              с.ставка?.сколько ? ` · ${Т("банк {монета}", { монета: монетами(с.ставка.банк, с.ставка.монета) })}` : ""}</span>
             <button type="button" class="uo-pravila-knopka" data-action="правила">${Т("Правила")}</button>
             ${(с.места.some(м => м.кто === game.user.id) && с.победитель === null)
               ? `<button type="button" class="uo-pravila-knopka" data-action="встать">${Т("Встать из-за стола")}</button>`
