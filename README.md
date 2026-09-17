@@ -21,6 +21,10 @@ A puzzle at the table usually turns into narration: the GM describes what is
 visible, the players say what they do. Here the puzzle lands on the table as a
 shared window: one player turns a dial, the others watch it turn, and the
 answer is checked by the GM's client — never shipped to the players.
+<p align="center"><img src="docs/panel.png" alt="The GM panel: puzzles and games in separate sections, a description with an example unfolded" width="420"></p>
+
+The GM panel splits the eleven puzzles from the three games, and a click on a
+name unfolds a description with an example before anything is set up.
 
 ## Installation
 
@@ -85,8 +89,11 @@ to the GM alone.
 ## For the GM
 
 - **Presets.** Build a puzzle before the session and lay it out with one click —
-  openly or hidden, to reveal later. The preset store lives in a GM-only journal
-  and travels with the world.
+  openly or hidden, to reveal later. In the store they sit in folders — by scene
+  or by place, nested — and are found by a search on the name. The store itself is
+  a GM-only journal entry: it travels with the world.
+
+<p align="center"><img src="docs/presets.png" alt="The preset store: folders, a trail and the presets of one folder" width="420"></p>
 - **The answer never reaches players.** It is kept in the GM's client and is not
   written to the world, so it cannot be read through the browser console.
 - **Levers.** Count it solved, reset, hide, take off the table, peek at the

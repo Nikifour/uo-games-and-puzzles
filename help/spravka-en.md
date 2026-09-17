@@ -14,7 +14,9 @@ Symbols to choose from: digits, runes, letters, signs of the heavens — or your
 
 ## Laying one out
 
-The "Games and Puzzles" button in the notes panel on the left, the jigsaw-piece icon. It opens the list of what is already on the table, the list of presets, and buttons for each puzzle.
+The "Games and Puzzles" button in the notes panel on the left, the jigsaw-piece icon. The window shows what is already on the table at the top, then two sections — "Puzzles" and "Games" — and the presets below them.
+
+Clicking a name does not open the settings at once: it unfolds a description — an example screenshot and a few lines on what the players will be doing. The "Set up and lay out" button inside the description opens the settings dialog. That way you can see what a puzzle asks of the table before building it.
 
 The dialog asks for a name, an inscription on the lock (players see it), the symbols, the code, the look, the attempt limit and the hint.
 
@@ -55,7 +57,13 @@ A preset is a puzzle assembled before the session: the settings lie ready, and o
 
 **How to remember one.** Every puzzle dialog has a "Remember as a preset" field at the bottom. Type a name and the settings go into the store. The puzzle is laid out as usual; and if it was refused (an empty code, no picture chosen) the preset is still remembered — that is how one builds it piece by piece.
 
-**Where to find them.** The "Puzzle presets" section of the GM's panel, split by kind. The same store also opens on its own: Settings → Configure Settings → "UO · Games and Puzzles" → Puzzle presets.
+**Where to find them.** The "Open the store" button in the "Puzzle presets" section of the GM's panel. The same store also opens on its own: Settings → Configure Settings → "UO · Games and Puzzles" → Puzzle presets.
+
+**Folders.** By the third evening there are more presets than one remembers, so the store has folders — by scene, by place, by whatever suits: "Manor", and "Cellar" inside it. The "New folder" button creates a shelf where you currently stand; a folder can be created empty and filled later. Clicking a folder opens it, the trail at the top ("Store / Manor / Cellar") takes you back, and the number on the spine says how many presets are inside, nested ones included.
+
+A preset is moved by the folder button in its row: pick a shelf from the list — or type the name of a new one, and it is created with the preset already in it. A folder can be renamed and removed: on removal its presets and nested folders move up one level instead of disappearing.
+
+**Search.** The field at the top searches by name when there is no time for folders: any part of it, case and "ё" aside. It searches folder names too — "catacombs" finds everything kept in them. Each hit shows its path, so it is clear where it came from. An empty field brings the folders back.
 
 **What to do with them.**
 

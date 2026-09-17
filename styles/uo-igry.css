@@ -193,9 +193,9 @@
 .uo-forma .uo-podskazka { margin: .1rem 0; font-size: .85rem; opacity: .8; }
 .uo-forma h3 { margin: 0 0 .2rem; }
 
-/* Заголовок раздела в панели: чертой, потому что разделов там два — что лежит
-   на столе и что приготовлено, и на глаз они иначе сливаются. Первому черта
-   не нужна: над ним и так край окна. */
+/* Заголовок раздела в панели: чертой, потому что разделов там четыре — что
+   лежит на столе, загадки, игры и заготовки, — и на глаз они иначе сливаются.
+   Первому черта не нужна: над ним и так край окна. */
 .uo-forma h2 {
   margin: .7rem 0 .3rem;
   padding-top: .5rem;
@@ -211,6 +211,105 @@
 /* Четыре кнопки в строке — жмём поля, а не имя заготовки: имя и есть то,
    по чему ведущий её узнаёт. */
 .uo-zagotovka button { flex: 0 0 auto; width: auto; padding: 0 .5rem; font-size: .9rem; }
+
+/* ─── панель ведущего ─── */
+
+/* Затеи в раздел — плиткой: четырнадцать названий в один ряд не читаются,
+   а столбиком занимают экран. Ширина плитки такая, чтобы «Счастливчик Джо»
+   и «Устройство» влезали целиком. */
+.uo-igry .uo-zatei {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: .3rem;
+}
+.uo-igry .uo-zateja { width: auto; padding: .25rem .4rem; font-size: .95rem; line-height: 1.2; }
+.uo-igry .uo-zateja.uo-vybrana {
+  border-color: var(--uo-otsvet);
+  box-shadow: 0 0 6px rgba(128, 128, 128, .45);
+  font-weight: 700;
+}
+
+/* Описание: пример слева, слова и кнопка справа. Снимок не грузится —
+   остаются одни слова во всю ширину, пустой рамки не будет. */
+.uo-igry .uo-zateja-opisanie {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: .55rem;
+  margin: .45rem 0 .2rem;
+  padding: .45rem;
+  border: 1px solid rgba(128, 128, 128, .4);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, .12);
+}
+.uo-igry .uo-zateja-opisanie.uo-bez-snimka { grid-template-columns: 1fr; }
+.uo-igry .uo-zateja-opisanie.uo-bez-snimka .uo-zateja-snimok { display: none; }
+/* Примеры — снимки окон, и высота у них разная: вытянутое окно растянуло бы
+   описание на пол-панели. Предел по высоте держит карточку в рамках, а
+   contain не даёт картинке обрезаться. */
+.uo-igry .uo-zateja-snimok {
+  width: 100%;
+  max-height: 19rem;
+  border: 1px solid rgba(128, 128, 128, .5);
+  border-radius: 3px;
+  object-fit: contain;
+  object-position: top;
+}
+.uo-igry .uo-zateja-slova { display: flex; flex-direction: column; gap: .4rem; }
+.uo-igry .uo-zateja-slova p { margin: 0; font-size: .9rem; line-height: 1.35; }
+.uo-igry .uo-zateja-slova button { margin-top: auto; width: auto; }
+
+/* Окно панели длинное: заготовок может быть много, а описание ещё
+   прибавляет. Пусть тело прокручивается, а не выезжает за край экрана. */
+.uo-igry.uo-panel-okno .window-content { overflow-y: auto; }
+.uo-igry .uo-panel-niz { display: flex; justify-content: flex-end; margin-top: .5rem; }
+.uo-igry .uo-panel-niz button { width: auto; padding: 0 1rem; }
+
+/* ─── склад заготовок ─── */
+
+/* Поиск и «новая папка» одной строкой: два пути к заготовке начинаются
+   с одного места, и выбирать между ними ведущий должен не глазами. */
+.uo-igry .uo-sklad-shapka { display: flex; gap: .4rem; align-items: center; }
+.uo-igry .uo-sklad-shapka input[type="search"] { flex: 1; min-width: 0; }
+.uo-igry .uo-sklad-shapka button { flex: 0 0 auto; width: auto; padding: 0 .6rem; }
+
+/* Тропа: каждое звено — кнопка назад, поэтому они плоские, без рамок. */
+.uo-igry .uo-sklad-tropa { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem; font-size: .9rem; }
+.uo-igry .uo-sklad-tropa span { opacity: .5; }
+.uo-igry .uo-sklad-tropa button {
+  width: auto;
+  padding: 0 .25rem;
+  border: none;
+  background: none;
+  font-size: .9rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.uo-igry .uo-sklad-tropa button:last-child { text-decoration: none; font-weight: 700; cursor: default; }
+
+.uo-igry .uo-sklad-papki { display: flex; flex-direction: column; gap: .25rem; margin: .35rem 0 .2rem; }
+.uo-igry .uo-sklad-papka { display: flex; align-items: center; gap: .4rem; }
+.uo-igry .uo-sklad-papka > button:not(.uo-sklad-vojti) { flex: 0 0 auto; width: auto; padding: 0 .5rem; font-size: .9rem; }
+/* Вся полка целиком — одна кнопка: щёлкают по папке, а не по слову в ней. */
+.uo-igry .uo-sklad-vojti { display: flex; align-items: center; gap: .45rem; flex: 1; min-width: 0; text-align: left; }
+.uo-igry .uo-sklad-vojti .uo-sklad-imya { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.uo-igry .uo-sklad-schet { flex: 0 0 auto; padding: 0 .4rem; border-radius: 999px; background: rgba(128, 128, 128, .25); font-size: .8rem; }
+
+/* Путь у найденного: в поиске полки не видно, и без него непонятно, откуда
+   заготовка взялась. */
+.uo-igry .uo-sklad-gde { opacity: .65; font-size: .85rem; }
+.uo-igry .uo-sklad-gde::before { content: "· "; }
+
+/* Название вида над полкой — подзаголовок, а не заглавие окна: в складе их
+   столько же, сколько видов загадок. */
+.uo-igry.uo-sklad-okno h3 { margin: .5rem 0 .15rem; font-size: 1rem; opacity: .85; }
+
+.uo-igry .uo-sklad-niz { display: flex; justify-content: flex-end; margin-top: .4rem; }
+.uo-igry .uo-sklad-niz button { width: auto; padding: 0 1rem; }
+
+/* Сводка склада в панели: слова слева, кнопка справа. */
+.uo-igry .uo-sklad-svodka { display: flex; align-items: center; gap: .5rem; }
+.uo-igry .uo-sklad-svodka .uo-podskazka { flex: 1; min-width: 0; margin: 0; }
+.uo-igry .uo-sklad-svodka button { flex: 0 0 auto; width: auto; padding: 0 .7rem; }
 
 /* ─── Кости ─── */
 

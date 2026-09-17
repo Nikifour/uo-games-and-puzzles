@@ -3,6 +3,15 @@
 One section per version, newest first. The in-Foundry "What's new" notice,
 the GitHub release notes and the Boosty post all come from here.
 
+## 0.28.0 — 2026-09-18
+
+- **The GM panel is rebuilt.** It used to be a row of fourteen buttons in no particular order; now the entries are split into "Puzzles" and "Games" and laid out as tiles.
+- **A click unfolds a description** instead of opening the settings: an example screenshot and a few lines on what the players will be doing. The settings dialog is opened by the "Set up and lay out" button inside the description.
+- **Folders in the preset store.** Presets can be sorted into folders — by scene or by place, nested: "Manor" with "Cellar" inside. A folder can be created empty and filled later; a preset is moved at any time with the folder button in its row.
+- **Search by name** in the store: any part of it, case and "ё" aside, folder names included. Each hit shows its path, so it is clear where it came from.
+- Removing a folder loses nothing: its presets and nested folders move up one level.
+- The GM panel now shows a summary and an "Open the store" button instead of the long list of presets.
+
 ## 0.27.0 — 2026-09-17
 
 - **The sequence is rebuilt.** The field is now a grid of any shape — a row, a square or a rectangle up to 6 × 12. The GM builds the puzzle in a preparation window right on the field: take a picture from a set or your own file and put it into a cell.
