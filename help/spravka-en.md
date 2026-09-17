@@ -201,17 +201,28 @@ By default a mistake **resets the levers** — one click and it starts over. Thi
 
 ## The sequence of pictures
 
-Put pictures in the right order: six frescoes by event, four coats of arms by seniority, five steps of a rite.
+Put pictures into the cells of a field the way the GM intended: six frescoes by event, coats of arms on a shield, steps of a rite. The field is not just a row: any grid up to 6 × 12.
 
-**The set is prepared in advance** — "Settings → Module settings → UO · Games and Puzzles → Picture sets". There you give the set a name and a list of pictures top to bottom: **the order of the lines is the correct one**. Each picture can carry a caption, visible to players. Pictures are chosen with the standard Foundry picker, and lines move with the arrows.
+**Preparation.** Panel → "Sequence" opens the preparation window. Set the field size, take a picture from the set on the right (or "Own file…") and click a cell — or drag it. This is how you lay out the solution. Every picture on the field has a lock:
 
-Sets live in the world, not in a browser: every world has its own store, and the second GM of that world gets it along with the world.
+- **closed** — the picture is fixed: it lies in place from the start and the players see it, as a hint;
+- **open** — the picture goes to the choice under the field and can be put into any cell.
 
-**At the table** the pictures lie jumbled and numbered by place. Click "take" on one, "take" on another — they swap; clicking the same picture again frees your hand. Clicking the picture itself opens it large. The "Check" button tests the sequence.
+**Decoys** are extra pictures in the choice that have no place on the field: click the "Decoys" area with a picture in hand. The players do not know how much of the choice is extra.
 
-Settings when laying out: attempt limit, the hint "how many pictures are in their places", who moves them, the macro on solving.
+Empty cells of the solution are **blocked** by default: nothing can be put there, which gives the field its shape. Untick "Empty cells are blocked" and an empty cell stays open — the right answer is to leave it empty.
 
-**The answer does not lie on the table.** The pictures are laid down already shuffled, and the correct sequence is kept by the GM — otherwise the order of the lines in the table's state would itself be the answer.
+"Whole set as a row" lays the set out in a single row, like the old sequence. A name in "Remember as a preset" puts the puzzle into the store; "Edit" in the store opens it in the same window.
+
+**Picture sets** — "Settings → Module settings → UO · Games and Puzzles → Picture sets" (or the button in the preparation window). They are the palette the puzzle is built from; a picture's caption is visible to players. Sets live in the world, not in a browser.
+
+**At the table** players take a picture from the choice and put it into a cell — by clicking (take, then a cell) or dragging. A picture in an occupied cell swaps places with the newcomer; right-click a picture on the field to put it back. The magnifier on a picture opens it large. **"Pull the lever"** checks the field: it fits when every open cell holds the right picture and no decoy is on the field. Identical pictures are interchangeable.
+
+Settings: attempt limit, the hint "how many pictures are in their places" (out of how many), who moves them, the macro on solving. The GM has "Show the answer" as a small grid, "Count it solved" (lays it out correctly), "Shuffle" (everything back to the choice, attempts reset) and "Take it off the table".
+
+**The answer does not lie on the table.** The pictures are stored as one shuffled list, and only the GM knows what goes where and what is a decoy.
+
+Old sequence presets with a set open and lay out as a row where everything is a choice.
 
 ## The inscription: two ciphers
 

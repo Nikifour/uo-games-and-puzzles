@@ -43,7 +43,7 @@ export const ЦВЕТА = {
   7: { имя: М("белый"), краска: "#f0ece0" },
 };
 
-export const имяЦвета = маска => ЦВЕТА[маска]?.имя ?? Т("тьма");
+export const имяЦвета = маска => Т(ЦВЕТА[маска]?.имя ?? М("тьма"));
 export const краска = маска => ЦВЕТА[маска]?.краска ?? "#3a3a3a";
 
 /* ─────────────────────────── ход лучей ─────────────────────────── */
@@ -315,7 +315,7 @@ export async function выложить(конфиг = {}) {
       старт = начальное;
     }
     if (зал) ui.notifications.warn(
-      `Зал вышел на ${старт.глубина} поворот(ов) вместо ${ходов} — на таком поле длиннее не легло.`);
+      Т("Зал вышел на {глубина} поворот(ов) вместо {ходов} — на таком поле длиннее не легло.", { глубина: старт.глубина, ходов }));
   }
   if (!зал) { ui.notifications.error(Т("Не вышло сложить зал призм — попробуйте поле побольше.")); return null; }
 
@@ -347,7 +347,7 @@ export async function выложить(конфиг = {}) {
   };
 
   if (стол.предел && стол.предел < старт.глубина) ui.notifications.warn(
-    `Предел ${стол.предел} меньше, чем нужно поворотов (${старт.глубина}) — зал не открыть.`);
+    Т("Предел {предел} меньше, чем нужно поворотов ({глубина}) — зал не открыть.", { предел: стол.предел, глубина: старт.глубина }));
 
   await записать(стол);
   return стол;
@@ -438,7 +438,7 @@ class ОкноПризм extends ApplicationV2 {
   static DEFAULT_OPTIONS = {
     classes: ["uo-igry", "uo-prizmy-okno"],
     tag: "div",
-    window: { title: Т("Зал призм"), icon: "fa-solid fa-gem", resizable: false },
+    window: { title: М("Зал призм"), icon: "fa-solid fa-gem", resizable: false },
     position: { width: 520, height: "auto" },
     actions: {
       повернуть: ОкноПризм.#повернуть,
@@ -506,14 +506,13 @@ class ОкноПризм extends ApplicationV2 {
 
     const кристаллы = Object.entries(с.приёмники).map(([к, нужно]) => {
       const дошло = приход.get(Number(к)) ?? 0;
-      return `<span class="uo-krisstall" style="color: ${краска(нужно)}">◈ нужен ${
-        экранировать(имяЦвета(нужно))}${дошло === нужно ? Т(" — есть") : дошло ? ` (сейчас ${
-          экранировать(имяЦвета(дошло))})` : Т(" — пусто")}</span>`;
+      return `<span class="uo-krisstall" style="color: ${краска(нужно)}">${Т("◈ нужен {цвет}", { цвет: экранировать(имяЦвета(нужно)) })}${
+        дошло === нужно ? Т(" — есть") : дошло ? Т(" (сейчас {цвет})", { цвет: экранировать(имяЦвета(дошло)) }) : Т(" — не горит")}</span>`;
     }).join("");
 
     const счёт = с.предел
-      ? `Поворот ${Math.min(с.поворотов + 1, с.предел)} из ${с.предел}`
-      : `Поворотов: ${с.поворотов}`;
+      ? Т("Поворот {номер} из {предел}", { номер: Math.min(с.поворотов + 1, с.предел), предел: с.предел })
+      : Т("Поворотов: {поворотов}", { поворотов: с.поворотов });
 
     const итог = с.зажжён
       ? `<p class="uo-itog uo-otkryt">${Т("Кристаллы взяли свой свет.")}</p>`
@@ -532,7 +531,7 @@ class ОкноПризм extends ApplicationV2 {
       </section>` : "";
 
     const откуда = (с.источники ?? []).map(и =>
-      `<span style="color: ${краска(и.цвет)}">${экранировать(имяЦвета(и.цвет))}</span>`).join(" и ");
+      `<span style="color: ${краска(и.цвет)}">${экранировать(имяЦвета(и.цвет))}</span>`).join(Т(" и "));
 
     return `
       <div class="uo-prizmy-telo uo-tema-${экранировать(с.тема)}">
@@ -554,7 +553,7 @@ class ОкноПризм extends ApplicationV2 {
 export async function диалогПризм(заготовка = null, имяЗаготовки = "") {
   if (!game.user.isGM) return null;
 
-  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${имя}</option>`).join("");
+  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${Т(имя)}</option>`).join("");
   const игроки = game.users.filter(u => !u.isGM).map(u =>
     `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}</label>`).join("");
 
@@ -563,7 +562,7 @@ export async function диалогПризм(заготовка = null, имяЗ
     position: { width: 480 },
     content: `
       <div class="uo-forma">
-        <label>${Т("Название")} <input type="text" name="название" value="Зал призм"></label>
+        <label>${Т("Название")} <input type="text" name="название" value="${Т("Зал призм")}"></label>
         <label>${Т("Что за зал")} <input type="text" name="подпись" placeholder="${Т("«два луча входят в бойницы, кристалл ждёт своего цвета»")}"></label>
         <label>${Т("Ширина")} <input type="number" name="ширина" value="9" min="5" max="12" step="1"></label>
         <label>${Т("Глубина")} <input type="number" name="высота" value="9" min="5" max="12" step="1"></label>

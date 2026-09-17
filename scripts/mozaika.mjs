@@ -60,7 +60,7 @@ const собранная = (сторона, дыраВ) => {
   return Array.from({ length: всего }, (_, i) => (i === место ? null : i));
 };
 
-/** Где вынимать кусок: как просили, но с оглядкой на размер поля. */
+/** Где вынимать кусок: как выбрано в диалоге, но с оглядкой на размер поля. */
 function выбратьДыру(сторона, как) {
   const всего = сторона * сторона;
   if (как === "ugol") return всего - 1;
@@ -236,7 +236,7 @@ class ОкноМозаики extends ApplicationV2 {
   static DEFAULT_OPTIONS = {
     classes: ["uo-igry", "uo-mozaika-okno"],
     tag: "div",
-    window: { title: Т("Мозаика"), icon: "fa-solid fa-puzzle-piece", resizable: false },
+    window: { title: М("Мозаика"), icon: "fa-solid fa-puzzle-piece", resizable: false },
     position: { width: 460, height: "auto" },
     actions: {
       сдвинуть: ОкноМозаики.#сдвинуть,
@@ -256,7 +256,7 @@ class ОкноМозаики extends ApplicationV2 {
   static #образец() {
     new foundry.applications.apps.ImagePopout({
       src: this.стол.картинка,
-      window: { title: `${this.стол.название} — образец` },
+      window: { title: Т("{название} — образец", { название: this.стол.название }) },
     }).render(true);
   }
 
@@ -294,8 +294,8 @@ class ОкноМозаики extends ApplicationV2 {
     }).join("");
 
     const счёт = с.предел
-      ? `Ход ${Math.min(с.ходов + 1, с.предел)} из ${с.предел}`
-      : `Ходов сделано: ${с.ходов}`;
+      ? Т("Ход {номер} из {предел}", { номер: Math.min(с.ходов + 1, с.предел), предел: с.предел })
+      : Т("Ходов сделано: {ходов}", { ходов: с.ходов });
 
     const итог = с.собрана
       ? `<p class="uo-itog uo-otkryt">${Т("Сложена.")}</p>`
@@ -337,7 +337,7 @@ class ОкноМозаики extends ApplicationV2 {
 export async function диалогМозаики(заготовка = null, имяЗаготовки = "") {
   if (!game.user.isGM) return null;
 
-  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${имя}</option>`).join("");
+  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${Т(имя)}</option>`).join("");
   const игроки = game.users.filter(u => !u.isGM).map(u =>
     `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}</label>`).join("");
 
@@ -346,7 +346,7 @@ export async function диалогМозаики(заготовка = null, им
     position: { width: 480 },
     content: `
       <div class="uo-forma">
-        <label>${Т("Название")} <input type="text" name="название" value="Мозаика"></label>
+        <label>${Т("Название")} <input type="text" name="название" value="${Т("Мозаика")}"></label>
         <label>${Т("Надпись")} <input type="text" name="подпись" placeholder="${Т("видна игрокам, необязательна")}"></label>
         <label>${Т("Картинка")}
           <span class="uo-kartinka">

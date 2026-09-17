@@ -133,7 +133,7 @@ async function ход(стол, запрос) {
   const путь = тайна(стол.id)?.путь;
   if (!путь) {
     ui.notifications.error(
-      `Тропа зала «${стол.название}» не найдена в этом браузере. Засчитайте вручную или выложите заново.`);
+      Т("Тропа зала «{название}» не найдена в этом браузере. Засчитайте вручную или выложите заново.", { название: стол.название }));
     return;
   }
 
@@ -244,7 +244,7 @@ class ОкноПлит extends ApplicationV2 {
   static DEFAULT_OPTIONS = {
     classes: ["uo-igry", "uo-plity-okno"],
     tag: "div",
-    window: { title: Т("Зал плит"), icon: "fa-solid fa-shoe-prints", resizable: false },
+    window: { title: М("Зал плит"), icon: "fa-solid fa-shoe-prints", resizable: false },
     position: { width: 480, height: "auto" },
     actions: {
       шагнуть: ОкноПлит.#шагнуть,
@@ -303,8 +303,8 @@ class ОкноПлит extends ApplicationV2 {
     }).join("");
 
     const счёт = с.ловушек.предел
-      ? `Ловушек сработало ${с.ловушек.сработало} из ${с.ловушек.предел}`
-      : `Ловушек сработало: ${с.ловушек.сработало}`;
+      ? Т("Ловушек сработало {сработало} из {предел}", { сработало: с.ловушек.сработало, предел: с.ловушек.предел })
+      : Т("Ловушек сработало: {сработало}", { сработало: с.ловушек.сработало });
 
     const итог = с.пройден
       ? `<p class="uo-itog uo-otkryt">${Т("Зал пройден.")}</p>`
@@ -353,7 +353,7 @@ class ОкноПлит extends ApplicationV2 {
 export async function диалогПлит(заготовка = null, имяЗаготовки = "") {
   if (!game.user.isGM) return null;
 
-  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${имя}</option>`).join("");
+  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${Т(имя)}</option>`).join("");
   const игроки = game.users.filter(u => !u.isGM).map(u =>
     `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}</label>`).join("");
 
@@ -362,7 +362,7 @@ export async function диалогПлит(заготовка = null, имяЗа
     position: { width: 480 },
     content: `
       <div class="uo-forma">
-        <label>${Т("Название")} <input type="text" name="название" value="Зал плит"></label>
+        <label>${Т("Название")} <input type="text" name="название" value="${Т("Зал плит")}"></label>
         <label>${Т("Что за зал")} <input type="text" name="подпись" placeholder="${Т("«плиты с рунами, между ними провал»")}"></label>
         <label>${Т("Ширина")} <input type="number" name="ширина" value="5" min="3" max="9" step="1"></label>
         <label>${Т("Глубина")} <input type="number" name="высота" value="5" min="3" max="9" step="1"></label>

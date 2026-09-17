@@ -127,7 +127,7 @@ async function открыть(стол, какая, ктоId) {
   const верная = тайна(стол.id)?.верная;
   if (верная === undefined) {
     ui.notifications.error(
-      `Разгадка врат «${стол.название}» не найдена в этом браузере. Засчитайте вручную или выложите заново.`);
+      Т("Разгадка врат «{название}» не найдена в этом браузере. Засчитайте вручную или выложите заново.", { название: стол.название }));
     return;
   }
 
@@ -208,7 +208,7 @@ class ОкноВрат extends ApplicationV2 {
   static DEFAULT_OPTIONS = {
     classes: ["uo-igry", "uo-vrata-okno"],
     tag: "div",
-    window: { title: Т("Врата"), icon: "fa-solid fa-dungeon", resizable: false },
+    window: { title: М("Врата"), icon: "fa-solid fa-dungeon", resizable: false },
     position: { width: 520, height: "auto" },
     actions: {
       пометить: ОкноВрат.#пометить,
@@ -264,8 +264,8 @@ class ОкноВрат extends ApplicationV2 {
       </button>`).join("");
 
     const счёт = с.попытки.предел
-      ? `Попытка ${Math.min(с.попытки.сделано + 1, с.попытки.предел)} из ${с.попытки.предел}`
-      : `Попыток сделано: ${с.попытки.сделано}`;
+      ? Т("Попытка {номер} из {предел}", { номер: Math.min(с.попытки.сделано + 1, с.попытки.предел), предел: с.попытки.предел })
+      : Т("Попыток сделано: {сделано}", { сделано: с.попытки.сделано });
 
     const журнал = (с.журнал ?? []).length ? `
       <ol class="uo-zhurnal">
@@ -286,10 +286,10 @@ class ОкноВрат extends ApplicationV2 {
     const гм = game.user.isGM ? `
       <section class="uo-gm">
         <div class="uo-gm-kod">
-          <button type="button" data-action="ответВидно">${this.ответВидно ? "Скрыть" : Т("Показать ответ")}</button>
+          <button type="button" data-action="ответВидно">${this.ответВидно ? Т("Скрыть ответ") : Т("Показать ответ")}</button>
           ${this.ответВидно && тайное ? `<code>${
-            экранировать(с.створки[тайное.верная]?.имя ?? "?")} · правдивы: ${
-            (тайное.правдивы ?? []).map(i => i + 1).join("), ") || Т("ни одна")}</code>` : ""}
+            экранировать(с.створки[тайное.верная]?.имя ?? "?")} · ${Т("правдивы:")} ${
+            (тайное.правдивы ?? []).map(i => i + 1).join(", ") || Т("ни одна")}</code>` : ""}
         </div>
         <div class="uo-gm-knopki">
           <button type="button" data-action="засчитать">${Т("Засчитать")}</button>
@@ -319,7 +319,7 @@ class ОкноВрат extends ApplicationV2 {
 export async function диалогВрат(заготовка = null, имяЗаготовки = "") {
   if (!game.user.isGM) return null;
 
-  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${имя}</option>`).join("");
+  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${Т(имя)}</option>`).join("");
   const игроки = game.users.filter(u => !u.isGM).map(u =>
     `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}</label>`).join("");
 
@@ -328,20 +328,20 @@ export async function диалогВрат(заготовка = null, имяЗа
     position: { width: 560 },
     content: `
       <div class="uo-forma">
-        <label>${Т("Название")} <input type="text" name="название" value="Врата"></label>
+        <label>${Т("Название")} <input type="text" name="название" value="${Т("Врата")}"></label>
         <label>${Т("Что перед вами")} <input type="text" name="подпись" placeholder="${Т("«три створки, на каждой высечено»")}"></label>
 
         <h3>${Т("Створки")}</h3>
         <p class="uo-podskazka">${Т("По одной в строке. Верную пометьте знаком «+» в начале строки.")}</p>
-        <textarea name="створки" rows="4" placeholder="+ левая, с ладонью
+        <textarea name="створки" rows="4" placeholder="${Т(`+ левая, с ладонью
 средняя, с трещиной
-правая, глухая"></textarea>
+правая, глухая`)}"></textarea>
 
         <h3>${Т("Надписи")}</h3>
         <p class="uo-podskazka">${Т("По одной в строке: «+» — правдивая, «-» — лживая. Игроки знака не увидят.")}</p>
-        <textarea name="надписи" rows="5" placeholder="- за левой створкой смерть
+        <textarea name="надписи" rows="5" placeholder="${Т(`- за левой створкой смерть
 + хотя бы одна из этих надписей лжёт
-- средняя створка ведёт к свету"></textarea>
+- средняя створка ведёт к свету`)}"></textarea>
 
         <label>${Т("Предел попыток")} <input type="number" name="предел" value="0" min="0" step="1"></label>
         <label>${Т("Оформление")} <select name="тема">${темы}</select></label>

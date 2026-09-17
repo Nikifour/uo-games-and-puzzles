@@ -15,20 +15,20 @@
  * и закрытии — иначе от одной партии база пухнет.
  */
 
-import { Т } from "./yazyk.mjs";
+import { Т, М } from "./yazyk.mjs";
 
 export const MODULE_ID = "uo-igry";
 export const КАНАЛ = `module.${MODULE_ID}`;
 
 /**
  * Оформление, общее для всех загадок: механика от облика отделена, и один
- * и тот же замок или мозаика выглядят храмовой печатью либо наростом Бездны
+ * и тот же замок или мозаика выглядят храмовой печатью либо наростом тьмы
  * без единой новой строки кода.
  */
 export const ТЕМЫ = {
-  kamen: "Камень",
-  orden: "Орден",
-  bezdna: "Бездна",
+  kamen: М("Камень"),
+  orden: М("Цитадель"),
+  bezdna: М("Бездна"),
 };
 
 /** Виды загадок и игр: тип -> правила. Заполняют файлы вроде zamok.mjs. */
@@ -247,7 +247,8 @@ export async function показать(id) {
 
 /* ───────────────────── итоги и объявления ───────────────────── */
 
-export async function объявить(содержимое, alias = "Загадка") {
+// Подпись по умолчанию переводится в миг объявления: параметр по умолчанию считается при вызове.
+export async function объявить(содержимое, alias = Т("Загадка")) {
   if (!game.user.isGM) return;
   await ChatMessage.create({ content: содержимое, speaker: { alias } });
 }
@@ -270,7 +271,7 @@ export function событие(имя, стол) {
 export async function запуститьМакрос(имя, стол) {
   if (!имя) return;
   const макрос = game.macros.getName(имя);
-  if (!макрос) return ui.notifications.warn(`Макрос «${имя}» не найден`);
+  if (!макрос) return ui.notifications.warn(Т("Макрос «{имя}» не найден", { имя }));
   try {
     await макрос.execute({ стол });
   } catch (e) {

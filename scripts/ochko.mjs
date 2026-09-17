@@ -356,7 +356,7 @@ export async function выгнать(id, индекс, вернутьСтавк�
   const чей = стол.чей > индекс ? стол.чей - 1 : (стол.чей === индекс ? стол.чей % места.length : стол.чей);
 
   await записать(вЖурнал({ ...стол, места, руки, чей },
-    Т(`{имя} встаёт из-за стола ({причина})`, { имя: ушедший.имя, причина })));
+    Т(`{имя} встаёт из-за стола ({причина})`, { имя: ушедший.имя, причина: причина === "сам" ? Т("сам") : Т("ведущий") })));
 
   await объявить(
     Т(`<p><strong>{имя}</strong> встаёт из-за стола.</p>`, { имя: экранировать(ушедший.имя) }), стол.название);
@@ -379,7 +379,7 @@ class ОкноОчка extends ApplicationV2 {
   static DEFAULT_OPTIONS = {
     classes: ["uo-igry", "uo-ochko-igra"],
     tag: "div",
-    window: { title: Т("Двадцать одно"), icon: "fa-solid fa-dice-d20", resizable: false },
+    window: { title: М("Двадцать одно"), icon: "fa-solid fa-dice-d20", resizable: false },   // Т здесь рано: словарь ещё не прочитан; заголовок даёт get title()
     position: { width: 520, height: "auto" },
     actions: {
       взять: ОкноОчка.#взять,
@@ -447,7 +447,7 @@ class ОкноОчка extends ApplicationV2 {
       const доступен = мой && можно.includes(г) && !закончил(моя, п);
       return `<button type="button" class="uo-kubik ${доступен ? "" : "uo-nedostupen"}"
         ${доступен ? `data-action="взять" data-gran="${г}"` : "disabled"}
-        title="${Т(`Бросить к{грань}`, { грань: г })}">к${г}</button>`;
+        title="${Т(`Бросить к{грань}`, { грань: г })}">${Т(`к{грань}`, { грань: г })}</button>`;
     }).join("");
 
     const кнопки = с.завершён ? "" : `
@@ -512,7 +512,7 @@ async function диалогВыхода(стол) {
   const строки = стол.места.map((м, i) => `
     <label class="uo-igrok">
       <input type="radio" name="место" value="${i}">
-      ${экранировать(м.имя)}${м.бот ? " (бот)" : ""} — ${Т(`побед: {победы}`, { победы: м.победы })}
+      ${экранировать(м.имя)}${м.бот ? ` (${Т("бот")})` : ""} — ${Т(`побед: {победы}`, { победы: м.победы })}
     </label>`).join("");
 
   await DialogV2.wait({
@@ -553,10 +553,10 @@ export async function диалогОчка() {
 
   const ботРазрешён = game.settings.get(MODULE_ID, "bot");
   const игроки = game.users.filter(u => u.active || !u.isGM).map(u =>
-    `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}${u.isGM ? " (ведущий)" : ""}</label>`).join("");
+    `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}${u.isGM ? ` (${Т("ведущий")})` : ""}</label>`).join("");
   const характеры = боты.выборХарактера();
   const монеты = Object.entries(МОНЕТЫ)
-    .map(([id, м]) => `<option value="${id}" ${id === "gp" ? "selected" : ""}>${м.имя} (${м.кратко})</option>`).join("");
+    .map(([id, м]) => `<option value="${id}" ${id === "gp" ? "selected" : ""}>${Т(м.имя)} (${Т(м.кратко)})</option>`).join("");
   const изПула = боты.пул().length
     ? боты.пул().map((б, i) => `<label class="uo-igrok"><input type="checkbox" name="изПула" value="${i}">
          ${экранировать(б.имя)} <span class="uo-podskazka">— ${экранировать(боты.подписьХарактера(б.характер))}</span></label>`).join("")
@@ -617,7 +617,7 @@ export async function диалогОчка() {
               места.push({
                 кто: null,
                 бот: { характер },
-                имя: свободноеИмя(ХАРАКТЕРЫ[характер]?.имя ?? Т("Бот"), места),
+                имя: свободноеИмя(ХАРАКТЕРЫ[характер] ? Т(ХАРАКТЕРЫ[характер].имя) : Т("Бот"), места),
               });
             }
           }

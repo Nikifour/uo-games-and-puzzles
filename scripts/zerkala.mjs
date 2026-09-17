@@ -178,7 +178,7 @@ export async function выложить(конфиг = {}) {
       старт = начальное;
     }
     if (зал) ui.notifications.warn(
-      `Зал вышел на ${старт.глубина} поворот(ов) вместо ${ходов} — на таком поле длиннее не легло.`);
+      Т("Зал вышел на {глубина} поворот(ов) вместо {ходов} — на таком поле длиннее не легло.", { глубина: старт.глубина, ходов }));
   }
   if (!зал) { ui.notifications.error(Т("Не вышло сложить зал — попробуйте поле побольше.")); return null; }
 
@@ -209,7 +209,7 @@ export async function выложить(конфиг = {}) {
   };
 
   if (стол.предел && стол.предел < старт.глубина) ui.notifications.warn(
-    `Предел ${стол.предел} меньше, чем нужно поворотов (${старт.глубина}) — зал не открыть.`);
+    Т("Предел {предел} меньше, чем нужно поворотов ({глубина}) — зал не открыть.", { предел: стол.предел, глубина: старт.глубина }));
 
   await записать(стол);
   return стол;
@@ -299,7 +299,7 @@ class ОкноЗеркал extends ApplicationV2 {
   static DEFAULT_OPTIONS = {
     classes: ["uo-igry", "uo-zerkala-okno"],
     tag: "div",
-    window: { title: Т("Зал зеркал"), icon: "fa-solid fa-gem", resizable: false },
+    window: { title: М("Зал зеркал"), icon: "fa-solid fa-gem", resizable: false },
     position: { width: 480, height: "auto" },
     actions: {
       повернуть: ОкноЗеркал.#повернуть,
@@ -349,8 +349,8 @@ class ОкноЗеркал extends ApplicationV2 {
     }).join("");
 
     const счёт = с.предел
-      ? `Поворот ${Math.min(с.поворотов + 1, с.предел)} из ${с.предел}`
-      : `Поворотов: ${с.поворотов}`;
+      ? Т("Поворот {номер} из {предел}", { номер: Math.min(с.поворотов + 1, с.предел), предел: с.предел })
+      : Т("Поворотов: {поворотов}", { поворотов: с.поворотов });
 
     const итог = с.зажжён
       ? `<p class="uo-itog uo-otkryt">${Т("Кристалл занялся светом.")}</p>`
@@ -368,7 +368,7 @@ class ОкноЗеркал extends ApplicationV2 {
         </div>
       </section>` : "";
 
-    const откуда = ["слева", "сверху", "справа", "снизу"][(с.источник.куда + 2) % 4];
+    const откуда = Т([М("слева"), М("сверху"), М("справа"), М("снизу")][(с.источник.куда + 2) % 4]);
 
     return `
       <div class="uo-zerkala-telo uo-tema-${экранировать(с.тема)}">
@@ -394,7 +394,7 @@ function провестиЛучБезопасно(стол) {
 export async function диалогЗеркал(заготовка = null, имяЗаготовки = "") {
   if (!game.user.isGM) return null;
 
-  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${имя}</option>`).join("");
+  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${Т(имя)}</option>`).join("");
   const игроки = game.users.filter(u => !u.isGM).map(u =>
     `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}</label>`).join("");
 
@@ -403,7 +403,7 @@ export async function диалогЗеркал(заготовка = null, имя
     position: { width: 480 },
     content: `
       <div class="uo-forma">
-        <label>${Т("Название")} <input type="text" name="название" value="Зал зеркал"></label>
+        <label>${Т("Название")} <input type="text" name="название" value="${Т("Зал зеркал")}"></label>
         <label>${Т("Что за зал")} <input type="text" name="подпись" placeholder="${Т("«свет входит в бойницу, кристалл в глубине»")}"></label>
         <label>${Т("Ширина")} <input type="number" name="ширина" value="8" min="4" max="12" step="1"></label>
         <label>${Т("Глубина")} <input type="number" name="высота" value="8" min="4" max="12" step="1"></label>

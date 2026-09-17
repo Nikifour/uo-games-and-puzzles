@@ -1,130 +1,116 @@
-# UO · Игры и загадки
+# UO · Games and Puzzles
 
-Загадки и настольные игры для Foundry VTT, за которыми сидит весь стол:
-ведущий выкладывает, игроки решают, все видят одно и то же в один и тот же миг.
+**English** · [Русский](README.ru.md)
+
+Interactive puzzles and tavern dice games for Foundry VTT that the whole table
+plays together: the GM lays a puzzle out, the players solve it, and everyone
+sees every move at the same moment.
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/zamok.png" alt="Кодовый замок с рунами"></td>
-    <td width="50%"><img src="docs/kosti.png" alt="Кости с трактирными соперниками"></td>
+    <td width="50%"><img src="docs/sequence.png" alt="Sequence: pictures placed on a grid, a fixed hint and decoys in the choice"></td>
+    <td width="50%"><img src="docs/lock.png" alt="Combination lock with rune dials"></td>
   </tr>
   <tr>
-    <td><img src="docs/sozvezdie.png" alt="Созвездие"></td>
-    <td><img src="docs/plity.png" alt="Зал плит с тропой ведущего"></td>
+    <td><img src="docs/mirrors.png" alt="Hall of mirrors: a beam routed to the crystal"></td>
+    <td><img src="docs/dice.png" alt="Dice with tavern bot opponents"></td>
   </tr>
 </table>
 
-Загадка за столом обычно превращается в пересказ: ведущий описывает, что видно,
-игроки говорят, что делают. Здесь загадка ложится на стол окном: один крутит,
-остальные смотрят, и видно это у всех сразу.
+A puzzle at the table usually turns into narration: the GM describes what is
+visible, the players say what they do. Here the puzzle lands on the table as a
+shared window: one player turns a dial, the others watch it turn, and the
+answer is checked by the GM's client — never shipped to the players.
 
-## Установка
+## Installation
 
-В Foundry, в окне установки модулей: **«Установить модуль»**, внизу окна
-вставить адрес манифеста:
+In Foundry's **Install Module** dialog, paste the manifest URL:
 
 ```
-https://github.com/Nikifour/uo-igry/releases/latest/download/module.json
+https://github.com/Nikifour/uo-games-and-puzzles/releases/latest/download/module.json
 ```
 
-Дальше модуль обновляется сам. Foundry **v13–v14**, система **dnd5e 5.0+**.
-Для тайлов, которые открывают загадку и отпирают дверь, нужен
-[Monk's Active Tile Triggers](https://foundryvtt.com/packages/monks-active-tiles);
-для объёмных костей — Dice So Nice. Без них всё остальное работает.
+- Foundry VTT **v13–v14**, game system **dnd5e 5.0+** (the dice games read
+  character sheets for coins and skill checks).
+- Optional: [Monk's Active Tile Triggers](https://foundryvtt.com/packages/monks-active-tiles)
+  to open a puzzle from a tile and unlock a door when it is solved;
+  Dice So Nice for 3D dice. Everything else works without them.
+- The interface is in **English and Russian**. It follows Foundry's language,
+  or pick one in the module settings.
+- A guide ships with the module as a compendium: *Games and Puzzles · How to use*.
 
-Справка едет вместе с модулем — компендиум «Игры и загадки · Как пользоваться»,
-по-русски и по-английски.
+## How it works
 
-## Одиннадцать загадок
+1. The GM opens the panel (the **Games and Puzzles** button in the Journal Notes scene controls,
+   or `UOIgry.panel()`) and lays a puzzle out — right away, or from a preset
+   prepared before the session.
+2. A window opens for every connected player. Moves are sent to the GM's
+   client, which applies them and broadcasts the result, so all screens stay
+   in sync.
+3. When the puzzle is solved, a chat message is posted, a hook fires and an
+   optional macro runs — a tile can open the door behind it.
 
-**Кодовый замок.** Диски с символами — цифры, руны, буквы, знаки светил или свои.
-Подсказка «сколько дисков стоят верно», предел попыток общий или на каждого.
+## Eleven puzzles
 
-**Мозаика.** Пятнашки из вашей картинки, от 2 × 2 до 5 × 5.
+| Puzzle | What the players do |
+|---|---|
+| **Combination Lock** | Turn dials of digits, runes, letters, star signs or your own symbols. Optional hint "how many dials are right", attempt limit shared or per player. |
+| **Sequence** | Place pictures into the cells of a row, square or rectangle. Some are fixed as hints; the rest wait in the choice under the field, mixed with decoys. |
+| **Mosaic** | A sliding puzzle cut from your own image, 2 × 2 to 5 × 5. Always solvable. |
+| **Gates** | Doors with statements, some of them lies. Push exactly one. |
+| **Constellation** | Draw lines between stars into the right figure. |
+| **Map of Paths** | Worlds and portals, some one-way: pass through the required worlds and reach the goal. |
+| **Hall of Mirrors** | Rotate mirrors to route a beam into the crystal. Difficulty is the number of turns to the solution — the hall is verified by search before it is laid out. |
+| **Hall of Prisms** | The same with several coloured beams: red and green make yellow. |
+| **Hall of Slabs** | One safe path crosses the hall; discovered traps stay marked, so the hall becomes the table's shared memory. |
+| **Device and the Torn Manual** | One player works the levers, the others each hold a different scrap of the manual, sent privately — the order comes only from all of them together. |
+| **Inscription** | A substitution cipher (a real cryptogram) or a shift wheel. |
 
-**Врата с надписями.** Створки, на них высказывания, часть лжёт. Толкнуть надо одну.
+<p align="center"><img src="docs/slabs.png" alt="Hall of slabs with the GM's view of the path" width="420"></p>
 
-**Созвездие.** Протянуть линии между звёздами в верную фигуру.
+## Three tavern games
 
-**Карта путей.** Миры и порталы, часть односторонних: пройти через нужные и выйти в цель.
+- **Dice** — six dice: score points and stop in time, or lose everything you
+  gathered this turn.
+- **Twenty-One** — dice from d4 to d20, each once per round; go over 21 and
+  you lose.
+- **Lucky Joe** — a thieves' game used to settle disputes.
 
-**Зал зеркал.** Довести луч до кристалла, разворачивая зеркала. Сложность — число
-поворотов до решения, и это не оценка: зал проверяется перебором перед выкладкой.
+Seat tavern **bot opponents** with a temper of their own (cautious innkeeper,
+reckless sellsword, bookkeeper), take **stakes** straight from character
+sheets, leave the table mid-game — or **cheat**: loaded dice up your sleeve,
+a Sleight of Hand check against the onlookers' attention, the outcome whispered
+to the GM alone.
 
-**Зал призм.** То же, но лучей несколько и они цветные: красный с зелёным дают жёлтый.
+## For the GM
 
-**Зал плит.** Через зал ведёт единственная тропа; найденные ловушки остаются
-помеченными, и зал становится общей памятью стола.
-
-**Устройство с разорванным руководством.** Один у механизма, у остальных — разные
-обрывки инструкции, и порядок выводится только из всех вместе.
-
-**Череда картинок.** Расставить картинки в верном порядке: фрески по событиям,
-гербы по старшинству.
-
-**Надпись.** Шифр подстановкой — настоящая криптограмма — или колесом со сдвигом.
-
-<p align="center"><img src="docs/zerkala.png" alt="Зал зеркал" width="360"></p>
-
-## Три игры
-
-**Кости** — шесть костей, набрать очки и вовремя остановиться, иначе набранное
-сгорит. **Двадцать одно** — кубики от к4 до к20, каждый раз за раунд, перевалил
-за 21 — проиграл. **Счастливчик Джо** — воровская игра, которой решают споры.
-
-За стол можно подсадить трактирных соперников со своим нравом: осторожный
-трактирщик, безрассудный наёмник, счетовод. Ставки, банк, возможность встать
-из-за стола — и шулерство: подменные кости в рукаве, проверка Ловкости рук
-против внимания зрителей, итог шёпотом одному ведущему.
-
-## Для ведущего
-
-**Заготовки.** Загадку можно собрать до партии и выложить одним нажатием — обычно
-или скрытно, чтобы игроки увидели её не раньше времени. Склад лежит в журнале,
-видимом только ведущему.
-
-**Ответ не уходит к игрокам.** Считает всегда клиент ведущего, ответ хранится
-у него и в мир не пишется: иначе разгадку читали бы через F12.
-
-**Рычаги.** Засчитать, сбросить, убрать со стола, подсмотреть код — на месте,
-не выходя из игры.
-
-**Тайл на карте.** Когда загадку решают, срабатывает событие `uo-igry.solved` —
-за него цепляется тайл Monk's Active Tiles и открывает дверь или запускает сцену.
+- **Presets.** Build a puzzle before the session and lay it out with one click —
+  openly or hidden, to reveal later. The preset store lives in a GM-only journal
+  and travels with the world.
+- **The answer never reaches players.** It is kept in the GM's client and is not
+  written to the world, so it cannot be read through the browser console.
+- **Levers.** Count it solved, reset, hide, take off the table, peek at the
+  answer — all from the puzzle window.
+- **Tiles and macros.** On success the hook `uo-igry.solved` fires with the
+  table state; Monk's Active Tiles or your own macro can react to it.
 
 ```js
-UOIgry.panel()                                      // панель ведущего
-UOIgry.presets.put("plity", "Зал", { скрытно: true })   // выложить заготовку скрытно
-UOIgry.tables                                       // что сейчас на столе
+UOIgry.panel()                                        // GM panel
+UOIgry.presets.put("plity", "Vault", { скрытно: true }) // lay out a preset hidden
+UOIgry.tables                                         // what is on the table now
+Hooks.on("uo-igry.solved", table => { /* open a door */ })
 ```
 
-## Поддержать
+## Support
 
-Модуль бесплатный. Новости о выходе инструментов и разборы того, как они
-устроены, — на Boosty: **[boosty.to/unshaved_orange](https://boosty.to/unshaved_orange)**.
-Там же можно сказать спасибо.
+The module is free. News and write-ups on how the tools are made are on Boosty:
+**[boosty.to/unshaved_orange](https://boosty.to/unshaved_orange)**.
 
-Ошибки и пожелания — в [Issues](https://github.com/Nikifour/uo-igry/issues).
+Bugs and ideas — [Issues](https://github.com/Nikifour/uo-games-and-puzzles/issues).
 
-## Лицензия
+## License
 
-Скачать и поставить может каждый; пользоваться в своих играх — как угодно,
-включая платные и в прямой передаче. Выкладывать модуль где-либо ещё,
-продавать и включать в чужие сборки нельзя. Все права за автором.
-Полный текст — в [LICENSE](LICENSE).
-
----
-
-## In English
-
-**Games and Puzzles** brings interactive puzzles and tavern games to a Foundry VTT
-table: the GM lays a puzzle out, players solve it together and see every move
-at once. Eleven puzzles — combination lock, sliding mosaic, gates of truth and
-lies, constellation, portal map, hall of mirrors, hall of prisms, hall of slabs,
-a device with a torn manual, picture order, ciphers — and three dice games with
-bot opponents, stakes and loaded dice. The interface is in Russian and English —
-it follows Foundry's language, or pick one in the module settings; an English
-guide ships as a compendium.
-
-Install with the manifest URL:
-`https://github.com/Nikifour/uo-igry/releases/latest/download/module.json`
+Anyone may download and install the module and use it in their own games,
+including paid games and streams. Redistributing the module, selling it or
+bundling it into other packages is not allowed. All rights reserved by the
+author. Full text: [LICENSE](LICENSE).

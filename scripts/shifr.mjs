@@ -37,8 +37,8 @@ export const АЗБУКИ = {
 };
 
 export const ВИДЫ_ШИФРА = {
-  sdvig: Т("Колесо: буквы сдвинуты по кругу"),
-  podstanovka: Т("Подстановка: каждая буква своя"),
+  sdvig: М("Колесо: буквы сдвинуты по кругу"),
+  podstanovka: М("Подстановка: каждая буква своя"),
 };
 
 const прибрать_текст = т => String(т ?? "").toUpperCase().replace(/Ё/g, "Е");
@@ -218,7 +218,7 @@ async function прочесть(стол, ктоId) {
   const секрет = тайна(стол.id);
   if (!секрет) {
     ui.notifications.error(
-      `Разгадка надписи «${стол.название}» не найдена в этом браузере. Засчитайте вручную или выложите заново.`);
+      Т("Разгадка надписи «{название}» не найдена в этом браузере. Засчитайте вручную или выложите заново.", { название: стол.название }));
     return;
   }
 
@@ -322,7 +322,7 @@ class ОкноШифра extends ApplicationV2 {
   static DEFAULT_OPTIONS = {
     classes: ["uo-igry", "uo-shifr-okno"],
     tag: "div",
-    window: { title: Т("Надпись"), icon: "fa-solid fa-scroll", resizable: false },
+    window: { title: М("Надпись"), icon: "fa-solid fa-scroll", resizable: false },
     position: { width: 540, height: "auto" },
     actions: {
       крутить: ОкноШифра.#крутить,
@@ -417,15 +417,15 @@ class ОкноШифра extends ApplicationV2 {
       рабочее = `
         <div class="uo-shifrbukvy">${свои}</div>
         <p class="uo-podskazka">${с.выбор
-          ? `Буква <strong>${экранировать(с.выбор)}</strong> в руке — выберите, что она значит. Щелчок по ней же стирает догадку.`
+          ? Т("Буква <strong>{буква}</strong> в руке — выберите, что она значит. Щелчок по ней же стирает догадку.", { буква: экранировать(с.выбор) })
           : Т("Возьмите букву шифра, потом укажите, что она значит. Начните с коротких слов и повторов.")}</p>
         <div class="uo-azbuka-plain">${азбука}</div>`;
     }
 
     const остаток = осталосьПопыток(с);
     const счёт = с.попытки?.предел
-      ? `Попытка ${Math.min(с.попытки.сделано + 1, с.попытки.предел)} из ${с.попытки.предел}`
-      : `Попыток сделано: ${с.попытки?.сделано ?? 0}`;
+      ? Т("Попытка {номер} из {предел}", { номер: Math.min(с.попытки.сделано + 1, с.попытки.предел), предел: с.попытки.предел })
+      : Т("Попыток сделано: {сделано}", { сделано: с.попытки?.сделано ?? 0 });
 
     const журнал = (с.журнал ?? []).length ? `
       <ol class="uo-zhurnal">
@@ -481,10 +481,10 @@ class ОкноШифра extends ApplicationV2 {
 export async function диалогШифра(заготовка = null, имяЗаготовки = "") {
   if (!game.user.isGM) return null;
 
-  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${имя}</option>`).join("");
-  const азбуки = Object.entries(АЗБУКИ).map(([id, а]) => `<option value="${id}">${а.имя}</option>`).join("");
+  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${Т(имя)}</option>`).join("");
+  const азбуки = Object.entries(АЗБУКИ).map(([id, а]) => `<option value="${id}">${Т(а.имя)}</option>`).join("");
   const виды = Object.entries(ВИДЫ_ШИФРА).map(([id, имя]) =>
-    `<option value="${id}" ${id === "podstanovka" ? "selected" : ""}>${имя}</option>`).join("");
+    `<option value="${id}" ${id === "podstanovka" ? "selected" : ""}>${Т(имя)}</option>`).join("");
   const игроки = game.users.filter(u => !u.isGM).map(u =>
     `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}</label>`).join("");
 
@@ -493,7 +493,7 @@ export async function диалогШифра(заготовка = null, имяЗ
     position: { width: 490 },
     content: `
       <div class="uo-forma">
-        <label>${Т("Название")} <input type="text" name="название" value="Надпись"></label>
+        <label>${Т("Название")} <input type="text" name="название" value="${Т("Надпись")}"></label>
         <label>${Т("Где она")} <input type="text" name="подпись" placeholder="${Т("«высечено над вратами», необязательно")}"></label>
         <label>${Т("Что написано")} <input type="text" name="фраза" placeholder="${Т("ОТКРОЙ НА ЗАКАТЕ")}"></label>
         <label>${Т("Каким шифром")} <select name="вид">${виды}</select></label>

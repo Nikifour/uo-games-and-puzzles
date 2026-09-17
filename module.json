@@ -1,14 +1,14 @@
 {
   "id": "uo-igry",
-  "title": "UO · Игры и загадки",
-  "description": "<p>Интерактивные загадки и настольные игры за одним столом: ведущий выкладывает, игроки решают, все видят одно и то же.</p>",
-  "version": "0.26.0",
-  "url": "https://github.com/Nikifour/uo-igry",
-  "manifest": "https://github.com/Nikifour/uo-igry/releases/latest/download/module.json",
-  "readme": "https://github.com/Nikifour/uo-igry/blob/main/README.md",
-  "bugs": "https://github.com/Nikifour/uo-igry/issues",
-  "changelog": "https://github.com/Nikifour/uo-igry/releases",
-  "license": "https://github.com/Nikifour/uo-igry/blob/main/LICENSE",
+  "title": "UO · Games and Puzzles",
+  "description": "<p>Interactive puzzles and tavern dice games that the whole table plays together: the GM lays a puzzle out, the players solve it and everyone sees every move at once. Eleven puzzles — combination lock, sequence, mosaic, gates, constellation, map of paths, halls of mirrors, prisms and slabs, a device with a torn manual, ciphers — and three dice games with bot opponents, stakes and loaded dice. English and Russian.</p><p>Интерактивные загадки и настольные игры за одним столом: ведущий выкладывает, игроки решают, все видят одно и то же.</p>",
+  "version": "0.27.0",
+  "url": "https://github.com/Nikifour/uo-games-and-puzzles",
+  "manifest": "https://github.com/Nikifour/uo-games-and-puzzles/releases/latest/download/module.json",
+  "readme": "https://github.com/Nikifour/uo-games-and-puzzles/blob/main/README.md",
+  "bugs": "https://github.com/Nikifour/uo-games-and-puzzles/issues",
+  "changelog": "https://github.com/Nikifour/uo-games-and-puzzles/releases",
+  "license": "https://github.com/Nikifour/uo-games-and-puzzles/blob/main/LICENSE",
   "compatibility": {
     "minimum": "13",
     "verified": "14"
@@ -16,6 +16,32 @@
   "authors": [
     {
       "name": "timmi"
+    }
+  ],
+  "media": [
+    {
+      "type": "cover",
+      "url": "https://raw.githubusercontent.com/Nikifour/uo-games-and-puzzles/main/docs/logo-wide.png"
+    },
+    {
+      "type": "screenshot",
+      "url": "https://raw.githubusercontent.com/Nikifour/uo-games-and-puzzles/main/docs/sequence.png"
+    },
+    {
+      "type": "screenshot",
+      "url": "https://raw.githubusercontent.com/Nikifour/uo-games-and-puzzles/main/docs/lock.png"
+    },
+    {
+      "type": "screenshot",
+      "url": "https://raw.githubusercontent.com/Nikifour/uo-games-and-puzzles/main/docs/mirrors.png"
+    },
+    {
+      "type": "screenshot",
+      "url": "https://raw.githubusercontent.com/Nikifour/uo-games-and-puzzles/main/docs/slabs.png"
+    },
+    {
+      "type": "screenshot",
+      "url": "https://raw.githubusercontent.com/Nikifour/uo-games-and-puzzles/main/docs/dice.png"
     }
   ],
   "socket": true,
@@ -40,7 +66,7 @@
       {
         "id": "monks-active-tiles",
         "type": "module",
-        "reason": "Тайл на карте может выложить загадку на стол и отпереть дверь, когда её решат."
+        "reason": "A tile can lay a puzzle out and unlock a door when it is solved. / Тайл может выложить загадку и отпереть дверь, когда её решат."
       }
     ]
   },
@@ -89,5 +115,5 @@
       }
     }
   ],
-  "download": "https://github.com/Nikifour/uo-igry/releases/download/v0.26.0/module.zip"
+  "download": "https://github.com/Nikifour/uo-games-and-puzzles/releases/download/v0.27.0/module.zip"
 }

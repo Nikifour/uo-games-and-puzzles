@@ -106,7 +106,7 @@ async function правка(индекс) {
     </div>`;
 
   await DialogV2.wait({
-    window: { title: индекс >= 0 ? `Устройство «${у.имя}»` : Т("Новое устройство"), icon: "fa-solid fa-gears" },
+    window: { title: индекс >= 0 ? Т("Устройство «{имя}»", { имя: у.имя }) : Т("Новое устройство"), icon: "fa-solid fa-gears" },
     position: { width: 620 },
     content: `
       <div class="uo-forma">
@@ -147,7 +147,7 @@ async function правка(индекс) {
           const запись = { имя, рычаги, порядок, обрывки };
           if (индекс >= 0) все[индекс] = запись; else все.push(запись);
           await сохранить(все);
-          ui.notifications.info(`Устройство «${имя}»: рычагов ${рычаги.length}, обрывков ${обрывки.length}`);
+          ui.notifications.info(Т("Устройство «{имя}»: рычагов {рычаги}, обрывков {обрывки}", { имя, рычаги: рычаги.length, обрывки: обрывки.length }));
         },
       },
       { action: "отмена", label: Т("Отмена") },
@@ -286,7 +286,7 @@ async function ход(стол, запрос) {
   const порядок = тайна(стол.id)?.порядок;
   if (!порядок) {
     ui.notifications.error(
-      `Верный порядок для «${стол.название}» не найден в этом браузере. Засчитайте вручную или выложите заново.`);
+      Т("Верный порядок для «{название}» не найден в этом браузере. Засчитайте вручную или выложите заново.", { название: стол.название }));
     return;
   }
 
@@ -383,7 +383,7 @@ class ОкноУстройства extends ApplicationV2 {
   static DEFAULT_OPTIONS = {
     classes: ["uo-igry", "uo-ustrojstvo-okno"],
     tag: "div",
-    window: { title: Т("Устройство"), icon: "fa-solid fa-gears", resizable: false },
+    window: { title: М("Устройство"), icon: "fa-solid fa-gears", resizable: false },
     position: { width: 520, height: "auto" },
     actions: {
       дёрнуть: ОкноУстройства.#дёрнуть,
@@ -446,8 +446,8 @@ class ОкноУстройства extends ApplicationV2 {
 
     const ктоУМеханизма = имяИгрока(с.оператор);
     const счёт = с.попытки?.предел
-      ? `Попытка ${Math.min(с.попытки.сделано + 1, с.попытки.предел)} из ${с.попытки.предел}`
-      : `Промахов: ${с.попытки?.сделано ?? 0}`;
+      ? Т("Попытка {номер} из {предел}", { номер: Math.min(с.попытки.сделано + 1, с.попытки.предел), предел: с.попытки.предел })
+      : Т("Промахов: {сделано}", { сделано: с.попытки?.сделано ?? 0 });
 
     const журнал = (с.журнал ?? []).length ? `
       <ol class="uo-zhurnal">
@@ -466,12 +466,12 @@ class ОкноУстройства extends ApplicationV2 {
     const гм = game.user.isGM ? `
       <section class="uo-gm">
         <div class="uo-gm-kod">
-          <button type="button" data-action="всёВидно">${this.всёВидно ? "Скрыть" : Т("Показать порядок и обрывки")}</button>
+          <button type="button" data-action="всёВидно">${this.всёВидно ? Т("Скрыть") : Т("Показать порядок и обрывки")}</button>
         </div>
         ${this.всёВидно && тайное ? `
           <div class="uo-gm-tajna">
             <p><strong>${Т("Порядок:")}</strong> ${экранировать((тайное.порядок ?? [])
-              .map(р => с.рычаги[р]?.имя ?? ")?").join(" → "))}</p>
+              .map(р => с.рычаги[р]?.имя ?? "?").join(" → "))}</p>
             ${Object.entries(тайное.обрывки ?? {}).map(([кто, текст]) =>
               `<p><strong>${экранировать(имяИгрока(кто))}:</strong> ${экранировать(текст)}</p>`).join("")}
           </div>` : ""}
@@ -487,7 +487,7 @@ class ОкноУстройства extends ApplicationV2 {
       <div class="uo-ustrojstvo-telo uo-tema-${экранировать(с.тема)}">
         ${с.подпись ? `<p class="uo-podpis">${экранировать(с.подпись)}</p>` : ""}
         <p class="uo-podskazka">${Т("У механизма:")} <strong>${экранировать(ктоУМеханизма)}</strong>${
-          дёргает ? Т(") — это вы") : ""}.</p>
+          дёргает ? ` ${Т("— это вы")}` : ""}.</p>
         <div class="uo-ryczagi-panel">${рычаги}</div>
         ${набрано}
         <div class="uo-stroka"><span class="uo-schet">${счёт}</span></div>
@@ -513,7 +513,7 @@ export async function диалогУстройства(заготовка = null
     return null;
   }
 
-  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${имя}</option>`).join("");
+  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${Т(имя)}</option>`).join("");
   const устройства = склад.map((у, i) =>
     `<option value="${i}">${Т(`{имя} — рычагов {рычаги}, обрывков {обрывки}`, { имя: экранировать(у.имя), рычаги: у.рычаги.length, обрывки: у.обрывки.length })}</option>`).join("");
   const игроки = game.users.filter(u => !u.isGM).map(u =>

@@ -84,8 +84,8 @@ const можетКрутить = (стол, пользователь) =>
  *
  * Предел бывает двух родов, и разница за столом заметная: общий — «пять
  * попыток на всю партию, тратьте как хотите»; на каждого — «по попытке
- * каждому, и никто не сожжёт чужую». Второй родился из простого желания:
- * пусть каждый попытает удачу сам.
+ * каждому, и никто не сожжёт чужую». Второй — чтобы каждый мог попытать
+ * удачу сам.
  */
 export function остатокПопыток(стол, пользователь) {
   const п = стол.попытки ?? {};
@@ -156,7 +156,7 @@ async function проверить(стол, ктоId) {
   const код = тайна(стол.id)?.код;
   if (!код) {
     ui.notifications.error(
-      `Ответ замка «${стол.название}» не найден в этом браузере. Засчитайте вручную или выложите замок заново.`);
+      Т("Ответ замка «{название}» не найден в этом браузере. Засчитайте вручную или выложите замок заново.", { название: стол.название }));
     return;
   }
 
@@ -245,7 +245,7 @@ class ОкноЗамка extends ApplicationV2 {
   static DEFAULT_OPTIONS = {
     classes: ["uo-igry", "uo-zamok"],
     tag: "div",
-    window: { title: Т("Кодовый замок"), icon: "fa-solid fa-lock", resizable: false },
+    window: { title: М("Кодовый замок"), icon: "fa-solid fa-lock", resizable: false },
     position: { width: 460, height: "auto" },
     actions: {
       крутить: ОкноЗамка.#вручную,
@@ -295,23 +295,23 @@ class ОкноЗамка extends ApplicationV2 {
       const ниже = набор[(поз + 1) % длина];
       return `
         <div class="uo-disk">
-          ${крутит ? `<button type="button" class="uo-krut" data-action="крутить" data-disk="${i}" data-step="-1" aria-label="выше">▲</button>` : ""}
+          ${крутит ? `<button type="button" class="uo-krut" data-action="крутить" data-disk="${i}" data-step="-1" aria-label="${Т("выше")}">▲</button>` : ""}
           <div class="uo-okoshko">
             <span class="uo-sosed">${экранировать(выше)}</span>
             <span class="uo-simvol">${экранировать(набор[поз])}</span>
             <span class="uo-sosed">${экранировать(ниже)}</span>
           </div>
-          ${крутит ? `<button type="button" class="uo-krut" data-action="крутить" data-disk="${i}" data-step="1" aria-label="ниже">▼</button>` : ""}
+          ${крутит ? `<button type="button" class="uo-krut" data-action="крутить" data-disk="${i}" data-step="1" aria-label="${Т("ниже")}">▼</button>` : ""}
         </div>`;
     }).join("");
 
     const проверяет = можетПроверить(с, game.user);
     const остаток = остатокПопыток(с, game.user);
     const счёт = !с.попытки.предел
-      ? `Попыток сделано: ${с.попытки.сделано}`
+      ? Т("Попыток сделано: {сделано}", { сделано: с.попытки.сделано })
       : с.попытки.наКаждого
-        ? `Ваших попыток осталось: ${Math.max(0, остаток)} из ${с.попытки.предел} · всего сделано ${с.попытки.сделано}`
-        : `Попытка ${Math.min(с.попытки.сделано + 1, с.попытки.предел)} из ${с.попытки.предел}`;
+        ? Т("Ваших попыток осталось: {осталось} из {предел} · всего сделано {сделано}", { осталось: Math.max(0, остаток), предел: с.попытки.предел, сделано: с.попытки.сделано })
+        : Т("Попытка {номер} из {предел}", { номер: Math.min(с.попытки.сделано + 1, с.попытки.предел), предел: с.попытки.предел });
 
     const журнал = с.журнал.length ? `
       <ol class="uo-zhurnal">
@@ -394,14 +394,14 @@ export async function диалогЗамка(заготовка = null, имяЗ
   if (!game.user.isGM) return null;
 
   const наборы = Object.entries(НАБОРЫ)
-    .map(([id, н]) => `<option value="${id}">${н.имя}: ${н.символы.join(" ")}</option>`).join("");
-  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${имя}</option>`).join("");
+    .map(([id, н]) => `<option value="${id}">${Т(н.имя)}: ${н.символы.join(" ")}</option>`).join("");
+  const темы = Object.entries(ТЕМЫ).map(([id, имя]) => `<option value="${id}">${Т(имя)}</option>`).join("");
   const игроки = game.users.filter(u => !u.isGM).map(u =>
     `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}</label>`).join("");
 
   const содержимое = `
     <div class="uo-forma">
-      <label>${Т("Название")} <input type="text" name="название" value="Кодовый замок"></label>
+      <label>${Т("Название")} <input type="text" name="название" value="${Т("Кодовый замок")}"></label>
       <label>${Т("Надпись на замке")} <input type="text" name="подпись" placeholder="${Т("видна игрокам, необязательна")}"></label>
       <label>${Т("Символы на дисках")} <select name="наборId">${наборы}</select></label>
       <label>${Т("Свои символы")} <input type="text" name="свои" placeholder="${Т("через пробел или подряд — перебьёт выбор выше")}"></label>

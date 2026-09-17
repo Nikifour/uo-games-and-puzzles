@@ -2,7 +2,7 @@
  * UO · Игры и загадки
  *
  * Оформление отделено от механики нарочно: один и тот же замок должен уметь
- * выглядеть храмовой печатью, орденским механизмом или наростом Бездны —
+ * выглядеть храмовой печатью, механизмом цитадели или наростом тьмы —
  * и для этого не нужно ни строчки нового кода, только класс темы.
  */
 
@@ -422,75 +422,225 @@
 
 /* ─── череда картинок ─── */
 
-.uo-igry .uo-porjadok-telo {
+/* Цвета по умолчанию — на окне, а тема на теле их перекрывает. */
+.uo-igry.uo-cherda-okno,
+.uo-igry.uo-cherda-podgotovka-okno {
   --uo-fon: #23231f;
   --uo-ramka: #7a7466;
+  --uo-simvol: #ece6d6;
   --uo-otsvet: #b6ad97;
   --uo-udacha: #6fae5a;
   --uo-beda: #b4553f;
+}
 
+.uo-igry .uo-cherda-telo {
   display: flex;
   flex-direction: column;
   gap: .55rem;
   padding: .3rem .2rem;
 }
 
-.uo-igry .uo-karty {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: .4rem;
+.uo-igry .uo-cherda-pole {
+  display: grid;
+  grid-template-columns: repeat(var(--stolbcov, 4), minmax(0, 1fr));
+  gap: .35rem;
+  padding: .45rem;
+  background: rgba(0, 0, 0, .25);
+  border: 1px solid var(--uo-ramka);
+  border-radius: 6px;
 }
 
-.uo-igry .uo-karta {
+.uo-igry .uo-cherda-kletka {
   position: relative;
-  margin: 0;
-  width: 6.2rem;
-  display: flex;
-  flex-direction: column;
-  gap: .15rem;
-  padding: .25rem;
-  background: var(--uo-fon);
-  border: 2px solid var(--uo-ramka);
-  border-radius: 5px;
-}
-
-.uo-igry .uo-karta.uo-vzjata {
-  border-color: #c9a227;
-  box-shadow: 0 0 10px rgba(201, 162, 39, .55);
-  transform: translateY(-3px);
-}
-
-.uo-igry .uo-karta img {
-  width: 100%;
   aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border: 0;
-  border-radius: 3px;
-  cursor: zoom-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  background: var(--uo-fon);
+  border: 2px dashed var(--uo-ramka);
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, .6);
+  overflow: hidden;
 }
 
-.uo-igry .uo-karta figcaption {
-  font-size: .75rem;
-  line-height: 1.2;
-  text-align: center;
-  color: var(--uo-otsvet);
+.uo-igry .uo-cherda-kletka.uo-mozhno { cursor: pointer; }
+.uo-igry .uo-cherda-kletka.uo-mozhno:hover { border-color: var(--uo-otsvet); }
+.uo-igry .uo-cherda-kletka.uo-zakreplena { border-style: solid; border-color: var(--uo-otsvet); }
+.uo-igry .uo-cherda-kletka.uo-vzjata { border: 2px solid #c9a227; box-shadow: 0 0 10px rgba(201, 162, 39, .55); }
+.uo-igry .uo-cherda-kletka.uo-gluhaja {
+  border: 1px solid transparent;
+  background: repeating-linear-gradient(45deg, rgba(0, 0, 0, .35) 0 6px, rgba(0, 0, 0, .15) 6px 12px);
+  box-shadow: none;
 }
 
-.uo-igry .uo-nomer {
+.uo-igry .uo-cherda-nomer {
   position: absolute;
-  top: .1rem;
-  left: .25rem;
+  top: .15rem;
+  left: .2rem;
+  z-index: 1;
   padding: 0 .25rem;
   border-radius: 3px;
   background: rgba(0, 0, 0, .65);
-  font-size: .75rem;
+  color: var(--uo-simvol);
+  font-size: .7rem;
   font-weight: 700;
+  pointer-events: none;
 }
 
-.uo-igry .uo-vzjat { min-height: 0; padding: 0; font-size: .75rem; line-height: 1.5; }
+.uo-igry .uo-cherda-pusto { color: var(--uo-otsvet); opacity: .45; font-size: .9rem; }
 
-.uo-igry .uo-porjadok-telo .uo-zhurnal li { justify-content: flex-start; gap: .4rem; }
+/* картинка — и в клетке, и в выборе */
+.uo-igry .uo-cherda-kusok {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  cursor: grab;
+}
+
+.uo-igry .uo-cherda-kusok img,
+.uo-igry .uo-cherda-kletka > img {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  object-fit: cover;
+  border: 0;
+  border-radius: 3px;
+}
+
+.uo-igry .uo-cherda-kusok figcaption,
+.uo-igry .uo-cherda-podpis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: .05rem .2rem;
+  background: rgba(0, 0, 0, .7);
+  color: var(--uo-simvol);
+  font-size: .7rem;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.uo-igry .uo-cherda-kusok.uo-vzjata { outline: 2px solid #c9a227; box-shadow: 0 0 10px rgba(201, 162, 39, .6); }
+
+.uo-igry .uo-cherda-lupa {
+  position: absolute;
+  top: .15rem;
+  right: .15rem;
+  z-index: 2;
+  width: 1.35rem;
+  height: 1.35rem;
+  min-height: 0;
+  padding: 0;
+  line-height: 1;
+  font-size: .7rem;
+  background: rgba(0, 0, 0, .6);
+  color: var(--uo-simvol);
+  border: none;
+  opacity: .0;
+}
+.uo-igry .uo-cherda-kusok:hover .uo-cherda-lupa { opacity: 1; }
+
+/* выбор под полем */
+.uo-igry .uo-cherda-zapas {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  padding: .4rem;
+  border: 1px solid rgba(128, 128, 128, .4);
+  border-radius: 6px;
+}
+.uo-igry .uo-cherda-zapas.uo-mozhno { border-color: #c9a227; cursor: pointer; }
+.uo-igry .uo-cherda-zagolovok { font-weight: 600; font-size: .9rem; }
+
+.uo-igry .uo-cherda-kuski {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+.uo-igry .uo-cherda-kuski .uo-cherda-kusok,
+.uo-igry .uo-cherda-palitra .uo-cherda-kusok {
+  width: 5rem;
+  height: 5rem;
+  background: var(--uo-fon);
+  border: 2px solid var(--uo-ramka);
+  border-radius: 5px;
+  padding: .15rem;
+}
+.uo-igry .uo-cherda-kuski .uo-podskazka { margin: 0; }
+
+.uo-igry .uo-cherda-telo .uo-zhurnal li { justify-content: flex-start; gap: .4rem; }
+
+.uo-igry .uo-cherda-otvet { gap: .2rem; padding: .25rem; max-width: 24rem; }
+.uo-igry .uo-cherda-otvet .uo-cherda-kletka { border-width: 1px; }
+
+/* окно подготовки */
+.uo-igry .uo-cherda-podgotovka { padding: .2rem; }
+.uo-igry .uo-cherda-shapka,
+.uo-igry .uo-cherda-podval {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: .3rem .9rem;
+  align-items: center;
+}
+.uo-igry .uo-cherda-podval fieldset,
+.uo-igry .uo-cherda-podval .uo-podskazka { grid-column: 1 / -1; }
+
+.uo-igry .uo-cherda-razmer { flex: 0 0 55%; display: flex; align-items: center; gap: .3rem; }
+.uo-igry .uo-cherda-razmer input { flex: 1 1 0; min-width: 0; }
+
+.uo-igry .uo-cherda-masterskaja {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17rem;
+  gap: .7rem;
+  align-items: start;
+}
+.uo-igry .uo-cherda-levo,
+.uo-igry .uo-cherda-pravo { display: flex; flex-direction: column; gap: .4rem; min-width: 0; }
+
+.uo-igry .uo-cherda-palitra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  max-height: 22rem;
+  overflow-y: auto;
+}
+.uo-igry .uo-cherda-palitra .uo-cherda-kusok { width: 4.9rem; height: 4.9rem; cursor: pointer; }
+
+.uo-igry .uo-cherda-palitra-knopki { display: flex; flex-direction: column; gap: .25rem; }
+
+.uo-igry .uo-cherda-podgotovka .uo-cherda-knopki {
+  position: absolute;
+  top: .15rem;
+  right: .15rem;
+  z-index: 2;
+  display: flex;
+  gap: .15rem;
+}
+.uo-igry .uo-cherda-podgotovka .uo-cherda-knopki button {
+  width: 1.45rem;
+  height: 1.45rem;
+  min-height: 0;
+  padding: 0;
+  line-height: 1;
+  font-size: .72rem;
+  background: rgba(0, 0, 0, .65);
+  color: var(--uo-simvol);
+  border: none;
+}
+.uo-igry .uo-cherda-podgotovka .uo-zakreplena .uo-cherda-knopki button:first-child { color: #c9a227; }
+.uo-igry .uo-cherda-podgotovka .uo-cherda-kletka { cursor: pointer; }
+
+.uo-igry .uo-cherda-deistvija { display: flex; gap: .4rem; margin-top: .3rem; }
+.uo-igry .uo-cherda-deistvija button { flex: 1; }
 
 /* строки набора в настройках */
 .uo-kartinki { display: flex; flex-direction: column; gap: .25rem; margin: .3rem 0; }

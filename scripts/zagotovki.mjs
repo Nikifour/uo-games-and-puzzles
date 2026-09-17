@@ -29,12 +29,13 @@
  */
 
 import { MODULE_ID, ВИДЫ, спрятать } from "./stol.mjs";
-import { Т } from "./yazyk.mjs";
+import { Т, М } from "./yazyk.mjs";
 
 const { DialogV2 } = foundry.applications.api;
 const экранировать = s => foundry.utils.escapeHTML(String(s ?? ""));
 
-const ИМЯ_ЖУРНАЛА = "UO · Заготовки загадок";
+// Имя переводится при создании журнала; искать его по имени не будем — только по флагу.
+const ИМЯ_ЖУРНАЛА = М("UO · Заготовки загадок");
 const ФЛАГ = "zagotovki";
 
 /**
@@ -58,7 +59,7 @@ async function журнал() {
   if (свой || !game.user.isGM) return свой;
 
   return JournalEntry.create({
-    name: ИМЯ_ЖУРНАЛА,
+    name: Т(ИМЯ_ЖУРНАЛА),
     // Ни у кого, кроме ведущего: игроку такой документ не пересылают вовсе,
     // и в списке журналов его у него нет.
     ownership: { default: CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE },
