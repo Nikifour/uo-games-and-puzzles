@@ -54,7 +54,7 @@ https://github.com/Nikifour/uo-games-and-puzzles/releases/latest/download/module
 3. When the puzzle is solved, a chat message is posted, a hook fires and an
    optional macro runs — a tile can open the door behind it.
 
-## Eleven puzzles
+## Ten puzzles
 
 | Puzzle | What the players do |
 |---|---|
@@ -67,10 +67,24 @@ https://github.com/Nikifour/uo-games-and-puzzles/releases/latest/download/module
 | **Hall of Mirrors** | Rotate mirrors to route a beam into the crystal. Difficulty is the number of turns to the solution — the hall is verified by search before it is laid out. |
 | **Hall of Prisms** | The same with several coloured beams: red and green make yellow. |
 | **Hall of Slabs** | One safe path crosses the hall; discovered traps stay marked, so the hall becomes the table's shared memory. |
-| **Device and the Torn Manual** | One player works the levers, the others each hold a different scrap of the manual, sent privately — the order comes only from all of them together. |
 | **Inscription** | A substitution cipher (a real cryptogram) or a shift wheel. |
 
 <p align="center"><img src="docs/slabs.png" alt="Hall of slabs with the GM's view of the path" width="420"></p>
+
+## Three devices
+
+A puzzle is solved, a game is played, and at a device people **work together**:
+one sees, the others act. The one who sees gets no hints — only what they
+manage to put into words.
+
+| Device | How it looks at the table |
+|---|---|
+| **Device and the Torn Manual** | One player works the levers, the others each hold a different scrap of the manual, sent privately — the order comes only from all of them together. |
+| **Hall of Prisms (D)** | Only the navigator sees the beams, the mirrors and their numbers. Everyone else stands at a panel of labelled levers, and which lever turns which mirror is known to the navigator alone. Levers are split between panels, and a panel can belong to a named player. |
+| **Combination Lock (D)** | The navigator sees the dials and presses "Check", while the others turn them. A lever moves a dial one step on; two levers per dial turn it both ways. |
+
+All three can be put on **a clock**: minutes and seconds by the server time.
+When it runs out the mechanism freezes, and "Reset" winds the clock again.
 
 ## Three tavern games
 

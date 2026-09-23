@@ -178,7 +178,9 @@
 }
 
 .uo-igry .uo-gm-kod code { font-size: 1.1rem; letter-spacing: .15em; }
-.uo-igry .uo-gm-knopki { display: flex; gap: .35rem; }
+.uo-igry .uo-gm-knopki { display: flex; justify-content: center; gap: .35rem; flex-wrap: wrap; }
+/* Кнопки не сминаются, а переносятся: иначе «Убрать со стола» рвётся по словам. */
+.uo-igry .uo-gm-knopki > button { flex: 0 0 auto; width: auto; padding: 0 .7rem; white-space: nowrap; }
 .uo-igry .uo-gm button { flex: 1; }
 
 /* ─── диалоги ─── */
@@ -190,6 +192,8 @@
 .uo-forma label select { flex: 0 0 55%; }
 .uo-forma fieldset { border: 1px solid rgba(128, 128, 128, .4); border-radius: 4px; padding: .3rem .5rem; }
 .uo-forma .uo-igrok { justify-content: flex-start; }
+.uo-forma .uo-ustrojstvo-knopki { display: flex; gap: .4rem; }
+.uo-forma .uo-ustrojstvo-knopki button { flex: 1; }
 .uo-forma .uo-podskazka { margin: .1rem 0; font-size: .85rem; opacity: .8; }
 .uo-forma h3 { margin: 0 0 .2rem; }
 
@@ -532,6 +536,73 @@
   --uo-beda: #b4553f;
 }
 
+/*
+ * Окно не выше экрана, а что не влезло — прокручивается.
+ *
+ * Без этого Foundry обрезает окно по краю экрана, и низ становится
+ * недостижим: кнопки «Выложить на стол» и «Запомнить заготовку», последние
+ * поля настроек. Вылезти может любое наше окно — поле Череды растёт вместе
+ * с шириной, список игроков и ботов в выкладке игры растёт сам по себе, —
+ * поэтому правило общее, а не по окну за раз.
+ *
+ * Диалоги выкладки заводятся через DialogV2 и класса модуля не несут;
+ * узнаём их по нашей же разметке формы.
+ */
+.uo-igry,
+.application:has(.uo-forma) { max-height: calc(100vh - 1rem); }
+.uo-igry .window-content,
+.application:has(.uo-forma) .window-content { overflow-y: auto; min-height: 0; }
+
+/* окно настроек загадки: поля | вид глазами игрока */
+.uo-igry .uo-nastrojka { display: flex; flex-wrap: wrap; gap: .9rem; align-items: flex-start; }
+.uo-igry .uo-nastrojka-forma { flex: 1 1 22rem; max-width: 30rem; min-width: 0; }
+.uo-igry .uo-nastrojka-vid {
+  flex: 1 1 24rem; min-width: 0; display: flex; flex-direction: column; gap: .4rem;
+  padding: .5rem; border: 1px dashed rgba(255, 255, 255, .25); border-radius: 6px;
+}
+.uo-igry .uo-nastrojka-shapka { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.uo-igry .uo-nastrojka-shapka h3 { margin: 0; font-size: 1rem; }
+.uo-igry .uo-nastrojka-shapka button { flex: 0 0 auto; width: auto; padding: 0 .7rem; }
+.uo-igry .uo-predprosmotr-okno { pointer-events: none; }
+.uo-igry .uo-zametka { margin: .15rem 0; font-size: .85rem; }
+.uo-igry .uo-zametka-error { color: #e06a4f; }
+.uo-igry .uo-zametka-warn { color: #e0b54f; }
+.uo-igry .uo-pereklyuchatel { display: flex; gap: 0; }
+.uo-igry .uo-pereklyuchatel button { flex: 0 0 auto; width: auto; padding: 0 .7rem; border-radius: 0; }
+.uo-igry .uo-pereklyuchatel button:first-child { border-radius: 4px 0 0 4px; }
+.uo-igry .uo-pereklyuchatel button:last-child { border-radius: 0 4px 4px 0; }
+.uo-igry .uo-pereklyuchatel button.uo-vybran { border-color: #f0d77a; color: #f0d77a; box-shadow: 0 0 6px rgba(240, 215, 122, .5); }
+.uo-igry .uo-zamok-disk { display: flex; align-items: center; gap: .35rem; margin: .15rem 0; }
+.uo-igry .uo-zamok-disk select { flex: 1 1 0; min-width: 0; width: 0; }
+.uo-igry .uo-zamok-disk label { display: flex; align-items: center; gap: .25rem; flex: 1 1 0; min-width: 0; font-size: .85rem; }
+.uo-igry .uo-zamok-nomer { flex: 0 0 1.2rem; text-align: center; color: #f0d77a; font-weight: 700; }
+.uo-igry .uo-zamok-detal { position: relative; }
+.uo-igry .uo-shifrbukva-obertka { position: relative; display: inline-flex; }
+.uo-igry .uo-otmetka {
+  position: absolute; top: -.3rem; right: -.3rem; width: 1.2rem; height: 1.2rem;
+  padding: 0; min-height: 0; line-height: 1; font-size: .7rem; border-radius: 50%;
+}
+.uo-igry .uo-otmetka.uo-vybran { color: #f0d77a; border-color: #f0d77a; }
+.uo-igry .uo-shifrbukva.uo-otkryta { border-color: #6fae5a; color: #cfe8c4; opacity: 1; }
+.uo-igry .uo-otkrytija .uo-schet { font-size: .85rem; }
+.uo-igry .uo-zamok-nomera { display: flex; gap: .3rem; justify-content: center; margin-top: .15rem; }
+.uo-igry .uo-zamok-nomera .uo-nomer-rychaga { position: static; font-size: .75rem; }
+
+/* ручная сборка зала призм */
+.uo-igry .uo-instrumenty { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.2rem, 1fr)); gap: .25rem; }
+.uo-igry .uo-instrument { display: flex; align-items: center; gap: .3rem; height: auto; padding: .25rem .4rem; font-size: .85rem; }
+.uo-igry .uo-instrument.uo-vybran { border-color: #f0d77a; box-shadow: 0 0 6px rgba(240, 215, 122, .6); }
+.uo-igry .uo-instrument-znak { font-size: 1.1rem; width: 1.2rem; text-align: center; }
+.uo-igry .uo-redaktor-stroka { display: flex; align-items: center; gap: .25rem; }
+.uo-igry .uo-redaktor-stroka select, .uo-igry .uo-redaktor-stroka input[type="text"] { flex: 1 1 0; min-width: 0; width: 0; }
+.uo-igry .uo-redaktor-stroka input[type="color"] { flex: 0 0 2.2rem; height: 1.8rem; padding: 0; }
+.uo-igry .uo-redaktor-stroka button { flex: 0 0 1.8rem; width: 1.8rem; padding: 0; }
+.uo-igry .uo-redaktor-itog { color: var(--uo-simvol); font-weight: 600; }
+.uo-igry .uo-strelka { font-size: .6rem; position: absolute; bottom: 1px; right: 2px; }
+.uo-igry .uo-redaktor-prizm .uo-prizma-kletka { cursor: pointer; }
+.uo-igry .uo-rychnaja { display: flex; gap: .4rem; }
+.uo-igry .uo-rychnaja button { flex: 1; }
+
 .uo-igry .uo-cherda-telo {
   display: flex;
   flex-direction: column;
@@ -693,8 +764,9 @@
 .uo-igry .uo-cherda-podval fieldset,
 .uo-igry .uo-cherda-podval .uo-podskazka { grid-column: 1 / -1; }
 
-.uo-igry .uo-cherda-razmer { flex: 0 0 55%; display: flex; align-items: center; gap: .3rem; }
-.uo-igry .uo-cherda-razmer input { flex: 1 1 0; min-width: 0; }
+.uo-igry .uo-cherda-shapka label { min-width: 0; }
+.uo-igry .uo-cherda-razmer { flex: 0 0 55%; min-width: 0; display: flex; align-items: center; gap: .3rem; }
+.uo-igry .uo-cherda-razmer input[type="number"] { flex: 1 1 0; min-width: 0; width: 0; }
 
 .uo-igry .uo-cherda-masterskaja {
   display: grid;
@@ -737,6 +809,12 @@
 }
 .uo-igry .uo-cherda-podgotovka .uo-zakreplena .uo-cherda-knopki button:first-child { color: #c9a227; }
 .uo-igry .uo-cherda-podgotovka .uo-cherda-kletka { cursor: pointer; }
+
+/* В подготовке клетка не больше 6rem: широкое окно даёт место палитре, а не раздувает поле. */
+.uo-igry .uo-cherda-podgotovka .uo-cherda-pole {
+  grid-template-columns: repeat(var(--stolbcov, 4), minmax(0, 6rem));
+  justify-content: center;
+}
 
 .uo-igry .uo-cherda-deistvija { display: flex; gap: .4rem; margin-top: .3rem; }
 .uo-igry .uo-cherda-deistvija button { flex: 1; }
@@ -1137,8 +1215,81 @@
 .uo-igry .uo-prizma-kletka.uo-est-zerkalo:hover { box-shadow: 0 0 8px rgba(127, 163, 204, .6); }
 .uo-igry .uo-prizma-kletka.uo-smesitel { border-color: var(--uo-otsvet); color: var(--uo-otsvet); }
 .uo-igry .uo-prizma-kletka.uo-dovolen { box-shadow: 0 0 12px rgba(111, 174, 90, .7); }
+.uo-igry .uo-prizma-kletka.uo-razdelitel { color: #f0ece0; font-size: 1.3rem; background: rgba(255, 255, 255, .06); }
 
 .uo-kristally { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; font-size: .85rem; }
+
+/* ─── раздельное управление и таймер (общие) ─── */
+
+.uo-igry .uo-prizma-kletka { position: relative; }
+.uo-igry .uo-nomer-rychaga {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  font-size: .62rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #f0d77a;
+  text-shadow: 0 0 3px #000, 0 0 3px #000;
+}
+
+.uo-igry .uo-pult {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: .45rem;
+}
+.uo-igry .uo-rychag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .15rem;
+  height: auto;
+  padding: .55rem .3rem;
+  border: 1px solid var(--uo-ramka);
+  border-radius: 6px;
+  background: linear-gradient(#3a3440, #24202a);
+  color: var(--uo-simvol);
+}
+.uo-igry .uo-rychag:not([disabled]):hover { box-shadow: 0 0 10px var(--uo-otsvet); }
+.uo-igry .uo-rychag:not([disabled]):active { transform: translateY(2px); }
+.uo-igry .uo-rychag-nomer { font-size: 1.3rem; font-weight: 700; line-height: 1; }
+.uo-igry .uo-rychag-podpis { font-size: .8rem; color: var(--uo-otsvet); text-align: center; }
+.uo-igry .uo-nomer-rychaga.uo-tusklo { color: #9a927e; opacity: .55; }
+.uo-igry .uo-prizma-kletka.uo-pomecheno { outline: 2px solid #f0d77a; outline-offset: -2px; }
+.uo-igry .uo-podskazka-vedushchego { color: var(--uo-simvol); font-style: italic; }
+
+/* подготовка устройства: настройки | механизм | пульт */
+.uo-igry .uo-u-podgotovka {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem;
+  align-items: flex-start;
+}
+.uo-igry .uo-u-podgotovka > section { display: flex; flex-direction: column; gap: .4rem; min-width: 0; }
+.uo-igry .uo-u-podgotovka h3 { margin: 0; font-size: 1rem; }
+.uo-igry .uo-u-nastrojki { flex: 1 1 17rem; max-width: 22rem; }
+.uo-igry .uo-u-mehanizm { flex: 2 1 22rem; padding: .3rem; border-radius: 6px; }
+.uo-igry .uo-u-pult { flex: 1 1 13rem; max-width: 18rem; }
+.uo-igry .uo-u-podskazka-pole { flex-direction: column; align-items: stretch !important; }
+.uo-igry .uo-u-podskazka-pole textarea { width: 100%; }
+.uo-igry .uo-u-rychagi { display: flex; flex-direction: column; gap: .3rem; }
+.uo-igry .uo-rychag-pravka { display: flex; align-items: center; gap: .4rem; }
+.uo-igry .uo-rychag-pravka .uo-rychag-nomer { width: 1.6rem; text-align: center; color: #f0d77a; }
+.uo-igry .uo-rychag-pravka input { flex: 1; min-width: 0; }
+.uo-igry .uo-u-niz { display: flex; flex-direction: column; gap: .3rem; margin-top: .6rem; }
+.uo-igry .uo-u-niz label { display: flex; align-items: center; gap: .5rem; }
+.uo-igry .uo-u-niz label input { flex: 1; }
+.uo-igry .uo-u-pult-blok { display: flex; flex-direction: column; gap: .3rem; margin: 0; }
+.uo-igry .uo-rychag-pravka select { flex: 0 0 3.2rem; }
+.uo-igry .uo-pult-imya { margin: .3rem 0 0; font-size: .9rem; color: var(--uo-otsvet); }
+.uo-forma .uo-tajmer-pole, .uo-igry .uo-tajmer-pole { display: flex; align-items: center; gap: .3rem; flex: 0 0 55%; }
+.uo-forma .uo-tajmer-pole input, .uo-igry .uo-tajmer-pole input { flex: 1 1 0; min-width: 0; width: 0; }
+
+.uo-igry .uo-tajmer { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--uo-simvol); }
+.uo-igry .uo-tajmer.uo-malo { color: #e06a4f; }
+.uo-igry .uo-tajmer.uo-stojat { opacity: .6; }
+
+.uo-forma .uo-vslepuju { display: flex; flex-direction: column; gap: .3rem; }
 
 /* ─── двадцать одно ─── */
 
@@ -1198,3 +1349,20 @@
 .uo-igry .uo-kubik.uo-nedostupen { opacity: .35; }
 
 .uo-igry .uo-nabrano { margin: 0; }
+
+/* Рассадка за устройством: строка на место — кто сидит, сколько рычагов. */
+.uo-igry .uo-rassadka-strochka { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin: .35rem 0; }
+.uo-igry .uo-rassadka-strochka label { display: flex; align-items: center; gap: .35rem; flex: 1 1 14rem; margin: 0; }
+.uo-igry .uo-rassadka-strochka select { flex: 1 1 8rem; min-width: 7rem; }
+.uo-igry .uo-rassadka-ubrat { display: flex; align-items: center; gap: .3rem; flex: 0 0 auto; }
+.uo-igry .uo-rassadka-ubrat select { width: auto; min-width: 6rem; }
+.uo-igry .uo-rassadka-ubrat button { width: auto; padding: 0 .6rem; }
+
+/* Время в руках ведущего — своей строкой: общий ряд кнопок и так тесен. */
+.uo-igry .uo-gm-vremya { display: flex; align-items: center; justify-content: center; gap: .3rem; margin: 0 0 .4rem; }
+.uo-igry .uo-gm-vremya button { width: auto; padding: 0 .6rem; flex: 0 0 auto; }
+.uo-igry .uo-gm-podpis { opacity: .7; font-size: .9em; margin-right: .15rem; }
+.uo-igry .uo-tajmer.uo-stojat { opacity: .75; }
+
+.uo-igry .uo-rassadka-obmen { margin-top: .5rem; padding-top: .5rem; border-top: 1px solid rgba(255,255,255,.12); }
+.uo-igry .uo-rassadka-obmen button { width: auto; padding: 0 .7rem; flex: 0 0 auto; }

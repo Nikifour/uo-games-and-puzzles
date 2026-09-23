@@ -18,6 +18,7 @@ import {
   объявить, событие, запуститьМакрос, имяИгрока, забытьОкно, спрятать, спрятатьУСебя, ТЕМЫ,
 } from "./stol.mjs";
 import { полеЗаготовки, запомнитьИзДиалога, заполнить } from "./zagotovki.mjs";
+import { настройка } from "./predprosmotr.mjs";
 
 const { ApplicationV2, DialogV2 } = foundry.applications.api;
 const экранировать = s => foundry.utils.escapeHTML(String(s ?? ""));
@@ -366,9 +367,9 @@ export async function диалогПутей(заготовка = null, имяЗ
   const игроки = game.users.filter(u => !u.isGM).map(u =>
     `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}</label>`).join("");
 
-  return DialogV2.wait({
+  return настройка({
+    тип: "puti",
     window: { title: Т("Новая карта путей"), icon: "fa-solid fa-route" },
-    position: { width: 560 },
     content: `
       <div class="uo-forma">
         <label>${Т("Название")} <input type="text" name="название" value="${Т("Карта путей")}"></label>
@@ -406,26 +407,21 @@ export async function диалогПутей(заготовка = null, имяЗ
         </fieldset>
         ${полеЗаготовки(имяЗаготовки)}
       </div>`,
-    buttons: [
-      {
-        action: "выложить", label: Т("Выложить на стол"), default: true,
-        callback: async (event, кнопка, диалог) => {
-          const э = диалог.element;
-          const зн = имя => э.querySelector(`[name="${имя}"]`)?.value ?? "";
-          const поимённо = э.querySelector(`[name="кто"][value="отмеченные"]`)?.checked;
+    // Настройки из полей — окно настроек снимает их на каждую правку, чтобы
+    // показать загадку глазами игрока, и ещё раз — на «Выложить на стол».
+    снять: э => {
+        const зн = имя => э.querySelector(`[name="${имя}"]`)?.value ?? "";
+        const поимённо = э.querySelector(`[name="кто"][value="отмеченные"]`)?.checked;
 
-          return выложить(await запомнитьИзДиалога("puti", э, {
-            название: зн("название").trim(), подпись: зн("подпись").trim(),
-            узлы: зн("узлы"), рёбра: зн("рёбра"),
-            начало: зн("начало"), цель: зн("цель"), обязательные: зн("обязательные"),
-            предел: зн("предел"), тема: зн("тема").trim(),
-            макрос: зн("макрос").trim(), макросТупика: зн("макросТупика").trim(),
-            идут: поимённо ? [...э.querySelectorAll(`[name="игрок"]:checked`)].map(и => и.value) : [],
-          }));
-        },
-      },
-      { action: "отмена", label: Т("Отмена") },
-    ],
+        return {
+          название: зн("название").trim(), подпись: зн("подпись").trim(),
+          узлы: зн("узлы"), рёбра: зн("рёбра"),
+          начало: зн("начало"), цель: зн("цель"), обязательные: зн("обязательные"),
+          предел: зн("предел"), тема: зн("тема").trim(),
+          макрос: зн("макрос").trim(), макросТупика: зн("макросТупика").trim(),
+          идут: поимённо ? [...э.querySelectorAll(`[name="игрок"]:checked`)].map(и => и.value) : [],
+        };
+    },
     render: (event, диалог) => заполнить(диалог.element, заготовка),
   });
 }

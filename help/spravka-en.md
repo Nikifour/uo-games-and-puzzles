@@ -4,7 +4,7 @@
 
 A table where the GM lays out a puzzle and the players solve it. The window opens at once for everyone in the world: one person turns the dials, the rest watch, and they see it the same instant.
 
-Fourteen things sit on the table now. Eleven puzzles: the combination lock, the mosaic, the inscription, the sequence of pictures, the device with a torn manual, the hall of slabs, the hall of mirrors, the hall of prisms, the gates with inscriptions, the constellation, the map of paths. And three games to sit down at: Dice, Twenty-One, Lucky Joe. The machinery underneath is shared, and whatever comes next sits down at the same table.
+Sixteen things sit on the table now, of three kinds. **Ten puzzles** to be solved: the combination lock, the mosaic, the inscription, the sequence of pictures, the hall of slabs, the hall of mirrors, the hall of prisms, the gates with inscriptions, the constellation, the map of paths. **Three devices** where people work together — one sees, the others act: the device with a torn manual, the hall of prisms (D), the combination lock (D). And **three games** to sit down at: Dice, Twenty-One, Lucky Joe. The machinery underneath is shared, and whatever comes next sits down at the same table.
 
 ## The combination lock
 
@@ -69,6 +69,7 @@ A preset is moved by the folder button in its row: pick a shelf from the list �
 
 - **Lay out** — onto the table, as usual.
 - **Hidden** — onto the table, but the players cannot see it. This is how an evening is prepared: before the session lay out the lock, the hall of slabs and the mechanism hidden, then reveal each in its moment with "Show". That button sits in the "On the table now" list.
+- **"Bring the window back"** — for when a player closed their window with the cross. The cross closes the window for that player alone, and the puzzle stays on the table; the button brings the window back for those who closed it and leaves alone those who still have it open.
 - **Edit** — open the dialog filled with the preset's settings. Save under the same name and the preset is rewritten; under a new one and a second preset appears beside it.
 - **Forget** — remove it from the store. Puzzles already laid out stay on the table.
 
@@ -201,15 +202,68 @@ One player stands at the mechanism and pulls the levers. The others see the pane
 
 **The fragment is delivered by the server, by name.** It is never sent to anyone else's client, so there is nothing to peek at through F12 — the same way the GM tells a cheat about loaded dice. If the page was reloaded and the fragment vanished, the window asks for it again by itself, and the GM can resend to everyone with a button.
 
-**The device store** is "Settings → Module settings → UO · Games and Puzzles → Devices". There you set the name, the list of levers, the correct order (lever numbers separated by spaces) and the fragments of the manual. The main rule when writing one: the order must follow **from all the fragments together and from no single one alone** — that is the whole point.
+**The device store** lives right in the placing window: the "New device" and "Edit selected" buttons (with "Forget device" inside), and if there are no devices yet, the new-device window opens by itself. A device has a name, the list of levers, the correct order (lever numbers separated by spaces) and the fragments of the manual. The main rule when writing one: the order must follow **from all the fragments together and from no single one alone** — that is the whole point.
 
 The fragments go round in turn: if there are more of them than hands, somebody gets two; if fewer, somebody is left an adviser without a slip.
 
 By default a mistake **resets the levers** — one click and it starts over. This can be switched off, and then the mechanism waits to the end of the sequence. A miss limit jams the mechanism; the GM gets "Count it solved", "Reset", "Send the fragments again" and a look at the whole thing at once.
 
+## Split control: (D)
+
+In the entries marked **(D)** one person sees the field and the others touch
+it. This is not a puzzle setting but a kind of its own: the same hall of
+prisms or the same lock, but dealt out to two people or more.
+
+**The navigator** sees everything — the beams, the mirrors, the dials — and
+can turn nothing. The others get **a panel of labelled levers**: a lever moves
+one mirror or one dial, and which one is known to the navigator alone, with
+the order of the levers shuffled. That is the whole game: the navigator
+explains in words, the others press.
+
+**Panels are shared out between players.** A panel can belong to a named
+player or to anyone; the GM writes the lever labels themselves, however suits
+them — "top left", "the squeaky one".
+
+**The numbers on the field are placed by the GM.** The navigator sees a number
+only on the mirrors the GM marked: mark them all and it is easy, mark three
+out of twelve and there will be a lot of explaining. The navigator gets no
+built-in hints at all.
+
+**Time.** Set in minutes and seconds, kept by the server clock, so it is the
+same for everyone. When it runs out the mechanism freezes; "Reset" winds the
+clock again.
+
+The GM gets a time row of their own: **"−30 s", "Pause" and "+30 s"**.
+The pause stops the count for everyone at once and lives on the table rather
+than in somebody's browser: close the window, leave the world and come back —
+the clock still stands, and time never runs out while it does. "+30 s" and "−30 s"
+add and take away half a minute; it cannot go below zero — if time is up, let the
+GM say so rather than one stray click.
+
+In the **Lock (D)** a lever moves a dial one step on. Give **two levers per
+dial** and it can be turned both ways. The code is checked by the navigator —
+the only one who can see what the dials show.
+
+**Who is where.** Roles change as the evening goes: a player drops out,
+two of them swap seats, someone steps away from the table. The **"Who is
+where…"** button in the GM's device window changes the seating at the live
+table — no need to replay the lay-out, and everything the table has already
+turned stays where it is.
+
+Pick someone who already sits somewhere and the two **swap places**, in any
+direction: panel with panel, navigator with panel. When two people are at the
+device, the same window has a **"Swap places"** button: at the table the
+request sounds like that, not like "make the one at the panel the navigator". A panel can also be left
+to "anyone". Someone has to see the field, so there is no navigator-less
+device.
+
+**Removing a panel** is in the same window: its levers go to the panel you
+choose. Lever numbers run through and do not change: the navigator says "the
+fifth", and the fifth stays the fifth — it is just in someone else's hands now.
+
 ## The sequence of pictures
 
-Put pictures into the cells of a field the way the GM intended: six frescoes by event, coats of arms on a shield, steps of a rite. The field is not just a row: any grid up to 6 × 12.
+Put pictures into the cells of a field the way the GM intended: six frescoes by event, coats of arms on a shield, steps of a rite. The field is not just a row: any grid up to 12 × 12.
 
 **Preparation.** Panel → "Sequence" opens the preparation window. Set the field size, take a picture from the set on the right (or "Own file…") and click a cell — or drag it. This is how you lay out the solution. Every picture on the field has a lock:
 

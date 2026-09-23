@@ -21,6 +21,7 @@ import {
   объявить, событие, запуститьМакрос, забытьОкно, спрятать, спрятатьУСебя, ТЕМЫ,
 } from "./stol.mjs";
 import { полеЗаготовки, запомнитьИзДиалога, заполнить } from "./zagotovki.mjs";
+import { настройка } from "./predprosmotr.mjs";
 
 const { ApplicationV2, DialogV2 } = foundry.applications.api;
 const экранировать = s => foundry.utils.escapeHTML(String(s ?? ""));
@@ -341,9 +342,9 @@ export async function диалогМозаики(заготовка = null, им
   const игроки = game.users.filter(u => !u.isGM).map(u =>
     `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}</label>`).join("");
 
-  return DialogV2.wait({
+  return настройка({
+    тип: "mozaika",
     window: { title: Т("Новая мозаика"), icon: "fa-solid fa-puzzle-piece" },
-    position: { width: 480 },
     content: `
       <div class="uo-forma">
         <label>${Т("Название")} <input type="text" name="название" value="${Т("Мозаика")}"></label>
@@ -384,25 +385,20 @@ export async function диалогМозаики(заготовка = null, им
         </fieldset>
         ${полеЗаготовки(имяЗаготовки)}
       </div>`,
-    buttons: [
-      {
-        action: "выложить", label: Т("Выложить на стол"), default: true,
-        callback: async (event, кнопка, диалог) => {
-          const э = диалог.element;
-          const зн = имя => э.querySelector(`[name="${имя}"]`)?.value?.trim() ?? "";
-          const галка = имя => !!э.querySelector(`[name="${имя}"]`)?.checked;
-          const поимённо = э.querySelector(`[name="кто"][value="отмеченные"]`)?.checked;
+    // Настройки из полей — окно настроек снимает их на каждую правку, чтобы
+    // показать загадку глазами игрока, и ещё раз — на «Выложить на стол».
+    снять: э => {
+        const зн = имя => э.querySelector(`[name="${имя}"]`)?.value?.trim() ?? "";
+        const галка = имя => !!э.querySelector(`[name="${имя}"]`)?.checked;
+        const поимённо = э.querySelector(`[name="кто"][value="отмеченные"]`)?.checked;
 
-          return выложить(await запомнитьИзДиалога("mozaika", э, {
-            название: зн("название"), подпись: зн("подпись"), картинка: зн("картинка"),
-            сторона: зн("сторона"), тема: зн("тема"), предел: зн("предел"), дыра: зн("дыра"),
-            образец: галка("образец"), макрос: зн("макрос"),
-            двигают: поимённо ? [...э.querySelectorAll(`[name="игрок"]:checked`)].map(и => и.value) : [],
-          }));
-        },
-      },
-      { action: "отмена", label: Т("Отмена") },
-    ],
+        return {
+          название: зн("название"), подпись: зн("подпись"), картинка: зн("картинка"),
+          сторона: зн("сторона"), тема: зн("тема"), предел: зн("предел"), дыра: зн("дыра"),
+          образец: галка("образец"), макрос: зн("макрос"),
+          двигают: поимённо ? [...э.querySelectorAll(`[name="игрок"]:checked`)].map(и => и.value) : [],
+        };
+    },
     render: (event, диалог) => {
       заполнить(диалог.element, заготовка);
       const поле = диалог.element.querySelector(`[name="картинка"]`);

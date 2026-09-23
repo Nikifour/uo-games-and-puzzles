@@ -34,7 +34,7 @@ import { запомнить } from "./zagotovki.mjs";
 const { ApplicationV2 } = foundry.applications.api;
 const экранировать = s => foundry.utils.escapeHTML(String(s ?? ""));
 
-export const СТРОК_НАИБОЛЬШЕ = 6;
+export const СТРОК_НАИБОЛЬШЕ = 12;
 export const СТОЛБЦОВ_НАИБОЛЬШЕ = 12;
 
 const вПределах = (ч, от, до, умолчание) => {
@@ -939,7 +939,7 @@ export class ОкноПодготовки extends ApplicationV2 {
               ${вРуке ? ` ${Т("В руке: {что}.", { что: экранировать(вРуке.подпись || вРуке.путь.split("/").pop()) })}` : ""}</p>
             <div class="uo-cherda-zapas uo-cherda-primanki ${вРуке && р.откуда !== "приманка" ? "uo-mozhno" : ""}" data-action="вПриманки">
               <div class="uo-cherda-zagolovok">${Т("Приманки")}
-                <span class="uo-podskazka">${Т("— щёлкните сюда с картинкой в руке, чтобы добавить")}</span></div>
+                <span class="uo-podskazka">${Т("— перетащите сюда для добавления в список приманок")}</span></div>
               <div class="uo-cherda-kuski">${приманки || `<p class="uo-podskazka">${Т("Приманок нет.")}</p>`}</div>
             </div>
           </div>

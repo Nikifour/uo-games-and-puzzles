@@ -486,7 +486,7 @@ function подкрутить(бросок) {
 async function проверитьПодмену(стол, индекс) {
   const шулер = стол.места[индекс];
   const актёр = актёрМеста(шулер);
-  const мод = шулер.бот ? ЛОВКОСТЬ_БОТА : (актёр?.system?.skills?.sle?.total ?? 0);
+  const мод = шулер.бот ? ЛОВКОСТЬ_БОТА : (актёр?.system?.skills?.slt?.total ?? 0);
 
   const бросок = await new Roll(`1d20 + ${мод}`).evaluate();
   const итог = бросок.total;

@@ -20,6 +20,7 @@ import {
   забытьОкно, спрятать, спрятатьУСебя, ТЕМЫ,
 } from "./stol.mjs";
 import { полеЗаготовки, запомнитьИзДиалога, заполнить } from "./zagotovki.mjs";
+import { настройка } from "./predprosmotr.mjs";
 
 const { ApplicationV2, DialogV2 } = foundry.applications.api;
 const экранировать = s => foundry.utils.escapeHTML(String(s ?? ""));
@@ -357,9 +358,9 @@ export async function диалогПлит(заготовка = null, имяЗа
   const игроки = game.users.filter(u => !u.isGM).map(u =>
     `<label class="uo-igrok"><input type="checkbox" name="игрок" value="${u.id}"> ${экранировать(u.name)}</label>`).join("");
 
-  return DialogV2.wait({
+  return настройка({
+    тип: "plity",
     window: { title: Т("Новый зал плит"), icon: "fa-solid fa-shoe-prints" },
-    position: { width: 480 },
     content: `
       <div class="uo-forma">
         <label>${Т("Название")} <input type="text" name="название" value="${Т("Зал плит")}"></label>
@@ -388,26 +389,21 @@ export async function диалогПлит(заготовка = null, имяЗа
         </fieldset>
         ${полеЗаготовки(имяЗаготовки)}
       </div>`,
-    buttons: [
-      {
-        action: "выложить", label: Т("Выложить на стол"), default: true,
-        callback: async (event, кнопка, диалог) => {
-          const э = диалог.element;
-          const зн = имя => э.querySelector(`[name="${имя}"]`)?.value?.trim() ?? "";
-          const поимённо = э.querySelector(`[name="кто"][value="отмеченные"]`)?.checked;
+    // Настройки из полей — окно настроек снимает их на каждую правку, чтобы
+    // показать загадку глазами игрока, и ещё раз — на «Выложить на стол».
+    снять: э => {
+        const зн = имя => э.querySelector(`[name="${имя}"]`)?.value?.trim() ?? "";
+        const поимённо = э.querySelector(`[name="кто"][value="отмеченные"]`)?.checked;
 
-          return выложить(await запомнитьИзДиалога("plity", э, {
-            название: зн("название"), подпись: зн("подпись"),
-            ширина: зн("ширина"), высота: зн("высота"), откат: зн("откат"),
-            помнитьЛовушки: !!э.querySelector(`[name="помнить"]`)?.checked,
-            предел: зн("предел"), макрос: зн("макрос"), макросЛовушки: зн("макросЛовушки"),
-            тема: зн("тема"),
-            шагают: поимённо ? [...э.querySelectorAll(`[name="игрок"]:checked`)].map(и => и.value) : [],
-          }));
-        },
-      },
-      { action: "отмена", label: Т("Отмена") },
-    ],
+        return {
+          название: зн("название"), подпись: зн("подпись"),
+          ширина: зн("ширина"), высота: зн("высота"), откат: зн("откат"),
+          помнитьЛовушки: !!э.querySelector(`[name="помнить"]`)?.checked,
+          предел: зн("предел"), макрос: зн("макрос"), макросЛовушки: зн("макросЛовушки"),
+          тема: зн("тема"),
+          шагают: поимённо ? [...э.querySelectorAll(`[name="игрок"]:checked`)].map(и => и.value) : [],
+        };
+    },
     render: (event, диалог) => заполнить(диалог.element, заготовка),
   });
 }
