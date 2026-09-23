@@ -924,5 +924,16 @@
   "Остановить часы у всех": "Stop the clock for everyone",
   "Поменять местами": "Swap places",
   "Поменялись местами": "They swapped places",
-  "штурман встанет к пульту, а тот — к полю": "the navigator moves to the panel, and the panel to the field"
+  "штурман встанет к пульту, а тот — к полю": "the navigator moves to the panel, and the panel to the field",
+  "Взять из журнала": "Take it from the journal",
+  "Взять": "Take it",
+  "Запись": "Entry",
+  "Страница": "Page",
+  "Из журнала…": "From the journal…",
+  "Взять текст со страницы журнала": "Take the text from a journal page",
+  "В журнале нет записей с текстом.": "There are no journal entries with text.",
+  "На этой странице текста нет.": "There is no text on this page.",
+  "Знаков: {сколько}. Начало: {начало}…": "Characters: {сколько}. It starts: {начало}…",
+  "Текст ляжет в поле и дальше правится как обычно: со страницей он не связан, и её правка загадку не тронет.": "The text goes into the field and is edited as usual: it is not linked to the page, so editing the page later will not touch the puzzle.",
+  "Надпись очень длинная — {сколько} знаков. Подстановку такой длины за столом разбирают долго; обычно хватает двух-трёх строк.": "The inscription is very long — {сколько} characters. A substitution cipher that long takes ages at the table; two or three lines is usually enough."
 }

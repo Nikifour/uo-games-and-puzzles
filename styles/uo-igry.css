@@ -487,6 +487,8 @@
   line-height: 1.5;
   text-align: center;
   word-break: break-word;
+  /* Надпись со страницы журнала приходит с переносами — показываем как есть. */
+  white-space: pre-wrap;
   font-family: "Segoe UI Historic", "Segoe UI Symbol", "Signika", serif;
 }
 
@@ -1366,3 +1368,9 @@
 
 .uo-igry .uo-rassadka-obmen { margin-top: .5rem; padding-top: .5rem; border-top: 1px solid rgba(255,255,255,.12); }
 .uo-igry .uo-rassadka-obmen button { width: auto; padding: 0 .7rem; flex: 0 0 auto; }
+
+/* Длинные поля: растут под текст (высоту ставит окно настроек), кнопка под полем. */
+.uo-igry .uo-nastrojka-forma textarea { min-height: 3.2rem; resize: vertical; line-height: 1.35; }
+.uo-igry .uo-dlinnoe { display: flex; flex-direction: column; align-items: stretch; gap: .2rem; }
+.uo-igry .uo-pod-polem { display: flex; justify-content: flex-end; margin: -.2rem 0 .4rem; }
+.uo-igry .uo-pod-polem button { width: auto; padding: 0 .7rem; flex: 0 0 auto; }

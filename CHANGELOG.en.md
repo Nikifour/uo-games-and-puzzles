@@ -3,6 +3,13 @@
 One section per version, newest first. The in-Foundry "What's new" notice,
 the GitHub release notes and the Boosty post all come from here.
 
+## 0.29.1 — 2026-09-23
+
+- **A long field grows with the text.** "What it says" in the Inscription used to be a single line: a long inscription could be neither read nor edited in it. The field now follows the text and scrolls beyond that. It is done in the settings window itself, so the gates' doors, the scraps of the manual and every other multi-line field grew along with it.
+- **"From the journal…".** An inscription, a letter or a prophecy is usually already written in the world's journal. The button under the field asks for an entry and a page and puts their text into the field: the markup is stripped and paragraphs become line breaks. No link to the page remains — editing the journal will not touch a puzzle already on the table.
+- The inscription is shown with its line breaks, as it was written.
+- For an inscription longer than 400 characters the settings window warns: a substitution cipher that long takes a long time at the table.
+
 ## 0.29.0 — 2026-09-23
 
 - **A new "Devices" section.** A puzzle is solved, a game is played, and at a device people work together: one sees, the others act. There used to be exactly one such thing — the Device and the Torn Manual — and it sat among the puzzles. It is now a kind of its own, and there are three.

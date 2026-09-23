@@ -292,6 +292,16 @@ The GM types a phrase, the module enciphers it, the players work it out. There a
 
 **Substitution** is a real puzzle. Every letter is replaced by its own, in no order; brute force is out, there are more variants than stars. It is played differently: you look at short words, at repeated letters, at endings — and substitute one at a time. At the bottom of the window are the cipher letters that occur in the inscription and the alphabet: click a cipher letter, click what it means. Solved letters glow in the inscription, unsolved ones stay dim. Clicking a taken letter again erases the guess.
 
+**Where the text comes from.** The "What it says" field follows the text, so
+a long inscription is visible in full. And if it is already written in the
+world's journal, the **"From the journal…"** button under the field asks for
+an entry and a page and puts their text into the field: the markup is
+stripped and paragraphs become line breaks. The text is then edited as usual
+and is not linked to the page — editing the journal will not touch a puzzle
+already on the table. For an inscription longer than four hundred characters
+the settings window warns: a substitution cipher that long takes a long time
+at the table.
+
 **The wheel** is a couple of minutes of ritual, not a puzzle. The letters are shifted around the ring of the alphabet, there are only thirty-odd settings, and every one can be flipped through with the arrows. Take it when you want not a challenge but the moment where the inscription is read aloud.
 
 **The player declares the answer, not the module.** The "Read it" button is a claim: "we think this is what it says." While the module decided, the wheel was spun blind, without reading: press the arrow until victory is announced. The attempt limit bounds the number of claims, not the number of turns.

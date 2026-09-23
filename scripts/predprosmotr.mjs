@@ -21,6 +21,7 @@ import {
 } from "./stol.mjs";
 import { Т, М } from "./yazyk.mjs";
 import { запомнитьИзДиалога } from "./zagotovki.mjs";
+import { взятьИзЖурнала } from "./zhurnal.mjs";
 
 const { ApplicationV2 } = foundry.applications.api;
 const экранировать = s => foundry.utils.escapeHTML(String(s ?? ""));
@@ -110,6 +111,34 @@ export class ОкноНастройки extends ApplicationV2 {
     э.querySelector(".uo-nastrojka-forma").addEventListener("submit", событие => событие.preventDefault());
     // Прежний хук диалога: заполнить поля из заготовки, повесить свои кнопки.
     this.н.render?.(null, { element: э, close: () => this.close(), окно: this });
+    /*
+     * Длинное поле растёт под текст. Надпись, обрывки руководства, створки
+     * врат — всё это бывает длиннее трёх строк, а прокрутка внутри поля
+     * в полтора сантиметра высотой правится мучительно.
+     */
+    const растить = поле => {
+      поле.style.height = "auto";
+      поле.style.height = `${Math.min(поле.scrollHeight + 2, 460)}px`;
+    };
+    э.querySelectorAll(".uo-nastrojka-forma textarea").forEach(растить);
+    э.querySelector(".uo-nastrojka-forma").addEventListener("input", событие => {
+      if (событие.target.tagName === "TEXTAREA") растить(событие.target);
+    });
+
+    // Кнопка «Из журнала…» у любого длинного поля: затея только ставит её рядом.
+    э.addEventListener("click", async событие => {
+      const кнопка = событие.target.closest("[data-zhurnal]");
+      if (!кнопка) return;
+      событие.preventDefault();
+      const текст = await взятьИзЖурнала();
+      if (текст === null) return;
+      const поле = э.querySelector(`[name="${кнопка.dataset.zhurnal}"]`);
+      if (!поле) return;
+      поле.value = текст;
+      if (поле.tagName === "TEXTAREA") растить(поле);
+      поле.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+
     э.querySelector(".uo-nastrojka-forma").addEventListener("input", () => this.#освежитьПозже());
     э.querySelector(".uo-nastrojka-forma").addEventListener("change", () => this.#освежитьПозже());
     this.#освежить();
