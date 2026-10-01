@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+    
+  <defs>
+    <radialGradient id="fon" cx="50%" cy="42%" r="75%">
+      <stop offset="0%" stop-color="#2a2231"/>
+      <stop offset="100%" stop-color="#110e15"/>
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#fon)"/>
+  <rect x="30.72" y="30.72" width="962.56" height="962.56" rx="61.44"
+        fill="none" stroke="#e8772e" stroke-width="12.288"/>
+    <g transform="translate(262 130) scale(1.25)">
+    <rect x="62" y="62" width="276" height="276" rx="54" fill="none" stroke="#e9d29a" stroke-width="16" transform="rotate(-8 200 200)"/>
+    <g transform="rotate(-8 200 200)">
+      <circle cx="130" cy="130" r="26" fill="#e9d29a"/><circle cx="270" cy="130" r="26" fill="#e9d29a"/><circle cx="130" cy="270" r="26" fill="#e9d29a"/><circle cx="270" cy="270" r="26" fill="#e9d29a"/>
+      <circle cx="200" cy="184" r="30" fill="#e8772e"/>
+      <path d="M 184 196 L 172 252 L 228 252 L 216 196 Z" fill="#e8772e"/>
+    </g></g>
+    <text x="512" y="772" font-family="Georgia, Cambria, serif" font-size="104" font-weight="700"
+     fill="#e9d29a" text-anchor="middle">Games</text><text x="512" y="884.32" font-family="Georgia, Cambria, serif" font-size="104" font-weight="700"
+     fill="#e9d29a" text-anchor="middle">and Puzzles</text>
+    <text x="512" y="118" font-family="Bahnschrift, 'Segoe UI', sans-serif" font-size="44" font-weight="600"
+     letter-spacing="7.92" fill="#e8772e" text-anchor="middle">UO</text>
+  </svg>

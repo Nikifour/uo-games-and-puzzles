@@ -4,7 +4,7 @@
 
 A table where the GM lays out a puzzle and the players solve it. The window opens at once for everyone in the world: one person turns the dials, the rest watch, and they see it the same instant.
 
-Sixteen things sit on the table now, of three kinds. **Ten puzzles** to be solved: the combination lock, the mosaic, the inscription, the sequence of pictures, the hall of slabs, the hall of mirrors, the hall of prisms, the gates with inscriptions, the constellation, the map of paths. **Three devices** where people work together — one sees, the others act: the device with a torn manual, the hall of prisms (D), the combination lock (D). And **three games** to sit down at: Dice, Twenty-One, Lucky Joe. The machinery underneath is shared, and whatever comes next sits down at the same table.
+Seventeen things sit on the table now, of three kinds. **Ten puzzles** to be solved: the combination lock, the mosaic, the inscription, the sequence of pictures, the hall of slabs, the hall of mirrors, the hall of prisms, the gates with inscriptions, the constellation, the map of paths. **Four devices** where people work together — one sees, the others act: the device with a torn manual, the hall of prisms (D), the combination lock (D), the inscription (D). And **three games** to sit down at: Dice, Twenty-One, Lucky Joe. The machinery underneath is shared, and whatever comes next sits down at the same table.
 
 ## The combination lock
 
@@ -443,3 +443,7 @@ Stake, coin and pot work as in Dice: the pot is counted by the number of seats a
 ## Language
 
 Russian in the source, English through the `lang/en.json` dictionary. Which one is used is decided by the **"Module language"** setting — each participant has their own: **"Same as Foundry"** (the default: Russian if Foundry is in Russian, English for any other language), **"Русский"** or **"English"**. So Foundry can run in English while the module speaks Russian, and the other way round. Changing it reloads the world.
+
+<!-- поддержавшие -->
+
+<!-- /поддержавшие -->

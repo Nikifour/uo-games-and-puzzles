@@ -23,8 +23,9 @@ shared window: one player turns a dial, the others watch it turn, and the
 answer is checked by the GM's client — never shipped to the players.
 <p align="center"><img src="docs/panel.png" alt="The GM panel: puzzles and games in separate sections, a description with an example unfolded" width="420"></p>
 
-The GM panel splits the eleven puzzles from the three games, and a click on a
-name unfolds a description with an example before anything is set up.
+The GM panel keeps the sixteen contraptions apart by kind — ten puzzles, three
+devices, three games — and a click on a name unfolds a description with an
+example before anything is set up.
 
 ## Installation
 
@@ -124,10 +125,14 @@ Hooks.on("uo-igry.solved", table => { /* open a door */ })
 
 ## Support
 
-The module is free. News and write-ups on how the tools are made are on Boosty:
-**[boosty.to/unshaved_orange](https://boosty.to/unshaved_orange)**.
+The module is free. News and write-ups on how the tools are made:
+**[patreon.com/unshavedorange](https://www.patreon.com/unshavedorange)** · **[boosty.to/unshaved_orange](https://boosty.to/unshaved_orange)** (for Russia and the CIS).
 
 Bugs and ideas — [Issues](https://github.com/Nikifour/uo-games-and-puzzles/issues).
+
+<!-- поддержавшие -->
+
+<!-- /поддержавшие -->
 
 ## License
 

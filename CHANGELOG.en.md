@@ -1,7 +1,18 @@
 # What's new in Games and Puzzles
 
 One section per version, newest first. The in-Foundry "What's new" notice,
-the GitHub release notes and the Boosty post all come from here.
+the GitHub release notes and the Patreon and Boosty posts all come from here.
+
+## 0.30.0 — 2026-10-01
+
+- **The Inscription (D) — a fourth device.** The inscription is enciphered by substitution, just like the ordinary one, and only the navigator sees it. But the substituting is not theirs to do: the values are set by rings, and the rings are turned by everyone else — from a console showing nothing but lever numbers. They never see a letter. It is played aloud: the navigator says what belongs there, the consoles hunt for the right ring. As with the ordinary Inscription, victory is declared by a person — the navigator presses "Read it" when they decide the inscription has spoken.
+- **The GM gives out the rings and decides who gets one.** The preparation window lists every distinct letter of the inscription: your letter on top, and below it in small type what it is written as in the cipher. Tick it and the letter gets a ring. Three buttons sit beside them: **"Deal at random"**, **"Deal to the frequent"** (to the most common letters — such a letter surfaces in several places at once, giving the navigator something to hold on to) and **"Another cipher"**.
+- **A ring starts at "unsolved".** Until it is touched, the cipher letter stands in its place, so the inscription begins as pure ciphertext. A ring has one position more than it has letters: five candidates plus an empty one. The empty one is there so a wrong guess can be taken back — otherwise the navigator would be stuck with a false character forever.
+- **There may be fewer rings than cipher letters, and that is the GM's call.** A letter without a ring can be changed by nobody: the navigator has no controls and the consoles have only levers. While such letters remain, the inscription will never come together and "Read it" will not count. The preparation window says so plainly and counts the shortfall. The **"A ring for every letter"** button fills the rings in to cover the whole cipher; not pressing it is a move too — then the table will not finish reading it, and the GM ends it with "Credit it". **"Reveal a letter"** is still there as well, and it opens any letter, including one that was given no ring.
+- The Inscription (D) has a **timer** and **reseating**, like every other device. When the time runs out the inscription falls silent; "Reset" winds the clock again and returns the rings to their empty position, so the inscription becomes pure ciphertext once more. The "Who's where…" button swaps the navigator and the console owners without touching the levers or anything already worked out.
+- **Work in progress is no longer lost on a reload.** Guesses and ring positions reach the table at once and are written to the world when the hand rests. In the Inscription they used to live only in the clients' memory until "Read it", so a reload mid-solve reset everything. This covers both the ordinary Inscription and the device.
+- **The length of the set on a ring is the difficulty.** A lever moves a ring one step, so the longer the set, the longer the search. By default a ring holds five candidates: the correct letter and four others. If it drags at the table, cut the set rather than the rings.
+- **As many discs on the lock as you need.** The old limit of eight is gone, both from the lock and from the Combination Lock (D). Worth knowing: the difficulty comes not from the number of discs but from the length of the set on each one. A lever moves a disc one step, so an alphabet of thirty-two letters takes thirty-two presses — if the game drags, cut the set, not the count.
 
 ## 0.29.1 — 2026-09-23
 

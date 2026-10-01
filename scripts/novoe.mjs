@@ -22,7 +22,10 @@
  * модуле и копируется в остальные дословно.
  */
 
+import { ПОДДЕРЖАВШИЕ } from "./podderzhavshie.mjs";
+
 const ID = new URL(import.meta.url).pathname.match(/\/modules\/([^/]+)\//)?.[1];
+const PATREON = "https://www.patreon.com/unshavedorange";
 const BOOSTY = "https://boosty.to/unshaved_orange";
 
 const СЛОВА = {
@@ -35,8 +38,9 @@ const СЛОВА = {
     понятно: "Понятно",
     позже: "Напомнить позже",
     неНапоминать: "Не напоминать об этой версии",
-    новости: "Новости и разборы — на <a href=\"{boosty}\">Boosty</a>.",
+    новости: "Новости и разборы — на <a href=\"{patreon}\">Patreon</a> и <a href=\"{boosty}\">Boosty</a>.",
     пусто: "Подробностей в списке изменений нет.",
+    спасибо: "Спасибо тем, кто держит это на плаву: {имена}.",
     настройка: "Сообщать о новых версиях",
     настройкаПодсказка: "Раз в запуск спрашивать GitHub, не вышла ли новая версия модуля, и показывать ведущему её список изменений.",
   },
@@ -49,8 +53,9 @@ const СЛОВА = {
     понятно: "Got it",
     позже: "Remind me later",
     неНапоминать: "Don't remind me about this version",
-    новости: "News and write-ups on <a href=\"{boosty}\">Boosty</a>.",
+    новости: "News and write-ups on <a href=\"{patreon}\">Patreon</a> and <a href=\"{boosty}\">Boosty</a>.",
     пусто: "The changelog has no details for this version.",
+    спасибо: "Thanks to the people keeping this afloat: {имена}.",
     настройка: "Announce new versions",
     настройкаПодсказка: "Once per launch, ask GitHub whether a new version of the module is out and show its changelog to the GM.",
   },
@@ -164,7 +169,8 @@ async function показать({ заголовок, тело, кнопки }) 
     window: { title: заголовок, icon: "fa-solid fa-gift" },
     position: { width: 520 },
     content: `<div class="uo-novoe" style="max-height: 60vh; overflow-y: auto">${тело}
-      <p class="notes" style="margin-top: .8em">${слово("новости", { boosty: BOOSTY })}</p></div>`,
+      <p class="notes" style="margin-top: .8em">${слово("новости", { patreon: PATREON, boosty: BOOSTY })}</p>
+      ${ПОДДЕРЖАВШИЕ.length ? `<p class="notes">${слово("спасибо", { имена: ПОДДЕРЖАВШИЕ.join(", ") })}</p>` : ""}</div>`,
     buttons: кнопки,
     rejectClose: false,
   }).catch(() => null);

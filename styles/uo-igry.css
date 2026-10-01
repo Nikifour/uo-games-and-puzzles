@@ -192,8 +192,18 @@
 .uo-forma label select { flex: 0 0 55%; }
 .uo-forma fieldset { border: 1px solid rgba(128, 128, 128, .4); border-radius: 4px; padding: .3rem .5rem; }
 .uo-forma .uo-igrok { justify-content: flex-start; }
-.uo-forma .uo-ustrojstvo-knopki { display: flex; gap: .4rem; }
-.uo-forma .uo-ustrojstvo-knopki button { flex: 1; }
+/*
+ * Кнопки механизма. Ряд переносится, а кнопка тянется по своей подписи:
+ * «Кольцо на каждую букву» вчетверо длиннее «Другого шифра», и при равной
+ * доле на всех длинная подпись сминалась в три строки и вылезала за край.
+ */
+.uo-forma .uo-ustrojstvo-knopki { display: flex; flex-wrap: wrap; gap: .4rem; }
+.uo-forma .uo-ustrojstvo-knopki button {
+  flex: 1 1 auto;
+  min-width: max-content;
+  white-space: nowrap;
+  padding-inline: .5rem;
+}
 .uo-forma .uo-podskazka { margin: .1rem 0; font-size: .85rem; opacity: .8; }
 .uo-forma h3 { margin: 0 0 .2rem; }
 
@@ -833,6 +843,98 @@
 
 .uo-igry .uo-nadpis .uo-temno { color: var(--uo-otsvet); opacity: .45; }
 .uo-igry .uo-nadpis .uo-razobrano { color: var(--uo-simvol); }
+
+/* ─── надпись вслепую: кольца ───
+ *
+ * Выветренный знак подсвечивается в самой надписи: вокруг него всё стоит
+ * верным, и штурману надо с первого взгляда видеть, за какие буквы идёт
+ * борьба. Без пометки он искал бы их перебором глазами.
+ */
+
+/* ─── выбор букв под кольца ───
+ *
+ * Ведущий отмечает буквы своей фразы; под каждой показано, чем она записана
+ * в шифре, — чтобы он видел, какой знак встанет в надписи у штурмана.
+ */
+
+.uo-igry .uo-bukvy-vybor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  margin: .4rem 0;
+}
+
+.uo-igry .uo-bukva-vybor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 2.1rem;
+  padding: .15rem .2rem;
+  border: 1px solid var(--uo-otsvet);
+  border-radius: .25rem;
+  cursor: pointer;
+  line-height: 1.1;
+}
+
+.uo-igry .uo-bukva-vybor input { display: none; }
+.uo-igry .uo-bukva-vybor .uo-verh { font-size: 1.05rem; }
+.uo-igry .uo-bukva-vybor .uo-niz { font-size: .75rem; opacity: .55; }
+
+.uo-igry .uo-bukva-vybor.uo-vybrana {
+  border-color: var(--uo-udacha);
+  color: var(--uo-udacha);
+}
+
+/* Предупреждение в окне подготовки: его легко пролистать мимо. */
+.uo-igry .uo-podskazka.uo-vnimanie {
+  color: var(--uo-udacha);
+  border-left: 2px solid currentColor;
+  padding-left: .5rem;
+}
+
+.uo-igry .uo-koltso-bukva {
+  color: var(--uo-udacha);
+  border-bottom: 1px dashed currentColor;
+}
+
+/*
+ * Кольцо, которого ещё не касались, стоит шифр-буквой: цвет берём у
+ * неразгаданного, а подчёркивание оставляем — оно и говорит штурману, что
+ * этот знак вообще можно сдвинуть, в отличие от соседей.
+ */
+.uo-igry .uo-koltso-bukva.uo-temno,
+.uo-igry .uo-koltso .uo-simvol.uo-temno {
+  color: var(--uo-otsvet);
+  opacity: .55;
+}
+
+.uo-igry .uo-koltsa {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin: .5rem 0;
+}
+
+.uo-igry .uo-koltso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .15rem;
+}
+
+.uo-igry .uo-koltso .uo-simvol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  padding: .2rem 0;
+  background: var(--uo-fon);
+  border: 1px solid var(--uo-otsvet);
+  border-radius: .25rem;
+  font-size: 1.2rem;
+  color: var(--uo-udacha);
+}
 
 .uo-igry .uo-shifrbukvy,
 .uo-igry .uo-azbuka-plain {
