@@ -1,7 +1,7 @@
 {
   "id": "uo-igry",
   "title": "UO · Games and Puzzles",
-  "description": "<p>Interactive puzzles and tavern dice games that the whole table plays together: the GM lays a puzzle out, the players solve it and everyone sees every move at once. Ten puzzles — combination lock, sequence, mosaic, gates, constellation, map of paths, halls of mirrors, prisms and slabs, ciphers — three devices where one player sees and the others act, and three dice games with bot opponents, stakes and loaded dice. English and Russian.</p><p>Интерактивные загадки, устройства и настольные игры за одним столом: ведущий выкладывает, игроки решают, все видят одно и то же.</p>",
+  "description": "<p>Interactive puzzles and tavern dice games that the whole table plays together: the GM lays a puzzle out, the players solve it and everyone sees every move at once. Ten puzzles — combination lock, sequence, mosaic, gates, constellation, map of paths, halls of mirrors, prisms and slabs, ciphers — four devices where one player sees and the others act, and three dice games with bot opponents, stakes and loaded dice. English and Russian.</p><p>Интерактивные загадки, устройства и настольные игры за одним столом: ведущий выкладывает, игроки решают, все видят одно и то же.</p>",
   "version": "0.30.0",
   "url": "https://github.com/Nikifour/uo-games-and-puzzles",
   "manifest": "https://github.com/Nikifour/uo-games-and-puzzles/releases/latest/download/module.json",

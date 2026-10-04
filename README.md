@@ -23,7 +23,7 @@ shared window: one player turns a dial, the others watch it turn, and the
 answer is checked by the GM's client — never shipped to the players.
 <p align="center"><img src="docs/panel.png" alt="The GM panel: puzzles and games in separate sections, a description with an example unfolded" width="420"></p>
 
-The GM panel keeps the sixteen contraptions apart by kind — ten puzzles, three
+The GM panel keeps the seventeen contraptions apart by kind — ten puzzles, four
 devices, three games — and a click on a name unfolds a description with an
 example before anything is set up.
 
@@ -72,7 +72,7 @@ https://github.com/Nikifour/uo-games-and-puzzles/releases/latest/download/module
 
 <p align="center"><img src="docs/slabs.png" alt="Hall of slabs with the GM's view of the path" width="420"></p>
 
-## Three devices
+## Four devices
 
 A puzzle is solved, a game is played, and at a device people **work together**:
 one sees, the others act. The one who sees gets no hints — only what they
@@ -83,8 +83,9 @@ manage to put into words.
 | **Device and the Torn Manual** | One player works the levers, the others each hold a different scrap of the manual, sent privately — the order comes only from all of them together. |
 | **Hall of Prisms (D)** | Only the navigator sees the beams, the mirrors and their numbers. Everyone else stands at a panel of labelled levers, and which lever turns which mirror is known to the navigator alone. Levers are split between panels, and a panel can belong to a named player. |
 | **Combination Lock (D)** | The navigator sees the dials and presses "Check", while the others turn them. A lever moves a dial one step on; two levers per dial turn it both ways. |
+| **Inscription (D)** | Only the navigator sees the cipher; the letters are set by rings, and the others turn the rings from a panel that shows nothing but lever numbers. The GM picks which letters get a ring — a letter without one stays enciphered to the end. |
 
-All three can be put on **a clock**: minutes and seconds by the server time.
+All four can be put on **a clock**: minutes and seconds by the server time.
 When it runs out the mechanism freezes, and "Reset" winds the clock again.
 
 ## Three tavern games
