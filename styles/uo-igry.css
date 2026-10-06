@@ -1476,3 +1476,373 @@
 .uo-igry .uo-dlinnoe { display: flex; flex-direction: column; align-items: stretch; gap: .2rem; }
 .uo-igry .uo-pod-polem { display: flex; justify-content: flex-end; margin: -.2rem 0 .4rem; }
 .uo-igry .uo-pod-polem button { width: auto; padding: 0 .7rem; flex: 0 0 auto; }
+
+/* ─── круглый стол для игр в кости ─── */
+/*
+ * Стол круглый. Места и полёт броска считаются в долях меньшей стороны
+ * стола (cqmin): так круг не вытягивается в овал от ширины окна, а кости
+ * летят от места к центру одинаково при любом числе игроков.
+ */
+
+.uo-igry .uo-krug {
+  position: relative;
+  height: 480px;
+  margin: .2rem 0 .3rem;
+  container-type: size;
+}
+
+.uo-igry .uo-krug-sukno {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 58cqmin;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 42%, #2f6a43 0%, #23533a 55%, #183d2a 100%);
+  border: 10px solid #5a3a22;
+  box-shadow:
+    inset 0 0 0 2px #7a5130,
+    inset 0 6px 22px rgba(0, 0, 0, .55),
+    0 0 0 2px #2e1d10,
+    0 8px 18px rgba(0, 0, 0, .45);
+  color: #e9e2cf;
+  text-align: center;
+}
+
+.uo-igry .uo-krug .uo-mesta {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+
+/* Карточка игрока у стола */
+.uo-igry .uo-krug-mesto {
+  position: absolute;
+  left: calc(50% + var(--x) * 1cqmin);
+  top: calc(50% + var(--y) * 1cqmin);
+  transform: translate(-50%, -50%);
+  width: 10.8rem;
+  padding: .3rem .45rem .35rem;
+  background: rgba(24, 22, 20, .92);
+  border: 1px solid rgba(160, 150, 130, .45);
+  border-radius: 7px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .45);
+  pointer-events: auto;
+  transition: border-color .25s, box-shadow .25s;
+}
+
+.uo-igry .uo-krug-mesto.uo-moe { border-color: rgba(200, 190, 160, .75); }
+.uo-igry .uo-krug-mesto.uo-hodit {
+  border-color: #c9a227;
+  box-shadow: 0 0 0 1px #c9a227, 0 0 14px rgba(201, 162, 39, .55);
+}
+.uo-igry .uo-krug-mesto.uo-pobeda {
+  border-color: var(--uo-udacha, #6fae5a);
+  box-shadow: 0 0 0 1px var(--uo-udacha, #6fae5a), 0 0 16px rgba(111, 174, 90, .6);
+}
+
+.uo-igry .uo-krug-imya {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: .4rem;
+  color: #ece6d6;
+}
+/* Имя может уйти на вторую строку: «Безрассудный наёмник» в одну не влезает, а обрубок не читается */
+.uo-igry .uo-krug-imya .uo-imya {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  min-width: 0;
+  line-height: 1.2;
+}
+.uo-igry .uo-krug-imya .uo-imya i { opacity: .7; font-size: .85em; }
+.uo-igry .uo-krug-imya .uo-ochki { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.uo-igry .uo-krug-niz {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  margin-top: .2rem;
+  font-size: .85rem;
+  color: #b6ad97;
+}
+
+/* Сколько пройдено до цели */
+.uo-igry .uo-polosa {
+  display: block;
+  height: 4px;
+  background: rgba(255, 255, 255, .1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.uo-igry .uo-polosa i { display: block; height: 100%; background: #c9a227; border-radius: 2px; transition: width .4s; }
+
+.uo-igry .uo-krug-otlozheno { display: flex; align-items: center; gap: .3rem; flex-wrap: wrap; }
+.uo-igry .uo-za-hod { color: #e3c766; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* «Ваш ход» под своей карточкой */
+.uo-igry .uo-tvoj-hod-metka {
+  margin-top: .25rem;
+  text-align: center;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #1b1b1e;
+  background: #c9a227;
+  border-radius: 3px;
+  animation: uo-migaet 1.6s ease-in-out infinite;
+}
+
+/* Бот думает: три точки */
+.uo-igry .uo-dumaet { display: flex; justify-content: center; gap: 4px; margin-top: .25rem; }
+.uo-igry .uo-dumaet i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c9a227;
+  animation: uo-tochka 1.1s ease-in-out infinite;
+}
+.uo-igry .uo-dumaet i:nth-child(2) { animation-delay: .18s; }
+.uo-igry .uo-dumaet i:nth-child(3) { animation-delay: .36s; }
+
+/* Облачко с решением: над карточкой, у верхних мест — под ней */
+.uo-igry .uo-replika {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 13rem;
+  padding: .25rem .55rem;
+  background: #ece6d6;
+  color: #1b1b1e;
+  font-size: .85rem;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .5);
+  z-index: 3;
+  animation: uo-vsplyvaet .25s ease-out;
+}
+.uo-igry .uo-replika::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #ece6d6;
+}
+.uo-igry .uo-krug-mesto.uo-sverhu .uo-replika { bottom: auto; top: calc(100% + 8px); }
+.uo-igry .uo-krug-mesto.uo-sverhu .uo-replika::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: #ece6d6;
+}
+
+/* Кость с точками */
+.uo-igry .uo-gran {
+  display: inline-grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  width: 1.15rem;
+  height: 1.15rem;
+  padding: 12%;
+  box-sizing: border-box;
+  background: linear-gradient(145deg, #fbf7ec, #ddd5c0);
+  border-radius: 18%;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .18), 0 1px 2px rgba(0, 0, 0, .5);
+  vertical-align: middle;
+}
+.uo-igry .uo-gran i { width: 74%; height: 74%; margin: auto; border-radius: 50%; background: #2a211b; }
+.uo-igry .uo-gran[data-g="1"] i { background: #9c2a22; width: 90%; height: 90%; }
+
+.uo-igry .uo-ryad-kostej { display: inline-flex; gap: 3px; flex-wrap: wrap; }
+
+/* Кости на сукне */
+.uo-igry .uo-na-sukne {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: .55rem .7rem;
+  max-width: 76%;
+  min-height: 3.4rem;
+}
+
+.uo-igry .uo-kost-sukno {
+  all: unset;
+  display: inline-block;
+  transform: translate(var(--dx), var(--dy)) rotate(var(--r));
+  transition: transform .2s, filter .2s;
+  border-radius: 20%;
+}
+.uo-igry .uo-kost-sukno .uo-gran {
+  width: 2.6rem;
+  height: 2.6rem;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .2), 0 3px 6px rgba(0, 0, 0, .55);
+}
+.uo-igry button.uo-kost-sukno { cursor: pointer; }
+.uo-igry button.uo-kost-sukno:hover { filter: brightness(1.08); transform: translate(var(--dx), calc(var(--dy) - 3px)) rotate(var(--r)); }
+.uo-igry button.uo-kost-sukno:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+
+/* Выбранная кость — своя или та, что выбрал бот, — горит одинаково */
+.uo-igry .uo-kost-sukno.uo-vybrana { transform: translate(var(--dx), calc(var(--dy) - 6px)) rotate(var(--r)) scale(1.08); }
+.uo-igry .uo-kost-sukno.uo-vybrana .uo-gran { box-shadow: 0 0 0 3px #c9a227, 0 0 16px 3px rgba(240, 200, 70, .75); }
+.uo-igry .uo-kost-sukno.uo-pusto .uo-gran {
+  filter: grayscale(.4) brightness(.8);
+  box-shadow: 0 0 0 2px #b4553f, 0 0 12px rgba(180, 85, 63, .7);
+}
+
+/* Полёт: от места бросавшего к центру, с разворотом и лёгким отскоком */
+.uo-igry .uo-kost-sukno.uo-letit {
+  animation: uo-brosok .6s cubic-bezier(.2, .7, .3, 1.15) both;
+  animation-delay: var(--zaderzhka);
+}
+@keyframes uo-brosok {
+  from {
+    transform: translate(calc(var(--ot-x) * 1cqmin), calc(var(--ot-y) * 1cqmin)) rotate(calc(var(--r) + 420deg)) scale(.55);
+    opacity: 0;
+  }
+  15% { opacity: 1; }
+  to { transform: translate(var(--dx), var(--dy)) rotate(var(--r)); }
+}
+
+.uo-igry .uo-v-ruke { font-size: .95rem; color: #cfe3d2; opacity: .8; }
+.uo-igry .uo-v-ruke i { margin-right: .25rem; }
+
+.uo-igry .uo-sukno-podpis {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+  font-size: .85rem;
+  color: #cfe3d2;
+}
+.uo-igry .uo-sukno-podpis .uo-schet { color: #e9e2cf; opacity: .85; }
+.uo-igry .uo-krug-sukno .uo-itog { margin: 0; font-size: 1.15rem; }
+
+/* Кнопки: в чужой ход гаснут, в свой — горят */
+.uo-igry .uo-krug ~ .uo-knopki { justify-content: center; }
+.uo-igry .uo-krug ~ .uo-knopki button[disabled] { opacity: .4; }
+.uo-igry .uo-knopki-pusto { min-height: var(--input-height, 2rem); }
+.uo-igry .uo-knopki button.uo-zhdet {
+  border-color: #c9a227;
+  box-shadow: 0 0 0 1px #c9a227, 0 0 12px rgba(201, 162, 39, .55);
+  animation: uo-zovet 1.8s ease-in-out infinite;
+}
+
+/* Многогранники Двадцати одного: силуэт по виду кубика */
+.uo-igry .uo-mnogogrannik {
+  --cvet: #d9cfb6;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .55));
+}
+.uo-igry .uo-mnogogrannik::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(150deg, color-mix(in srgb, var(--cvet) 100%, white 25%), var(--cvet) 55%, color-mix(in srgb, var(--cvet) 70%, black));
+  clip-path: var(--forma);
+}
+.uo-igry .uo-mnogogrannik b { position: relative; color: #1e1914; font-size: .8rem; font-weight: 800; line-height: 1; padding-top: var(--sdvig, 0); }
+.uo-igry .uo-mnogogrannik[data-d="4"] { --cvet: #c98a5a; --forma: polygon(50% 0, 100% 92%, 0 92%); --sdvig: 30%; }
+.uo-igry .uo-mnogogrannik[data-d="6"] { --cvet: #e3dccb; --forma: inset(6% round 16%); }
+.uo-igry .uo-mnogogrannik[data-d="8"] { --cvet: #8fb3c9; --forma: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.uo-igry .uo-mnogogrannik[data-d="10"] { --cvet: #a7c48a; --forma: polygon(50% 0, 100% 42%, 50% 100%, 0 42%); --sdvig: 0; }
+.uo-igry .uo-mnogogrannik[data-d="12"] { --cvet: #c7a3d6; --forma: polygon(50% 0, 98% 36%, 80% 96%, 20% 96%, 2% 36%); --sdvig: 12%; }
+.uo-igry .uo-mnogogrannik[data-d="20"] { --cvet: #e0c35e; --forma: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0 50%); }
+
+.uo-igry .uo-kost-sukno .uo-mnogogrannik { width: 3.1rem; height: 3.1rem; }
+.uo-igry .uo-kost-sukno .uo-mnogogrannik b { font-size: 1.3rem; }
+
+/* Кнопки кубиков в Двадцати одном — те же силуэты */
+.uo-igry .uo-ryad-mnogogrannikov { display: flex; justify-content: center; gap: .55rem; flex-wrap: wrap; }
+.uo-igry .uo-ryad-mnogogrannikov button {
+  all: unset;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .1rem;
+  padding: .2rem .25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #d8d0bd;
+  font-size: .8rem;
+  transition: transform .15s, box-shadow .2s, opacity .2s;
+}
+.uo-igry .uo-ryad-mnogogrannikov .uo-mnogogrannik { width: 2.3rem; height: 2.3rem; }
+.uo-igry .uo-ryad-mnogogrannikov button:hover:not([disabled]) { transform: translateY(-2px); }
+.uo-igry .uo-ryad-mnogogrannikov button[disabled] { cursor: default; opacity: .35; }
+.uo-igry .uo-ryad-mnogogrannikov button.uo-zhdet { box-shadow: 0 0 0 1px rgba(201, 162, 39, .7), 0 0 10px rgba(201, 162, 39, .45); }
+.uo-igry .uo-ryad-mnogogrannikov button.uo-beret {
+  opacity: 1;
+  box-shadow: 0 0 0 2px #c9a227, 0 0 16px rgba(240, 200, 70, .8);
+  transform: translateY(-3px) scale(1.06);
+}
+.uo-igry .uo-ryad-mnogogrannikov button.uo-vzyat { opacity: .18; }
+
+.uo-igry .uo-summa-bolshaya { font-size: 1.5rem; font-weight: 800; color: #f2ead4; font-variant-numeric: tabular-nums; line-height: 1; }
+.uo-igry .uo-summa-bolshaya.uo-bito { color: #e07a62; }
+.uo-igry .uo-krug-mesto.uo-perebor { opacity: .7; border-color: rgba(190, 70, 70, .7); }
+.uo-igry .uo-krug-niz .uo-ruka { display: flex; align-items: center; gap: 3px; flex-wrap: wrap; min-height: 1.5rem; }
+.uo-igry .uo-krug-niz .uo-ruka .uo-mnogogrannik { width: 1.35rem; height: 1.35rem; }
+.uo-igry .uo-krug-niz .uo-ruka .uo-mnogogrannik b { font-size: .72rem; }
+.uo-igry .uo-krug-niz .uo-summa-mesta { margin-left: auto; color: #ece6d6; font-weight: 700; }
+.uo-igry .uo-krug-niz .uo-summa-mesta.uo-bito { color: #e07a62; }
+
+/* Ряд Джо: шесть ячеек, сложившиеся окна подсвечены */
+.uo-igry .uo-dzho-ryad { display: flex; gap: 2px; }
+.uo-igry .uo-dzho-yachejka {
+  display: inline-grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 4px;
+}
+.uo-igry .uo-dzho-yachejka.uo-pustaya { border: 1px dashed rgba(182, 173, 151, .35); box-sizing: border-box; }
+.uo-igry .uo-dzho-yachejka.uo-v-okne { background: rgba(201, 162, 39, .35); box-shadow: 0 0 0 1px rgba(201, 162, 39, .7); }
+.uo-igry .uo-krug-mesto.uo-uzy { border-color: #b07fd1; box-shadow: 0 0 0 1px #b07fd1, 0 0 14px rgba(176, 127, 209, .55); }
+.uo-igry .uo-krug-mesto.uo-nichya { border-color: #8fb3c9; box-shadow: 0 0 0 1px #8fb3c9, 0 0 12px rgba(143, 179, 201, .5); }
+
+/* Итог раунда на сукне */
+/* Без появления: окно перерисовывается на каждое «готов», и итог мигал бы каждый раз */
+.uo-igry .uo-itog-raunda { display: flex; flex-direction: column; align-items: center; gap: .3rem; max-width: 80%; }
+.uo-igry .uo-itog-zagolovok { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: #cfe3d2; opacity: .85; }
+.uo-igry .uo-itog-kto { font-size: 1.15rem; font-weight: 700; color: #f2ead4; line-height: 1.25; }
+.uo-igry .uo-gotovy { font-size: .85rem; color: #e3c766; }
+.uo-igry .uo-metka-gotov {
+  align-self: center;
+  padding: 0 .4rem;
+  font-size: .72rem;
+  font-weight: 700;
+  color: #1b1b1e;
+  background: var(--uo-udacha, #6fae5a);
+  border-radius: 3px;
+}
+
+@keyframes uo-migaet { 50% { opacity: .55; } }
+@keyframes uo-tochka { 0%, 100% { opacity: .25; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+@keyframes uo-vsplyvaet { from { opacity: 0; transform: translateX(-50%) translateY(4px) scale(.92); } }
+@keyframes uo-zovet { 50% { box-shadow: 0 0 0 1px #c9a227, 0 0 20px rgba(201, 162, 39, .85); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .uo-igry .uo-kost-sukno.uo-letit,
+  .uo-igry .uo-knopki button.uo-zhdet,
+  .uo-igry .uo-tvoj-hod-metka,
+  .uo-igry .uo-dumaet i { animation: none; }
+}

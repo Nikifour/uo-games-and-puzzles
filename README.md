@@ -96,6 +96,13 @@ When it runs out the mechanism freezes, and "Reset" winds the clock again.
   you lose.
 - **Lucky Joe** — a thieves' game used to settle disputes.
 
+All three are played at **a round table**: the felt in the middle, the seats
+around it, your own at the bottom. Dice fly onto the felt from the thrower's
+seat, and a bot's every move is visible — the dice it picks light up and a
+speech bubble says what it decided. Between rounds the table waits until
+everyone presses "Ready", and the GM can seat a newcomer in a game already
+under way.
+
 Seat tavern **bot opponents** with a temper of their own (cautious innkeeper,
 reckless sellsword, bookkeeper), take **stakes** straight from character
 sheets, leave the table mid-game — or **cheat**: loaded dice up your sleeve,

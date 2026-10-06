@@ -312,6 +312,18 @@ There are two alphabets — Russian with 32 letters (Ё folds into Е) and Latin
 
 For the GM: **"Reveal a letter"** (for the substitution, when the table has come to a dead stop), "Show the answer", "Count it solved", "Reset", "Take it off the table".
 
+## Dice games: the table
+
+All three games — Dice, Twenty-One and Lucky Joe — are played at a round table. The felt is in the middle, the players' seats around it; your own seat is always at the bottom, the opponents across and to the sides. Thrown dice fly onto the felt from the thrower's seat.
+
+**A bot's turn is visible.** While a bot thinks, three dots run over its seat. The dice it picks light up on the felt and a speech bubble with its decision pops up over the seat — "Sets aside for 350", "Takes a d20", "Keeps the 5" — and only then do the dice go. In the middle of a bot's turn neither dice nor buttons can be pressed: the bot plays itself, and the GM can step in with "Pass the turn".
+
+**The buttons call you on your turn.** They glow and your seat shows "Your turn"; on someone else's turn they go dark. While the dice are rolling there are no buttons at all, and a second click will not roll again.
+
+**Between rounds the table waits.** When a round of Twenty-One or a tied round of Lucky Joe ends, the hands and rows stay in their seats, the winner is highlighted, and the felt says in large type how it ended. The next round begins once every player presses "Ready"; those who are ready get a green mark on their seat. Bots are always ready, a table of bots alone waits for no one, and the GM has "Start without waiting".
+
+**Seat a player mid-game.** The GM's "Seat a player" button brings into a game under way a player not yet at the table, an opponent from the pool or an unnamed bot. In Dice the newcomer sits in at once, last in the turn order, starting from zero. In Twenty-One — at once if the table is between rounds, otherwise from the next round. In Lucky Joe — at once before a round starts, otherwise from the next round; no one joins a tiebreak. Who is waiting is written under the table. If the game is played for stakes, the newcomer pays the same stake and the pot grows.
+
 ## Lucky Joe: the rules
 
 A thieves' game for settling arguments. They take turns: roll 2d6, keep one die, pass it on, six times each. The kept dice lie down in a row in plain sight.
@@ -352,11 +364,11 @@ Setting dice aside "for company" is not allowed: **every** die must count in the
 
 "Games and Puzzles" → "Dice". In the dialog you tick who is sitting down and set the target for the game — what score you play to. There can be any number of players: the turn goes round in the order they were ticked. The same dialog holds the opening threshold (how much must be banked in a turn to open the account) and the price of three pairs, if you play with them.
 
-Foundry rolls the dice, so everyone sees them and Dice So Nice rolls them across the screen. Click a die to set it aside, click again to take it back. Then two buttons: "Set aside and roll" or "Set aside and bank".
+Foundry rolls the dice, so everyone sees them and Dice So Nice rolls them across the screen. Click a die to set it aside, click again to take it back. Then two buttons: "Set aside and roll" sets the selection aside and rolls the rest at once, "Set aside and bank" adds what you gathered to your score and passes the turn. The dice set aside this turn lie by your seat.
 
 The **"Rules"** button beside the score opens a reminder: how the turns go and what scores what — with the very numbers this table plays by. If three pairs are on, their price is there; if an opening threshold is set, so is that. Someone who is merely watching sees it too.
 
-The GM can play for anyone and pass the turn with "Pass the turn" — if a player has left or the game has stuck.
+The GM can play for any player and pass the turn with "Pass the turn" — if a player has left or the game has stuck. A bot plays itself: in the middle of its turn no one can press the buttons.
 
 ## Dice: rolls and chat
 
@@ -430,9 +442,9 @@ The "Games and Puzzles" button → "Twenty-One". In the dialog you tick who sits
 
 Turns run as in blackjack: a player finishes their whole hand — taking dice one after another and saying "Stand" — and only then does the turn move on. Acting last is an advantage, since the other totals are visible, so **the right to act first moves to the next seat every round**.
 
-The window shows each player's total, the dice they rolled with a mark of which die each was, and rounds taken as circles. A rolled die is not removed from the table but dimmed: you can see what has been spent.
+Each seat shows the dice taken — by silhouette, with the number rolled — the total, and rounds taken as circles. In the row of buttons a rolled die is dimmed: you can see what has been spent. When a round ends the table waits until everyone presses "Ready".
 
-The GM can act for anyone and pass the turn with the "Pass the turn" button — if a player has left or the game is stuck.
+The GM can act for any player and pass the turn with the "Pass the turn" button — if a player has left or the game is stuck. A bot plays itself: in the middle of its turn no one can press the buttons.
 
 ## Twenty-One: opponents and stakes
 
