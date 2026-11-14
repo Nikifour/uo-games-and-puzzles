@@ -436,12 +436,37 @@
   box-shadow: 0 0 8px rgba(180, 85, 63, .5);
 }
 
+/* Рукав: сколько краплёных подсунуть — ряд маленьких кнопок 0, 1, 2… */
+.uo-igry .uo-rukav { display: inline-flex; align-items: center; gap: .25rem; flex: 0 0 auto; }
+.uo-igry .uo-rukav-podpis { font-size: .85rem; opacity: .85; margin-right: .1rem; }
+.uo-igry .uo-rukav .uo-podmena { min-width: 1.9rem; padding: 0 .4rem; }
+.uo-forma .uo-rukav-mesto { justify-content: space-between; }
+.uo-forma .uo-rukav-mesto select { flex: 0 0 5rem; }
+
 .uo-boty { display: flex; flex-direction: column; gap: .3rem; margin: .3rem 0; }
 .uo-bot-stroka { display: flex; align-items: center; gap: .4rem; }
 .uo-bot-stroka .uo-bot-imya { flex: 1 1 55%; }
 .uo-bot-stroka .uo-bot-nrav { flex: 1 1 40%; }
 .uo-bot-stroka .uo-bot-ubrat { flex: 0 0 auto; width: auto; padding: 0 .5rem; }
 .uo-bot-dobavit { width: auto; padding: 0 .8rem; align-self: flex-start; }
+
+/* Конструктор нравов */
+.uo-nravy .uo-nravy-ruchki { margin: 0 0 .2rem; padding-left: 1.1rem; }
+.uo-nravy .uo-nravy-ruchki li { margin: .1rem 0; }
+.uo-nravy .uo-nrav-vstroennyj { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin: .15rem 0; }
+.uo-nravy .uo-nrav-vstroennyj button { flex: 0 0 auto; width: auto; padding: 0 .6rem; }
+.uo-nravy .uo-nravy-svoi { display: flex; flex-direction: column; gap: .45rem; max-height: 50vh; overflow-y: auto; margin-bottom: .35rem; }
+.uo-nravy .uo-nrav { border: 1px solid rgba(128, 128, 128, .35); border-radius: 5px; padding: .35rem .5rem; }
+.uo-nravy .uo-nrav-shapka { display: flex; align-items: center; gap: .4rem; margin-bottom: .2rem; }
+.uo-nravy .uo-nrav-shapka .uo-nrav-imya { flex: 1 1 auto; font-weight: 600; }
+.uo-nravy .uo-nrav-shapka .uo-nrav-ubrat { flex: 0 0 auto; width: auto; padding: 0 .5rem; }
+.uo-nravy .uo-nrav-ruchka .uo-nrav-podpis { flex: 0 0 6.5rem; }
+.uo-nravy .uo-nrav-ruchka input[type="range"] { flex: 1 1 auto; }
+.uo-nravy .uo-nrav-ruchka output { flex: 0 0 3rem; text-align: right; font-variant-numeric: tabular-nums; }
+.uo-nravy .uo-nrav-ryad { display: flex; gap: .8rem; }
+.uo-nravy .uo-nrav-ryad .uo-nrav-ruchka { flex: 1 1 50%; }
+.uo-nravy .uo-nrav-ryad input[type="number"] { flex: 0 0 4rem; }
+.uo-nravy .uo-nrav-slovami { margin-top: .2rem; font-style: italic; }
 
 /* ─── мозаика ─── */
 

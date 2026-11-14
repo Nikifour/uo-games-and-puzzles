@@ -3,6 +3,14 @@
 One section per version, newest first. The in-Foundry "What's new" notice,
 the GitHub release notes and the Patreon and Boosty posts all come from here.
 
+## 0.33.0 — 2026-11-14
+
+- **A bot temper builder.** The module settings have "Bot tempers": build your own temper from four knobs — greed, skill, sleight of hand and attention — and see it put into words under them: "takes risks · slips at times". Any built-in temper can be used as a base. Your own tempers are kept in the world and join every list at once: the opponents' pool, seating, nameless bots and tokens. Remove a temper someone in the pool had, and that opponent is a cautious innkeeper again.
+- **A sleeve of loaded dice.** The GM slips one, two or three loaded dice up a sleeve. Before a roll the cheat decides how many to slip in: a slipped-in die almost surely lands a one or a five, the rest roll fair, and which die on the felt is loaded cannot be told by its place. Each one slipped in is −2 to Sleight of Hand. A bot slips in its whole sleeve on every roll.
+- **Whoever notices the swap learns it themselves.** If a character's passive Perception is not below the cheat's roll, the player gets a private whisper "You notice so-and-so swapping the dice" — with no numbers. What to do about it is their call. The cheat still does not know they were caught.
+- **A bot's sleight and attention come from its temper.** A cheating bot rolls its temper's Sleight of Hand and catches someone else's swap with its own attention.
+- **Fixed.** For a "Played by the GM" seat with loaded dice the GM had no swap button — now the choice of how many to slip in appears for the GM on that seat's turn.
+
 ## 0.32.0 — 2026-11-14
 
 - **Tokens from the scene sit down at the table.** The seating dialog of Dice, Twenty-One and Lucky Joe, and "Seat at the table", now have a "Tokens from the scene" section — every token on the current scene that has a sheet, with its portrait. Tokens selected on the scene are already ticked: draw a box round the crowd at the bar and in they sit. The stake comes from the token's sheet, winnings go back to it, and an NPC opponent no longer plays at the GM's expense.

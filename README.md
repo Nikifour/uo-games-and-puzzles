@@ -104,10 +104,11 @@ everyone presses "Ready", and the GM can seat a newcomer in a game already
 under way.
 
 Seat tavern **bot opponents** with a temper of their own (cautious innkeeper,
-reckless sellsword, bookkeeper), take **stakes** straight from character
+reckless sellsword, bookkeeper — or one you build yourself from greed, skill,
+sleight of hand and attention), take **stakes** straight from character
 sheets, leave the table mid-game — or **cheat**: loaded dice up your sleeve,
-a Sleight of Hand check against the onlookers' attention, the outcome whispered
-to the GM alone. **Tokens from the scene** sit down too: the regulars at the bar
+as many slipped into a roll as you dare, a Sleight of Hand check against the
+onlookers' attention, the outcome whispered to the GM and to whoever noticed. **Tokens from the scene** sit down too: the regulars at the bar
 or the heroes, each played by its player, by the GM or by a bot, with the stake
 taken from the token's sheet and its portrait at the seat.
 

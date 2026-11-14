@@ -33,6 +33,7 @@ import * as зеркала from "./zerkala.mjs";
 import * as призмы from "./prizmy.mjs";
 import * as штурман from "./shturman.mjs";
 import * as склад from "./zagotovki.mjs";
+import { принятьСвоиНравы } from "./kosti-bot.mjs";
 import { Т, М, загрузитьЯзык } from "./yazyk.mjs";
 
 const { ApplicationV2, DialogV2 } = foundry.applications.api;
@@ -92,6 +93,13 @@ Hooks.once("init", () => {
     scope: "world", config: false, type: Array, default: [],
   });
 
+  // Свои нравы ботов из конструктора. Тоже мир: нрав «завсегдатай-гном»
+  // нужен той вселенной, где этот гном сидит. Правка доходит до всех сразу.
+  game.settings.register(MODULE_ID, "nravy", {
+    scope: "world", config: false, type: Array, default: [],
+    onChange: список => принятьСвоиНравы(список),
+  });
+
   // Наборы картинок для загадки на порядок: тоже склад мира, не браузера.
   game.settings.register(MODULE_ID, "nabory", {
     scope: "world", config: false, type: Array, default: [],
@@ -126,6 +134,15 @@ Hooks.once("init", () => {
     hint: Т("Кого ведущий может посадить за стол: имя и нрав. Имена видят игроки — пишите так, как этих людей зовут в вашем мире."),
     icon: "fa-solid fa-users",
     type: боты.МенюСоперников,
+    restricted: true,
+  });
+
+  game.settings.registerMenu(MODULE_ID, "nravyMenu", {
+    name: Т("Нравы ботов"),
+    label: Т("Собрать нрав"),
+    hint: Т("Как играют боты: жадность, мастерство, ловкость рук и внимание. Свои нравы встают во все списки рядом со встроенными."),
+    icon: "fa-solid fa-masks-theater",
+    type: боты.МенюНравов,
     restricted: true,
   });
 
@@ -180,6 +197,8 @@ Hooks.on("getSceneControlButtons", controls => {
 /* ─────────────── связь и обновление окон ─────────────── */
 
 Hooks.once("ready", () => {
+  // Свои нравы — до всего, что может двинуть бота или нарисовать посадку
+  принятьСвоиНравы(game.settings.get(MODULE_ID, "nravy"));
   game.socket.on(КАНАЛ, принять);
 
   // Стол переменился у ведущего — окна у всех перерисовываются сами.

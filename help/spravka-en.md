@@ -410,15 +410,19 @@ The turn order and everything remembered by seat number — stakes, loaded dice 
 
 ## Dice: loaded dice
 
-Cheating. With the "Loaded dice" button in the game window the GM slips marked dice up the sleeve of anyone at the table — a player or a bot.
+Cheating. With the "Loaded dice" button in the game window the GM slips marked dice up the sleeve of anyone at the table — a player, a bot or a "Played by the GM" seat — and decides how many: one, two or three.
 
-**A player** gets a "Swap the dice" button and decides for themselves when to use it: before the roll, not after. Loaded dice fall more often on ones and fives — that is, on what scores.
+**A player** on their turn, while the dice are in hand, sees a "Slip in loaded: 0 1 2…" row — as many buttons as they have up their sleeve, but no more than the dice in hand. The choice holds for the following rolls until changed; 0 means playing fair. A slipped-in die almost surely lands a one or a five, the rest roll fair, and which die on the felt is loaded cannot be told by its place. The choice is made before the roll, not after.
 
-**A bot** with marked dice cheats on every roll: an innkeeper whose luck never turns is a ready-made scene.
+**The price.** Each die slipped in is −2 to the Sleight of Hand check: one is easy to swap, three at once is almost sure to be caught.
+
+**A bot** with marked dice slips in its whole sleeve on every roll and pays the same penalty: an innkeeper whose luck never turns is a ready-made scene.
+
+**A "Played by the GM" seat** with marked dice cheats the way a player does: the GM gets the choice of how many to slip in on that seat's turn, and the Sleight of Hand check uses the token's sheet.
 
 **How they are caught.** Every swapped roll is met by a Sleight of Hand check against the passive attention of the onlookers: anyone whose passive Perception is not below the roll noticed. Passive on purpose: otherwise every roll would mean sending the whole table for a check, and the game would grind to a halt. The more often you cheat, the more surely you are caught.
 
-**Only the GM knows the outcome.** A whisper goes to them: what the cheat threw and who noticed. The table is told nothing — this is the GM's scene, not a line in chat. The cheat does not know either whether they were caught.
+**The GM knows the outcome.** A whisper goes to them: what the cheat threw and who noticed. The table is told nothing — this is the GM's scene, not a line in chat. **A player who noticed** learns it themselves, in their own whisper — "You notice so-and-so swapping the dice", with no numbers. Whether to say it aloud, keep quiet or demand the dice be checked is their call. The cheat does not know whether they were caught.
 
 The swap cannot be spied out in the console: it is not kept in the table's state but lives with the GM, and whoever has the dice up their sleeve learns of it by a private letter — the Foundry server delivers such a thing only to the addressee.
 
@@ -427,6 +431,8 @@ The swap cannot be spied out in the console: it is not kept in the table's state
 The bot has two independent knobs. **Greed** — when it stops: a cautious innkeeper banks early, a reckless sellsword pushes to the last die. **Skill** — how often it plays correctly at all; a flawless bot beats living people reliably, and that is dull, so it knows how to err.
 
 There are four ready tempers: cautious innkeeper, reckless sellsword, bookkeeper, villager.
+
+**Your own tempers** are built in "Settings → Module settings → UO · Games and Puzzles → Bot tempers". A temper has a name and four knobs: greed and skill — the same as the built-in ones; **sleight of hand** — the bonus to the check when the bot plays with loaded dice (+3 by default); **attention** — the passive Perception it catches someone else's swap with (12 by default). Under the knobs the temper is put into words — "takes risks · slips at times" — so you need not remember what greed 1.4 means. Any built-in temper can be used as a base. Your own tempers are kept in the world and join every list at once: the opponents' pool, seating, nameless bots and tokens. Remove a temper that someone in the pool had, and that opponent is a cautious innkeeper again — the window says how many. A bot at a table already in play whose temper was removed finishes as an innkeeper.
 
 It is switched off in "Settings → Module settings → UO · Games and Puzzles": clearing the "Bot opponent allowed" box removes it from the seating dialog, and the code for its turn never runs. The pause between its rolls is set there too — an instant bot smears the game.
 
