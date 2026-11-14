@@ -192,6 +192,17 @@
 .uo-forma label select { flex: 0 0 55%; }
 .uo-forma fieldset { border: 1px solid rgba(128, 128, 128, .4); border-radius: 4px; padding: .3rem .5rem; }
 .uo-forma .uo-igrok { justify-content: flex-start; }
+/* Жетон и соперник из пула: слева кто, справа — кто за него играет и каким нравом */
+.uo-forma .uo-zheton,
+.uo-forma .uo-bot-vybor { display: flex; align-items: center; gap: .4rem; }
+.uo-forma .uo-zheton .uo-igrok,
+.uo-forma .uo-bot-vybor .uo-igrok { flex: 1 1 50%; min-width: 0; gap: .35rem; }
+.uo-forma .uo-zheton select,
+.uo-forma .uo-bot-vybor select { flex: 0 0 45%; min-width: 0; }
+.uo-forma .uo-zheton img { width: 26px; height: 26px; border: none; border-radius: 50%; object-fit: cover; flex: 0 0 auto; }
+.uo-forma .uo-bezymyannye { display: flex; flex-direction: column; gap: .3rem; }
+.uo-forma .uo-bezymyannye:not(:empty) { margin: .2rem 0; }
+.uo-forma .uo-bezymyannyj .uo-bot-nrav { flex: 1 1 auto; }
 /*
  * Кнопки механизма. Ряд переносится, а кнопка тянется по своей подписи:
  * «Кольцо на каждую букву» вчетверо длиннее «Другого шифра», и при равной
@@ -1566,6 +1577,41 @@
   line-height: 1.2;
 }
 .uo-igry .uo-krug-imya .uo-imya i { opacity: .7; font-size: .85em; }
+/*
+ * Портрет жетона: место посажено с жетона сцены — видно, кто именно сидит.
+ * Стоит слева во всю высоту карточки, а не в строке имени: так он крупнее,
+ * а карточка не растёт вширь. Размер идёт от числа мест: двое за столом —
+ * 64px, каждый следующий отнимает 7px, но не меньше 30px — за большим
+ * столом карточки стоят тесно.
+ */
+.uo-igry .uo-krug-mesto.uo-s-obrazom {
+  --obraz: clamp(30px, calc(78px - var(--mest, 4) * 7px), 64px);
+  /* Портрет берёт место у имени — карточка шире на его часть. За малым
+     столом простора много; с семи мест прибавки нет: карточки и так
+     стоят впритык. */
+  width: calc(10.8rem + (var(--obraz) - 30px) * 1.3);
+  display: grid;
+  grid-template-columns: var(--obraz) minmax(0, 1fr);
+  column-gap: .45rem;
+  align-items: center;
+}
+.uo-igry .uo-krug-mesto.uo-s-obrazom > .uo-krug-imya,
+.uo-igry .uo-krug-mesto.uo-s-obrazom > .uo-krug-niz { grid-column: 2; }
+.uo-igry .uo-krug-mesto.uo-s-obrazom > .uo-tvoj-hod-metka,
+.uo-igry .uo-krug-mesto.uo-s-obrazom > .uo-dumaet { grid-column: 1 / -1; }
+.uo-igry .uo-krug-mesto .uo-krug-obraz {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: var(--obraz);
+  height: var(--obraz);
+  box-sizing: border-box;
+  border: 2px solid rgba(236, 230, 214, .4);
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgba(0, 0, 0, .25);
+}
+.uo-igry .uo-krug-mesto.uo-hodit .uo-krug-obraz { border-color: #c9a227; }
+.uo-igry .uo-krug-imya .uo-imya { flex: 1 1 auto; }
 .uo-igry .uo-krug-imya .uo-ochki { font-weight: 700; font-variant-numeric: tabular-nums; }
 
 .uo-igry .uo-krug-niz {

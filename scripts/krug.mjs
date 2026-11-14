@@ -111,6 +111,8 @@ export function своёМесто(места, пользователь = game.u
  * @param {object} о
  * @param {string} о.имя
  * @param {boolean} [о.бот]
+ * @param {boolean} [о.ведущий]   — за место ходит ведущий своими руками
+ * @param {string} [о.образ]      — портрет жетона, если место посажено с жетона
  * @param {string} [о.счёт]       — справа от имени: очки, победы
  * @param {string} [о.низ]        — под именем: кости, ряд, сумма
  * @param {boolean} [о.ходит]
@@ -121,15 +123,17 @@ export function своёМесто(места, пользователь = game.u
 export function место(о) {
   const думает = о.ходит && о.бот && !о.реплика && !о.итог;
   return `
-    <div class="uo-krug-mesto ${о.ходит ? "uo-hodit" : ""} ${о.моё ? "uo-moe" : ""} ${о.y < -10 ? "uo-sverhu" : ""} ${о.класс ?? ""}"
+    <div class="uo-krug-mesto ${о.ходит ? "uo-hodit" : ""} ${о.моё ? "uo-moe" : ""} ${о.y < -10 ? "uo-sverhu" : ""} ${о.образ ? "uo-s-obrazom" : ""} ${о.класс ?? ""}"
          style="--x: ${о.x.toFixed(2)}; --y: ${о.y.toFixed(2)}">
       ${о.реплика ? `<div class="uo-replika">${о.реплика}</div>` : ""}
+      ${о.образ ? `<img class="uo-krug-obraz" src="${экранировать(о.образ)}" alt="">` : ""}
       <div class="uo-krug-imya">
-        <span class="uo-imya">${о.бот ? `<i class="fa-solid fa-robot" title="${Т("бот")}"></i> ` : ""}${экранировать(о.имя)}</span>
+        <span class="uo-imya">${о.бот ? `<i class="fa-solid fa-robot" title="${Т("бот")}"></i> ` : ""}${
+          о.ведущий ? `<i class="fa-solid fa-chess-king" title="${Т("играет ведущий")}"></i> ` : ""}${экранировать(о.имя)}</span>
         ${о.счёт !== undefined ? `<span class="uo-ochki">${о.счёт}</span>` : ""}
       </div>
       ${о.низ ? `<div class="uo-krug-niz">${о.низ}</div>` : ""}
-      ${о.ходит && о.моё && !о.итог ? `<div class="uo-tvoj-hod-metka">${Т("Ваш ход")}</div>` : ""}
+      ${о.ходит && (о.моё || (о.ведущий && game.user.isGM)) && !о.итог ? `<div class="uo-tvoj-hod-metka">${Т("Ваш ход")}</div>` : ""}
       ${думает ? `<div class="uo-dumaet"><i></i><i></i><i></i></div>` : ""}
     </div>`;
 }
@@ -141,8 +145,9 @@ export function место(о) {
  * @param {string} сукно     — что лежит посередине
  */
 export function стол(места, сукно, класс = "") {
+  // Число мест — в стиль: от него портреты жетонов крупнее за малым столом и мельче за большим
   return `
-    <div class="uo-krug ${класс}">
+    <div class="uo-krug ${класс}" style="--mest: ${места.length}">
       <div class="uo-krug-sukno">${сукно}</div>
       <div class="uo-mesta">${места.join("")}</div>
     </div>`;

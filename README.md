@@ -107,7 +107,9 @@ Seat tavern **bot opponents** with a temper of their own (cautious innkeeper,
 reckless sellsword, bookkeeper), take **stakes** straight from character
 sheets, leave the table mid-game — or **cheat**: loaded dice up your sleeve,
 a Sleight of Hand check against the onlookers' attention, the outcome whispered
-to the GM alone.
+to the GM alone. **Tokens from the scene** sit down too: the regulars at the bar
+or the heroes, each played by its player, by the GM or by a bot, with the stake
+taken from the token's sheet and its portrait at the seat.
 
 ## For the GM
 

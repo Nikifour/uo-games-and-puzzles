@@ -3,6 +3,14 @@
 One section per version, newest first. The in-Foundry "What's new" notice,
 the GitHub release notes and the Patreon and Boosty posts all come from here.
 
+## 0.32.0 — 2026-11-14
+
+- **Tokens from the scene sit down at the table.** The seating dialog of Dice, Twenty-One and Lucky Joe, and "Seat at the table", now have a "Tokens from the scene" section — every token on the current scene that has a sheet, with its portrait. Tokens selected on the scene are already ticked: draw a box round the crowd at the bar and in they sit. The stake comes from the token's sheet, winnings go back to it, and an NPC opponent no longer plays at the GM's expense.
+- **You choose who plays a token.** To the right of each token: its player (if the sheet has an owner), you yourself, or a bot of any temper. For a "Played by the GM" seat you roll by hand: the card shows a crown, you see "Your turn" when it comes round, a player cannot roll for it, and between rounds it is ready at once, like a bot. A player with their own hero gets one seat, even if also ticked in the players' list.
+- **Every bot has its own temper.** An opponent from the pool can be given a different temper for this game — the pool itself stays as it was. Nameless bots are added with the "Nameless bot" button, one line each with its own temper. The bot section is now the same in all three games and in "Seat at the table": Lucky Joe gets nameless bots too, and seating mid-game respects the "bots disabled" setting.
+- **A portrait at the table.** A seat taken from a token shows its portrait on the left, the full height of the card: large at a table for two, smaller the more seats there are.
+- **Fixed.** A table removed in the middle of a bot's turn no longer comes back to life: before, in Twenty-One and Lucky Joe the bots played on without a window, and in Dice a bot rolled out the rest of its turn into chat. When the GM logs in, the stray records this left in the world are cleaned up as well.
+
 ## 0.31.0 — 2026-10-07
 
 - **The dice games sit at a round table.** Dice, Twenty-One and Lucky Joe now look like a table people sit at: the felt in the middle, the players' seats around it. Your own seat is always at the bottom, the opponents across and to the sides. Thrown dice fly onto the felt from the thrower's seat and land scattered, not in a row of buttons. Dice are drawn with pips, and Twenty-One's dice by their silhouettes: the d4 a triangle, the d8 a diamond, the d20 a hexagon.
